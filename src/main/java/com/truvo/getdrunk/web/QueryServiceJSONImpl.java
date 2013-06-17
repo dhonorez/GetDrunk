@@ -50,6 +50,8 @@ public class QueryServiceJSONImpl {
 				} catch (Exception e) {
 					logger.error(e.getMessage(), e);
 				}
+				
+				logger.info("Elastic search returned {} result(s).", queryResponse.getBusinesses().size());
 
 				response.type("application/json; charset=UTF-8");
 				return asJson(queryResponse);
