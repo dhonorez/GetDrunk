@@ -18,16 +18,17 @@ import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.truvo.getdrunk.elasticsearch.query.BusinessQuery;
 
 public class WebQuery {
 
 	private static ObjectMapper mapper = new ObjectMapper();
 	private static JsonGenerator generator;
-	
+
 	private static Logger logger = LoggerFactory.getLogger(WebQuery.class);
 
 	public static void main(String[] args) throws Exception {
-		
+
 		get(new Route("/hello") {
 			@Override
 			public Object handle(Request request, Response response) {
@@ -39,24 +40,27 @@ public class WebQuery {
 			@Override
 			public Object handle(Request request, Response response) {
 				logger.info(request.toString());
-				
+
+				QueryResponse queryResponse = null;
+
 				try {
 					Query query = mapper.readValue(request.body(), Query.class);
-					
+
 					// do something with query
+					queryResponse = BusinessQuery.query(query);
 				} catch (Exception e) {
 					logger.error(e.getMessage(), e);
 				}
-				
-				Business business = new Business();
-				business.setCategory("Cafés");
-				business.setName("Kelly's Irish Pub BVBA");
-				business.setPhone("03 201 59 88");
-				business.setWebsite("http://www.kellys.be");
-				business.setAddress(new Address("De Keyserlei", 27, 2018, "Antwerpen"));
-				
-				QueryResponse queryResponse = new QueryResponse(Arrays.asList(business));
-				
+
+				// Business business = new Business();
+				// business.setCategory("Cafés");
+				// business.setName("Kelly's Irish Pub BVBA");
+				// business.setPhone("03 201 59 88");
+				// business.setWebsite("http://www.kellys.be");
+				// business.setAddress(new Address("De Keyserlei", 27, 2018, "Antwerpen"));
+				//
+				// QueryResponse queryResponse = new QueryResponse(Arrays.asList(business));
+
 				return asJson(queryResponse);
 			}
 		});
@@ -65,19 +69,19 @@ public class WebQuery {
 			@Override
 			public Object handle(Request request, Response response) {
 				logger.info(request.toString());
-				
+
 				Query query = new Query();
 				query.setCategory("TETTEN");
 				query.setMaxResults(10);
 				query.setCoordinates(Arrays.asList(new Coordinate(1.06f, 13.0f)));
-				
+
 				return asJson(query);
 			}
 
 		});
-		
+
 	}
-	
+
 	private static Object asJson(Object json) {
 		OutputStream outputStream = null;
 		try {
