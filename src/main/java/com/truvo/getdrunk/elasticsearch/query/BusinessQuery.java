@@ -99,7 +99,7 @@ public class BusinessQuery {
 
 			Map<String, String> bCoord = (Map<String, String>) fields.get("location");
 
-			Coordinate coordinate = new Coordinate(Double.parseDouble(bCoord.get("lat")), Double.parseDouble(bCoord.get("lon")));
+			Coordinate coordinate = new Coordinate(Double.parseDouble(bCoord.get("lon")), Double.parseDouble(bCoord.get("lat")));
 			business.setCoordinate(coordinate);
 
 			List<String> phoneNumbers = (List<String>) fields.get("phoneNumbers");
