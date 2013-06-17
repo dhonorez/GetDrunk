@@ -17,7 +17,7 @@ public class WebQuery {
 	      get(new Route("/query") {
 		         @Override
 		         public Object handle(Request request, Response response) {
-		            return "Let's get drunk!";
+		            return request.body();
 		         }
 		      });
 
