@@ -6,11 +6,20 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>GetDrunk</name>
 
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.mongodb</groupId>
 			<artifactId>mongo-java-driver</artifactId>
 			<version>2.11.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.elasticsearch</groupId>
+			<artifactId>elasticsearch</artifactId>
+			<version>0.90.1</version>
 		</dependency>
 	</dependencies>
 
@@ -27,5 +36,4 @@
 			</plugin>
 		</plugins>
 	</build>
-	
 </project>
