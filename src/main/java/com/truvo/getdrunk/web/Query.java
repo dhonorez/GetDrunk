@@ -41,4 +41,10 @@ public class Query {
 		this.openNow = openNow;
 	}
 
+	@Override
+	public String toString() {
+		return "Query [category=" + category + ", maxResults=" + maxResults
+				+ ", coordinates=" + coordinates + ", openNow=" + openNow + "]";
+	}
+
 }

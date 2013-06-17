@@ -1,6 +1,6 @@
 package com.truvo.getdrunk.web;
 
-import static spark.Spark.get;
+import static spark.Spark.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
@@ -20,12 +20,12 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.truvo.getdrunk.elasticsearch.query.BusinessQuery;
 
-public class WebQuery {
+public class QueryServiceJSONImpl {
 
 	private static ObjectMapper mapper = new ObjectMapper();
 	private static JsonGenerator generator;
 
-	private static Logger logger = LoggerFactory.getLogger(WebQuery.class);
+	private static Logger logger = LoggerFactory.getLogger(QueryServiceJSONImpl.class);
 
 	public static void main(String[] args) throws Exception {
 		get(new Route("/hello") {
@@ -35,7 +35,7 @@ public class WebQuery {
 			}
 		});
 
-		get(new Route("/query") {
+		post(new Route("/query") {
 			@Override
 			public Object handle(Request request, Response response) {
 				logger.info(request.toString());
@@ -44,21 +44,21 @@ public class WebQuery {
 
 				try {
 					Query query = mapper.readValue(request.body(), Query.class);
-
+					logger.info(query.toString());
 					// do something with query
-					queryResponse = BusinessQuery.query(query);
+					//queryResponse = BusinessQuery.query(query);
 				} catch (Exception e) {
 					logger.error(e.getMessage(), e);
 				}
 
-//				Business business = new Business();
-//				business.setHeadings(Arrays.asList("Cafés"));
-//				business.setName("Kelly's Irish Pub BVBA");
-//				business.setPhone("03 201 59 88");
-//				business.setWebsite("http://www.kellys.be");
-//				business.setAddress(new Address("De Keyserlei", 27, 2018, "Antwerpen"));
-//
-//				queryResponse = new QueryResponse(Arrays.asList(business));
+				Business business = new Business();
+				business.setHeadings(Arrays.asList("Cafés"));
+				business.setName("Kelly's Irish Pub BVBA");
+				business.setPhone("03 201 59 88");
+				business.setWebsite("http://www.kellys.be");
+				business.setAddress(new Address("De Keyserlei", 27, 2018, "Antwerpen"));
+
+				queryResponse = new QueryResponse(Arrays.asList(business));
 				
 				response.type("application/json; charset=UTF-8");  
 				return asJson(queryResponse);
