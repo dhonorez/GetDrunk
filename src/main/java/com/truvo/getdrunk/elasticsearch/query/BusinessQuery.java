@@ -4,13 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
+import org.elasticsearch.client.Requests;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.index.query.FilterBuilders;
+import org.elasticsearch.index.query.GeoPolygonFilterBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 import com.truvo.getdrunk.web.Business;
 import com.truvo.getdrunk.web.Coordinate;
@@ -37,16 +45,43 @@ public class BusinessQuery {
 		// c.addTransportAddress(new InetSocketTransportAddress("192.168.0.121", 9300));
 		// Client client = c;
 
-		int maxSize = 20;
-		if (query != null) {
-			maxSize = query.getMaxResults();
-		}
-		// SearchResponse response = client.prepareSearch("businesses").setTypes("nl").setFrom(0).setSize(maxSize).execute().actionGet();
-		SearchResponse response = client.prepareSearch().execute().actionGet();
+		if (query != null && query.getCoordinates() != null) {
+			// FilterBuilder filter = FilterBuilders.geoPolygonFilter("location");
 
-		QueryResponse queryResponse = convertResponse(response);
-		// client.close();
-		return queryResponse;
+			GeoPolygonFilterBuilder geoPolygonFilter = FilterBuilders.geoPolygonFilter("location");
+
+			for (Coordinate coord : query.getCoordinates()) {
+				geoPolygonFilter.addPoint(coord.getX(), coord.getY());
+			}
+
+			QueryBuilder esQuery = QueryBuilders.constantScoreQuery(geoPolygonFilter);
+
+			SearchSourceBuilder source = new SearchSourceBuilder().query(esQuery);
+
+			SearchRequest request = Requests.searchRequest("businesses").source(source);
+
+			int maxSize = 20;
+			if (query != null) {
+				maxSize = query.getMaxResults();
+			}
+			SearchRequestBuilder searchRequestBuilder = client.prepareSearch("businesses");
+			searchRequestBuilder.setQuery(esQuery);
+
+			SearchResponse response = searchRequestBuilder.setSize(maxSize).setExplain(false).execute().actionGet();
+
+			QueryResponse queryResponse = convertResponse(response);
+			return queryResponse;
+		} else {
+			int maxSize = 20;
+			if (query != null) {
+				maxSize = query.getMaxResults();
+			}
+			// SearchResponse response = client.prepareSearch("businesses").setTypes("nl").setFrom(0).setSize(maxSize).execute().actionGet();
+			SearchResponse response = client.prepareSearch().execute().actionGet();
+
+			QueryResponse queryResponse = convertResponse(response);
+			return queryResponse;
+		}
 
 	}
 
