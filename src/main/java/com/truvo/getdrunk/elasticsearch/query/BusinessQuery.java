@@ -51,7 +51,7 @@ public class BusinessQuery {
 			GeoPolygonFilterBuilder geoPolygonFilter = FilterBuilders.geoPolygonFilter("location");
 
 			for (Coordinate coord : query.getCoordinates()) {
-				geoPolygonFilter.addPoint(coord.getX(), coord.getY());
+				geoPolygonFilter.addPoint(coord.getY(), coord.getX());
 			}
 
 			QueryBuilder esQuery = QueryBuilders.constantScoreQuery(geoPolygonFilter);
