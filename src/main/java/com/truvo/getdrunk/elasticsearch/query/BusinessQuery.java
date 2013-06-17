@@ -28,7 +28,11 @@ public class BusinessQuery {
 		Settings settings = ImmutableSettings.settingsBuilder().put("cluster.name", "InDomoCluster").build();
 		Client client = new TransportClient(settings).addTransportAddress(new InetSocketTransportAddress("http://192.168.0.121", 9300));
 
-		SearchResponse response = client.prepareSearch("businesses").setTypes("nl").setFrom(0).setSize(query.getMaxResults()).execute().actionGet();
+		int maxSize = 20;
+		if (query != null) {
+			maxSize = query.getMaxResults();
+		}
+		SearchResponse response = client.prepareSearch("businesses").setTypes("nl").setFrom(0).setSize(maxSize).execute().actionGet();
 
 		QueryResponse queryResponse = convertResponse(response);
 		client.close();
