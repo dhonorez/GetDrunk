@@ -67,8 +67,10 @@ public class WebQuery {
 				business.setWebsite("http://www.kellys.be");
 				business.setAddress(new Address("De Keyserlei", 27, 2018, "Antwerpen"));
 
-				queryResponse = new QueryResponse(Arrays.asList(business));
 
+				queryResponse = new QueryResponse(Arrays.asList(business));
+				
+				response.type("application/json; charset=UTF-8");  
 				return asJson(queryResponse);
 			}
 		});
