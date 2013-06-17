@@ -1,10 +1,12 @@
 package com.truvo.getdrunk.web;
 
+import java.util.List;
+
 public class Business {
 
 	private String name;
 	private Coordinate coordinate;
-	private String category;
+	private List<String> headings;
 	private String website;
 	private String phone;
 	private Address address;
@@ -17,8 +19,8 @@ public class Business {
 		return coordinate;
 	}
 
-	public String getCategory() {
-		return category;
+	public List<String> getHeadings() {
+		return headings;
 	}
 
 	public String getWebsite() {
@@ -41,8 +43,8 @@ public class Business {
 		this.coordinate = coordinate;
 	}
 
-	public void setCategory(String category) {
-		this.category = category;
+	public void setHeadings(List<String> headings) {
+		this.headings = headings;
 	}
 
 	public void setWebsite(String website) {

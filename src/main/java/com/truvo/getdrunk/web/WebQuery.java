@@ -1,6 +1,6 @@
 package com.truvo.getdrunk.web;
 
-import static spark.Spark.get;
+import static spark.Spark.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
@@ -28,7 +28,6 @@ public class WebQuery {
 	private static Logger logger = LoggerFactory.getLogger(WebQuery.class);
 
 	public static void main(String[] args) throws Exception {
-
 		get(new Route("/hello") {
 			@Override
 			public Object handle(Request request, Response response) {
@@ -61,6 +60,15 @@ public class WebQuery {
 				//
 				// QueryResponse queryResponse = new QueryResponse(Arrays.asList(business));
 
+				Business business = new Business();
+				business.setHeadings(Arrays.asList("Cafés"));
+				business.setName("Kelly's Irish Pub BVBA");
+				business.setPhone("03 201 59 88");
+				business.setWebsite("http://www.kellys.be");
+				business.setAddress(new Address("De Keyserlei", 27, 2018, "Antwerpen"));
+				
+				QueryResponse queryResponse = new QueryResponse(Arrays.asList(business));
+				
 				return asJson(queryResponse);
 			}
 		});
