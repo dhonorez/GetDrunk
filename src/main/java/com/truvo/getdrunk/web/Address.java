@@ -3,11 +3,11 @@ package com.truvo.getdrunk.web;
 public class Address {
 
 	private String street;
-	private int number;
-	private int zipcode;
+	private String number;
+	private String zipcode;
 	private String city;
 
-	public Address(String street, int number, int zipcode, String city) {
+	public Address(String street, String number, String zipcode, String city) {
 		super();
 		this.street = street;
 		this.number = number;
@@ -19,11 +19,11 @@ public class Address {
 		return street;
 	}
 
-	public int getNumber() {
+	public String getNumber() {
 		return number;
 	}
 
-	public int getZipcode() {
+	public String getZipcode() {
 		return zipcode;
 	}
 
@@ -35,11 +35,11 @@ public class Address {
 		this.street = street;
 	}
 
-	public void setNumber(int number) {
+	public void setNumber(String number) {
 		this.number = number;
 	}
 
-	public void setZipcode(int zipcode) {
+	public void setZipcode(String zipcode) {
 		this.zipcode = zipcode;
 	}
 

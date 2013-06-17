@@ -8,6 +8,7 @@ public class Business {
 	private Coordinate coordinate;
 	private List<String> headings;
 	private String website;
+	private String email;
 	private String phone;
 	private Address address;
 
@@ -57,6 +58,14 @@ public class Business {
 
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	@Override

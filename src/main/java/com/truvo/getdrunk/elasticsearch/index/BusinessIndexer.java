@@ -101,6 +101,12 @@ public class BusinessIndexer {
 			List<String> phoneNumbers = business.getPhoneNumbers();
 			objectToInsert.field("phoneNumbers", phoneNumbers);
 
+			List<String> websites = business.getWebsites();
+			objectToInsert.field("websites", websites);
+
+			List<String> emails = business.getEmails();
+			objectToInsert.field("emails", emails);
+
 			List<String> headings = business.getHeadings().get("nl");
 			objectToInsert.field("headings", headings);
 
@@ -113,7 +119,11 @@ public class BusinessIndexer {
 				locMap.put("lat", xcoord.toString());
 				locMap.put("lon", ycoord.toString());
 				objectToInsert.field("location", locMap);
-				System.out.println("inserting coordinates");
+
+				objectToInsert.field("number", address.getHousenumber());
+				objectToInsert.field("street", address.getStreet());
+				objectToInsert.field("zipcode", address.getPostalcode());
+				objectToInsert.field("city", address.getMunicipality());
 			}
 			objectToInsert.endObject();
 

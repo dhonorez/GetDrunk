@@ -20,6 +20,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 
+import com.truvo.getdrunk.web.Address;
 import com.truvo.getdrunk.web.Business;
 import com.truvo.getdrunk.web.Coordinate;
 import com.truvo.getdrunk.web.Query;
@@ -94,6 +95,9 @@ public class BusinessQuery {
 
 			business.setName((String) fields.get("name"));
 
+			Address address = new Address((String) fields.get("street"), (String) fields.get("number"), (String) fields.get("zipcode"),
+					(String) fields.get("city"));
+
 			List<String> headings = (List<String>) fields.get("headings");
 			business.setHeadings(headings);
 
@@ -105,6 +109,16 @@ public class BusinessQuery {
 			List<String> phoneNumbers = (List<String>) fields.get("phoneNumbers");
 			if (phoneNumbers != null && phoneNumbers.size() > 0) {
 				business.setPhone(phoneNumbers.get(0));
+			}
+
+			List<String> websites = (List<String>) fields.get("websites");
+			if (websites != null && websites.size() > 0) {
+				business.setWebsite(websites.get(0));
+			}
+
+			List<String> emails = (List<String>) fields.get("emails");
+			if (emails != null && emails.size() > 0) {
+				business.setEmail(emails.get(0));
 			}
 
 			businesses.add(business);

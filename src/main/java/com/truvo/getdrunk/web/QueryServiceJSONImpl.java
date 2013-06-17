@@ -50,14 +50,14 @@ public class QueryServiceJSONImpl {
 				} catch (Exception e) {
 					logger.error(e.getMessage(), e);
 				}
-				
+
 				logger.info("Elastic search returned {} result(s).", queryResponse.getBusinesses().size());
 
 				response.type("application/json; charset=UTF-8");
 				return asJson(queryResponse);
 			}
 		});
-		
+
 		post(new Route("/dummy") {
 			@Override
 			public Object handle(Request request, Response response) {
@@ -65,7 +65,7 @@ public class QueryServiceJSONImpl {
 
 				Business business = createDummyBusinesses();
 
-                QueryResponse queryResponse = new QueryResponse(Arrays.asList(business));
+				QueryResponse queryResponse = new QueryResponse(Arrays.asList(business));
 
 				response.type("application/json; charset=UTF-8");
 				return asJson(queryResponse);
@@ -77,8 +77,8 @@ public class QueryServiceJSONImpl {
 				business.setName("Kelly's Irish Pub BVBA");
 				business.setPhone("03 201 59 88");
 				business.setWebsite("http://www.kellys.be");
-				business.setAddress(new Address("De Keyserlei", 27, 2018, "Antwerpen"));
-                business.setCoordinate(new Coordinate(4.418218577f, 51.217544792f));
+				business.setAddress(new Address("De Keyserlei", "27", "2018", "Antwerpen"));
+				business.setCoordinate(new Coordinate(4.418218577f, 51.217544792f));
 				return business;
 			}
 		});
