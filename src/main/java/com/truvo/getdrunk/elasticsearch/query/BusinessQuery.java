@@ -33,7 +33,7 @@ public class BusinessQuery {
 		// Client client = node.client();
 
 		Settings settings = ImmutableSettings.settingsBuilder().put("cluster.name", "InDomoCluster").build();
-		Client client = new TransportClient(settings).addTransportAddress(new InetSocketTransportAddress("192.168.0.121", 9300));
+		Client client = new TransportClient(settings).addTransportAddress(new InetSocketTransportAddress("10.17.213.81", 9300));
 
 		// Builder settings = ImmutableSettings.settingsBuilder();
 		// settings.put("client.transport.sniff", true);
@@ -112,8 +112,23 @@ public class BusinessQuery {
 	}
 
 	public static void main(String[] args) {
-		QueryResponse response = BusinessQuery.query(null);
+		Query q = new Query();
+		q.setCategory(null);
+		q.setMaxResults(20);
+		q.setOpenNow(false);
+
+		List<Coordinate> coordinates = new ArrayList<Coordinate>();
+		Coordinate c1 = new Coordinate(51.256758449834216, 4.06219482421875);
+		coordinates.add(c1);
+		Coordinate c2 = new Coordinate(51.163844261348274, 4.167938232421875);
+		coordinates.add(c2);
+		Coordinate c3 = new Coordinate(51.17202478938592, 4.4501495361328125);
+		coordinates.add(c3);
+		Coordinate c4 = new Coordinate(51.28768819403519, 4.38629150390625);
+		coordinates.add(c4);
+		q.setCoordinates(coordinates);
+
+		QueryResponse response = BusinessQuery.query(q);
 		System.out.println(response);
 	}
-
 }
