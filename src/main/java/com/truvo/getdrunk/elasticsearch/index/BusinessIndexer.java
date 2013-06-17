@@ -99,9 +99,12 @@ public class BusinessIndexer {
 			objectToInsert.field("name", bn);
 
 			List<String> phoneNumbers = business.getPhoneNumbers();
+			objectToInsert.field("phoneNumbers", phoneNumbers);
+
+			List<String> headings = business.getHeadings().get("nl");
+			objectToInsert.field("headings", headings);
 
 			Map<String, Address> addresses = business.getAddresses();
-
 			Address address = addresses.get("DUTCH");
 			if (address != null) {
 				Double xcoord = address.getxCoord();

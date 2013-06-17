@@ -12,7 +12,6 @@
 	 <tx:annotation-driven/>
 	 <context:component-scan base-package="com.truvo.contentbroker" />
 	 
-	
 	 <bean id="propertyConfigurer_CO" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
@@ -21,7 +20,6 @@
 				<value>properties/ext-services.properties</value>
 				<value>properties/business.indexer.properties</value>
 				
-				<!--  only for local tweaking -->
 				<value>file:../conf/${business.indexer.local.properties}</value>
 			</list>
 		</property>
