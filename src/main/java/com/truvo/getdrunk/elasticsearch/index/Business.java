@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class Business {
 
@@ -24,8 +25,10 @@ public class Business {
 	private List<String> emails = new ArrayList<String>();
 	private List<String> websites = new ArrayList<String>();
 
-	private Long averageRating;
-	private Long numberOfReviews;
+	private Integer averageRating;
+	private Integer numberOfReviews;
+	private boolean paid;
+	private boolean open;
 
 	private Date updateDate;
 
@@ -122,19 +125,45 @@ public class Business {
 		this.websites = websites;
 	}
 
-	public Long getAverageRating() {
-		return averageRating;
+	public Integer getAverageRating() {
+		int nextInt = new Random().nextInt(5);
+		return nextInt + 1;
 	}
 
-	public void setAverageRating(Long averageRating) {
+	public void setAverageRating(Integer averageRating) {
 		this.averageRating = averageRating;
 	}
 
-	public Long getNumberOfReviews() {
-		return numberOfReviews;
+	public Integer getNumberOfReviews() {
+		int nextInt = new Random().nextInt(15);
+		return nextInt + 1;
 	}
 
-	public void setNumberOfReviews(Long numberOfReviews) {
+	public boolean isPaid() {
+		int nextInt = new Random().nextInt(10);
+		if (nextInt > 3) {
+			return false;
+		}
+		return true;
+	}
+
+	public void setPaid(boolean paid) {
+		this.paid = paid;
+	}
+
+	public boolean isOpen() {
+		int nextInt = new Random().nextInt(10);
+		if (nextInt > 7) {
+			return false;
+		}
+		return true;
+	}
+
+	public void setOpen(boolean open) {
+		this.open = open;
+	}
+
+	public void setNumberOfReviews(Integer numberOfReviews) {
 		this.numberOfReviews = numberOfReviews;
 	}
 

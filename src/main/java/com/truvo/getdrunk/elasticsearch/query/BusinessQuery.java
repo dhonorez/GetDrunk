@@ -121,6 +121,11 @@ public class BusinessQuery {
 				business.setEmail(emails.get(0));
 			}
 
+			business.setAverageRating((String) fields.get("averageRating"));
+			business.setAverageRating((String) fields.get("numberOfReviews"));
+			business.setAverageRating((String) fields.get("open"));
+			business.setAverageRating((String) fields.get("paid"));
+
 			businesses.add(business);
 		}
 		return new QueryResponse(businesses);

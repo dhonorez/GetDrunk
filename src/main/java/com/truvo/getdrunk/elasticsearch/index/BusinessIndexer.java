@@ -6,6 +6,7 @@ import static org.elasticsearch.node.NodeBuilder.nodeBuilder;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -99,7 +100,11 @@ public class BusinessIndexer {
 			objectToInsert.field("name", bn);
 
 			List<String> phoneNumbers = business.getPhoneNumbers();
-			objectToInsert.field("phoneNumbers", phoneNumbers);
+			if (phoneNumbers != null && phoneNumbers.size() > 0) {
+				objectToInsert.field("phoneNumbers", phoneNumbers);
+			} else {
+				objectToInsert.field("phoneNumbers", Arrays.asList("015 25 35 03"));
+			}
 
 			List<String> websites = business.getWebsites();
 			objectToInsert.field("websites", websites);
@@ -125,6 +130,11 @@ public class BusinessIndexer {
 				objectToInsert.field("zipcode", address.getPostalcode());
 				objectToInsert.field("city", address.getMunicipality());
 			}
+			objectToInsert.field("averageRating", business.getAverageRating());
+			objectToInsert.field("numberOfReviews", business.getNumberOfReviews());
+			objectToInsert.field("open", business.isOpen());
+			objectToInsert.field("paid", business.isPaid());
+
 			objectToInsert.endObject();
 
 			IndexResponse response = client.prepareIndex("businesses", "nl", businessId.toString()).setSource(objectToInsert).execute().actionGet();

@@ -11,6 +11,10 @@ public class Business {
 	private String email;
 	private String phone;
 	private Address address;
+	private String averageRating;
+	private String numberOfReviews;
+	private String paid;
+	private String open;
 
 	public String getName() {
 		return name;
@@ -66,6 +70,38 @@ public class Business {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getAverageRating() {
+		return averageRating;
+	}
+
+	public void setAverageRating(String averageRating) {
+		this.averageRating = averageRating;
+	}
+
+	public String getNumberOfReviews() {
+		return numberOfReviews;
+	}
+
+	public void setNumberOfReviews(String numberOfReviews) {
+		this.numberOfReviews = numberOfReviews;
+	}
+
+	public String getPaid() {
+		return paid;
+	}
+
+	public void setPaid(String paid) {
+		this.paid = paid;
+	}
+
+	public String getOpen() {
+		return open;
+	}
+
+	public void setOpen(String open) {
+		this.open = open;
 	}
 
 	@Override
