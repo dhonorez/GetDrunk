@@ -42,8 +42,10 @@ public class WebQuery {
 				
 				try {
 					Query query = mapper.readValue(request.body(), Query.class);
+					
+					// do something with query
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e.getMessage(), e);
 				}
 				
 				Business business = new Business();
@@ -84,8 +86,8 @@ public class WebQuery {
 			mapper.writeValue(generator, json);
 			return outputStream.toString();
 		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+			logger.error(e.getMessage(), e);
+			return e.getMessage();
 		} finally {
 			IOUtils.closeQuietly(outputStream);
 		}
