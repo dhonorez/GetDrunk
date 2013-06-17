@@ -59,4 +59,10 @@ public class Business {
 		this.address = address;
 	}
 
+	@Override
+	public String toString() {
+		return "Business [name=" + name + ", coordinate=" + coordinate + ", headings=" + headings + ", website=" + website + ", phone=" + phone + ", address="
+				+ address + "]";
+	}
+
 }

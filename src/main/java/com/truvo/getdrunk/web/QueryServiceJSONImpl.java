@@ -1,6 +1,7 @@
 package com.truvo.getdrunk.web;
 
-import static spark.Spark.*;
+import static spark.Spark.get;
+import static spark.Spark.post;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
@@ -46,22 +47,22 @@ public class QueryServiceJSONImpl {
 					Query query = mapper.readValue(request.body(), Query.class);
 					logger.info(query.toString());
 					// do something with query
-					//queryResponse = BusinessQuery.query(query);
+					queryResponse = BusinessQuery.query(query);
 				} catch (Exception e) {
 					logger.error(e.getMessage(), e);
 				}
 
-				Business business = new Business();
-				business.setHeadings(Arrays.asList("Cafés"));
-				business.setName("Kelly's Irish Pub BVBA");
-				business.setPhone("03 201 59 88");
-				business.setWebsite("http://www.kellys.be");
-				business.setAddress(new Address("De Keyserlei", 27, 2018, "Antwerpen"));
-				business.setCoordinate(new Coordinate(4.418218577f, 51.217544792f));
+				// Business business = new Business();
+				// business.setHeadings(Arrays.asList("Cafés"));
+				// business.setName("Kelly's Irish Pub BVBA");
+				// business.setPhone("03 201 59 88");
+				// business.setWebsite("http://www.kellys.be");
+				// business.setAddress(new Address("De Keyserlei", 27, 2018, "Antwerpen"));
+                // business.setCoordinate(new Coordinate(4.418218577f, 51.217544792f));
 
-				queryResponse = new QueryResponse(Arrays.asList(business));
-				
-				response.type("application/json; charset=UTF-8");  
+				// queryResponse = new QueryResponse(Arrays.asList(business));
+
+				response.type("application/json; charset=UTF-8");
 				return asJson(queryResponse);
 			}
 		});
