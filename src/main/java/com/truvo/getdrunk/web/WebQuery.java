@@ -69,6 +69,8 @@ public class WebQuery {
 				
 				QueryResponse queryResponse = new QueryResponse(Arrays.asList(business));
 				
+				response.type("application/json; charset=UTF-8");  
+				
 				return asJson(queryResponse);
 			}
 		});
