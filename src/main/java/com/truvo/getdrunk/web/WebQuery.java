@@ -10,9 +10,16 @@ public class WebQuery {
 	      get(new Route("/hello") {
 	         @Override
 	         public Object handle(Request request, Response response) {
-	            return "Hello World!";
+	            return "Let's get drunk!";
 	         }
 	      });
+	      
+	      get(new Route("/query") {
+		         @Override
+		         public Object handle(Request request, Response response) {
+		            return "Let's get drunk!";
+		         }
+		      });
 
 	   }
 
