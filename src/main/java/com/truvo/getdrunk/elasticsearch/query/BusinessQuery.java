@@ -33,7 +33,7 @@ public class BusinessQuery {
 		// Client client = node.client();
 
 		Settings settings = ImmutableSettings.settingsBuilder().put("cluster.name", "InDomoCluster").build();
-		Client client = new TransportClient(settings).addTransportAddress(new InetSocketTransportAddress("10.17.213.81", 9300));
+		Client client = new TransportClient(settings).addTransportAddress(new InetSocketTransportAddress("192.168.0.121", 9300));
 
 		// Builder settings = ImmutableSettings.settingsBuilder();
 		// settings.put("client.transport.sniff", true);
