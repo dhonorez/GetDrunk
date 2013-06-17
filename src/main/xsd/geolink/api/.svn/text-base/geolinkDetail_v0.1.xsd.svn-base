@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema xmlns="http://www.truvo.com/schema/geolink/api/geolinkDetail/1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gc="http://www.truvo.com/schema/geolink/api/geolinkCommon/1.0" xmlns:geo="http://www.truvo.com/schema/shared/geo/1.0" xmlns:i18n="http://www.truvo.com/schema/shared/i18n/1.0" targetNamespace="http://www.truvo.com/schema/geolink/api/geolinkDetail/1.0" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.truvo.com/schema/geolink/api/geolinkCommon/1.0" schemaLocation="geolinkCommon_v1.0.xsd"/>
+	<xsd:import namespace="http://www.truvo.com/schema/shared/geo/1.0" schemaLocation="../../shared/geo_v1.0.xsd"/>
+	<xsd:import namespace="http://www.truvo.com/schema/shared/i18n/1.0" schemaLocation="../../shared/i18n_v1.0.xsd"/>
+	<!-- Core Elements -->
+	<xsd:element name="locationDetailRequest">
+		<xsd:annotation>
+			<xsd:documentation><![CDATA[
+                Allows to retrieve details about a given location as returned by the geolink service
+                
+                Request Method 1        
+                URI: http://{geolinkDomain}/api/detail/{geoRefId}
+                QUERY: ?languageCode={languageCode}&includeNonOfficialTranslations={flag}
+                METHOD: GET
+                BODY: n/a  
+                
+                Request Method 2        
+                URI: http://{geolinkDomain}/api/detail
+                QUERY: n/a
+                METHOD: POST
+                BODY: XML{locationDetailRequest}
+                ]]></xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="geoRefId" type="gc:GeoRefIdType" minOccurs="1" maxOccurs="1"/>
+				<xsd:element name="geoLevel" type="gc:GeoLevelType" minOccurs="1" maxOccurs="1"/>
+				<xsd:element name="languageCode" type="i18n:LanguageCodeType" minOccurs="0" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation>
+                            The prefered language in which translations of locations should be returned.
+                            When not specified all available translations are returned.
+                        </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="includeNonOfficialTranslations" type="xsd:boolean" default="false" minOccurs="0" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation>
+                            When true non-official translations will be returned as well. Default is false.
+                        </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="locationDetailResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="info" type="LocationRichDetailType" minOccurs="0" maxOccurs="1"/>
+				<xsd:element name="status" type="gc:StatusType" minOccurs="1" maxOccurs="1"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="LocationRichDetailType">
+		<xsd:complexContent>
+			<xsd:extension base="LocationDetailType">
+				<xsd:sequence>
+					<xsd:element name="parents" type="LocationsHolderType" minOccurs="1" maxOccurs="1"/>
+					<xsd:element name="immediateChildren" type="LocationsHolderType" minOccurs="1" maxOccurs="1"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="LocationsHolderType">
+		<xsd:sequence>
+			<xsd:element name="location" type="LocationDetailType" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LocationDetailType">
+		<xsd:sequence>
+			<xsd:element name="referenceInfo" type="gc:GeoLinkReferenceInfoType" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="coordinates" type="geo:CoordinatesType" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="translation" type="LocationTranslationType" minOccurs="1" maxOccurs="unbounded"/>
+			<xsd:element name="postalCode" type="xsd:string" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>
+					Optional postalCode, only present for streets since higher levels need not have a unique postalCode. 
+					If a physical street has multiple postalcodes or submunicipalities, we consider each such combination to be a different street, 
+					so for us a street always has a unique postalcode.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="LocationRankType">
+		<xsd:annotation>
+			<xsd:documentation>             
+                This is the internal geolink rank in an administrative area hierarchy.
+                The higher the rank the fine-grainer in the location hierarchy.                 
+            </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:nonNegativeInteger"/>
+	</xsd:simpleType>
+	<xsd:complexType name="LocationTranslationType" mixed="true">
+		<xsd:attribute name="languageCode" type="i18n:LanguageCodeType" use="required"/>
+		<xsd:attribute name="category" type="LocationTranslationCategoryType" use="required"/>
+	</xsd:complexType>
+	<xsd:simpleType name="LocationTranslationCategoryType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="OFFICIAL"/>
+			<xsd:enumeration value="NON-OFFICIAL"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

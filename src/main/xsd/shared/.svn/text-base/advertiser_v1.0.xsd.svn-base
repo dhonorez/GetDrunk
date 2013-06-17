@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema 
+	xmlns="http://www.truvo.com/schema/shared/advertiser/1.0" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"        
+	xmlns:billing="http://www.truvo.com/schema/shared/billing/1.0"
+	xmlns:cp="http://www.truvo.com/schema/shared/contactPoint/1.0"	
+	xmlns:geo="http://www.truvo.com/schema/shared/geo/1.0"
+	xmlns:i18n="http://www.truvo.com/schema/shared/i18n/1.0"
+	xmlns:sys="http://www.truvo.com/schema/shared/system/1.0"
+	xmlns:url="http://www.truvo.com/schema/shared/urls/1.0"
+	targetNamespace="http://www.truvo.com/schema/shared/advertiser/1.0"
+	elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+		
+	<xsd:import namespace="http://www.truvo.com/schema/shared/billing/1.0" schemaLocation="billing_v1.0.xsd"/>
+	<xsd:import namespace="http://www.truvo.com/schema/shared/contactPoint/1.0" schemaLocation="../shared/contactPoint_v1.0.xsd"/>
+	<xsd:import namespace="http://www.truvo.com/schema/shared/geo/1.0" schemaLocation="geo_v1.0.xsd"/>
+	<xsd:import namespace="http://www.truvo.com/schema/shared/i18n/1.0" schemaLocation="i18n_v1.0.xsd"/>
+	<xsd:import namespace="http://www.truvo.com/schema/shared/system/1.0" schemaLocation="system_v1.0.xsd"/>
+	<xsd:import namespace="http://www.truvo.com/schema/shared/urls/1.0" schemaLocation="urls_v1.0.xsd"/>	
+
+	<!-- Advertiser Detail -->
+	<xsd:complexType name="AdvertiserDetailType">
+		<xsd:sequence>
+			<xsd:element name="action" type="sys:CreateUpdateDeleteEnum" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="advertiserName" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="advertiserStatus" type="AdvertiserStatusEnum" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="clientisStatus" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="advertiserType" type="AdvertiserTypeEnum" minOccurs="1" maxOccurs="1"/>
+			<!-- xsd:element name="businessType" type="business:BusinessTypeEnum" minOccurs="1" maxOccurs="1"/ -->
+			<xsd:element name="legalType" type="LegalTypeEnum" minOccurs="1" maxOccurs="1"/>			
+			<xsd:element name="indicators" type="AdvertiserIndicatorsType" minOccurs="1" maxOccurs="1"/>
+
+			<!-- mainDetails -->
+			<xsd:element name="mainEnterpriseReference" type="billing:EnterpriseReferenceType" minOccurs="1" maxOccurs="1"/>						
+			<xsd:element name="mainAddress" type="geo:AddressDetailsType" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="mainLanguage" type="i18n:LanguageCodeType" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="mainEmail" type="cp:EmailType" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="mainUrl" type="url:ResourceUriType" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="mainPhoneNumber" type="cp:TelephoneNumberType" minOccurs="0" maxOccurs="1"/>		
+			
+			<!--xsd:element name="billingPreferences" type="AdvertiserBillingPreferencesType" minOccurs="1" maxOccurs="1"/-->
+			<!--xsd:element name="creditClass" type="CreditClassEnum" minOccurs="1" maxOccurs="1"/ -->
+			<xsd:element name="agencyDetails" type="AgencyDetailsType" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="contactPlan" type="ContactPlanType" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="delinquentDetails" type="DelinquentDetailsType" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="additionalInfo" type="xsd:string" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>
+						Advertiser specific remarks
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="advertiserRelation" type="AdvertiserRelationType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="modificationInfo" type="sys:ModificationInfoType" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<!--xsd:complexType name="AdvertiserBillingPreferencesType">
+		<xsd:sequence>
+			<xsd:element name="preferredBillCycle" type="billing:BillingCycleEnum"/>
+			<xsd:element name="currency" type="CurrencyEnum"/>
+		</xsd:sequence>
+	</xsd:complexType -->
+	<xsd:complexType name="AdvertiserIndicatorsType">
+		<xsd:sequence>
+			<xsd:element name="prospect" type="ProspectIndicatorEnum" minOccurs="1" maxOccurs="1"/>			
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AgencyDetailsType">
+		<xsd:sequence>
+			<xsd:element name="agencyClientNumber" type="xsd:string"/>
+			<xsd:element name="agencyName" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ContactPlanType">
+		<xsd:annotation>
+			<xsd:documentation>
+				Segment calculated using contracts information and products used by the advertiser
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="segment" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="dateFirstOnline" type="xsd:date" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="dateContract" type="xsd:date" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>	
+	<xsd:complexType name="DelinquentDetailsType">
+		<xsd:sequence>
+			<xsd:element name="delinquentStatus" type="DelinquentStatusEnum" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="delinquentOn" type="xsd:dateTime" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>	
+	<xsd:simpleType name="AdvertiserIdType">
+		<xsd:annotation>
+			<xsd:documentation>matches number(10) datatype </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:unsignedLong">
+			<xsd:maxInclusive value="9999999999"/>
+		</xsd:restriction>
+	</xsd:simpleType>	
+	<xsd:simpleType name="AdvertiserStatusEnum">
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="ACTIVE"/>
+			<xsd:enumeration value="BACK_IN_BUSINESS"/>
+			<xsd:enumeration value="MERGED">
+				<xsd:annotation>
+					<xsd:documentation>
+						Indicates that the advertiser was merged from another advertiser
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="OUT_OF_BUSINESS"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AdvertiserTypeEnum">
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="AG"><xsd:annotation><xsd:documentation>Agency</xsd:documentation></xsd:annotation></xsd:enumeration>
+			<xsd:enumeration value="AC"><xsd:annotation><xsd:documentation>Agency Client</xsd:documentation></xsd:annotation></xsd:enumeration>
+			<xsd:enumeration value="RG"><xsd:annotation><xsd:documentation>Regular</xsd:documentation></xsd:annotation></xsd:enumeration>
+			<xsd:enumeration value="RS"><xsd:annotation><xsd:documentation>Reseller</xsd:documentation></xsd:annotation></xsd:enumeration>
+			<xsd:enumeration value="CR"><xsd:annotation><xsd:documentation>Care</xsd:documentation></xsd:annotation></xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- xsd:simpleType name="CreditClassEnum">
+		<xsd:annotation><xsd:documentation>##TODO_TBD_Amdocs##</xsd:documentation></xsd:annotation>
+		<xsd:restriction base="xsd:NMTOKEN"/>
+	</xsd:simpleType -->
+	<xsd:simpleType name="CurrencyEnum">
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="EURO"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DelinquentStatusEnum">
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="L"/>
+			<xsd:enumeration value="S"/>
+			<xsd:enumeration value="T"/>
+			<xsd:enumeration value="N"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LegalTypeEnum">
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="BUSINESS"/>
+			<xsd:enumeration value="INDIVIDUAL"/>
+			<xsd:enumeration value="NONE"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ProspectIndicatorEnum">
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="ADVERTISER">
+				<xsd:annotation>
+					<xsd:documentation>
+						This is a normal advertiser
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>				
+			<xsd:enumeration value="NEW_CONNECT">
+				<xsd:annotation>
+					<xsd:documentation>
+						New advertiser in the system which was not contacted yet
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>						
+			<xsd:enumeration value="NON-ADVERTISER">
+				<xsd:annotation>
+					<xsd:documentation>
+						Advertiser that was contacted by a sales representative and didn’t buy anything
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>					
+			<xsd:enumeration value="PROSPECT">
+				<xsd:annotation>
+					<xsd:documentation>
+						This advertiser has a potential to buy an advertisement
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>											
+		</xsd:restriction>
+	</xsd:simpleType>
+
+
+	<xsd:complexType name="AdvertiserRelationMemberType">
+		<xsd:annotation>
+			<xsd:documentation>Describes the members of an advertiser relation</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="advertiserId" type="AdvertiserIdType"/>
+			<xsd:element name="role" type="AdvertiserRelationMemberRoleTypeEnum">
+				<xsd:annotation>
+					<xsd:documentation>The role of the other advertiser participating in this relationship as a member</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AdvertiserRelationType">
+		<xsd:annotation>
+			<xsd:documentation>Describes a relation between advertiser</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="type" type="AdvertiserRelationTypeEnum"/>
+			<xsd:element name="role" type="AdvertiserRelationMemberRoleTypeEnum">
+				<xsd:annotation>
+					<xsd:documentation>The role of the current advertiser in this relationship with the members</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="members" type="AdvertiserRelationMemberType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>	
+	<xsd:simpleType name="AdvertiserRelationMemberRoleTypeEnum">
+		<xsd:restriction base="xsd:NMTOKEN">			
+			<xsd:enumeration value="SOURCE_ADVERTISER"/>
+			<xsd:enumeration value="TARGET_ADVERTISER"/>			
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AdvertiserRelationTypeEnum">
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="REPLACE"/>
+			<xsd:enumeration value="MERGE_FROM"/>
+		</xsd:restriction>
+	</xsd:simpleType>		
+
+</xsd:schema>

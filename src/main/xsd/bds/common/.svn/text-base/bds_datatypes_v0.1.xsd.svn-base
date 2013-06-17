@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema      
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+    
+    <!-- Simple Types -->          
+    <xsd:simpleType name="PublicIdType">
+        <xsd:restriction base="xsd:NMTOKEN"/>
+    </xsd:simpleType>
+    
+    <xsd:simpleType name="PublicCodeType">
+        <xsd:restriction base="xsd:NMTOKEN"/>
+    </xsd:simpleType>    
+    
+    <xsd:simpleType name="UriType">
+        <xsd:restriction base="xsd:anyURI"/>
+    </xsd:simpleType>   
+    
+    <xsd:simpleType name="InternalIdType">
+        <xsd:restriction base="xsd:NMTOKEN"/>
+    </xsd:simpleType>    
+    
+    <xsd:simpleType name="FlagType">
+        <xsd:restriction base="xsd:NMTOKEN">
+            <xsd:enumeration value="unknown"/>            
+            <xsd:enumeration value="true"/>
+            <xsd:enumeration value="false"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+</xsd:schema>

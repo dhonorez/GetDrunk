@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.truvo.com/schema/geolink/api/geolinkCommon/1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:data="http://www.truvo.com/schema/shared/dataTypes/1.0" xmlns:geo="http://www.truvo.com/schema/shared/geo/1.0" xmlns:i18n="http://www.truvo.com/schema/shared/i18n/1.0" xmlns:urls="http://www.truvo.com/schema/shared/urls/1.0" targetNamespace="http://www.truvo.com/schema/geolink/api/geolinkCommon/1.0" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.truvo.com/schema/shared/dataTypes/1.0" schemaLocation="../../shared/dataTypes_v1.0.xsd"/>
+	<xsd:import namespace="http://www.truvo.com/schema/shared/geo/1.0" schemaLocation="../../shared/geo_v1.0.xsd"/>
+	<xsd:import namespace="http://www.truvo.com/schema/shared/i18n/1.0" schemaLocation="../../shared/i18n_v1.0.xsd"/>
+	<xsd:import namespace="http://www.truvo.com/schema/shared/urls/1.0" schemaLocation="../../shared/urls_v1.0.xsd"/>
+	<xsd:complexType name="AddressMatchType">
+		<xsd:sequence>
+			<xsd:element name="languageCode" type="i18n:LanguageCodeType" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="addressDetails" type="geo:AddressDetailsType" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="score" type="MatchScoreType" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="referenceInfo" type="GeoLinkReferenceInfoType" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="warnings" type="WarningsType" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AutoSuggestMatchType">
+		<xsd:sequence>
+			<xsd:element name="languageCode" type="i18n:LanguageCodeType" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="value" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="referenceInfo" type="GeoLinkReferenceInfoType" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="MatchScoreType">
+		<xsd:restriction base="xsd:integer">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="100"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="GeoLinkReferenceInfoType">
+		<xsd:sequence>
+			<xsd:element name="geoRefId" type="GeoRefIdType" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="geoLevel" type="GeoLevelType" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="uri" type="urls:ResourceUriType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>
+                        geolink rest URI that can be used to retrieve details about this location
+                    </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="GeoRefIdType">
+		<xsd:restriction base="xsd:NMTOKEN"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="GeoLevelType">
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="POSTAL_CODE"/>
+			<xsd:enumeration value="HOUSE"/>
+			<xsd:enumeration value="STREET_NAME"/>
+			<xsd:enumeration value="SUB_MUNICIPALITY"/>
+			<xsd:enumeration value="MUNICIPALITY"/>
+			<xsd:enumeration value="PROVINCE"/>
+			<xsd:enumeration value="REGION"/>
+			<xsd:enumeration value="COUNTRY"/>
+		</xsd:restriction>
+		<!-- Deliberately not choosing for country specific types for the sake of clarity in XSDs and code generation -->
+		<!-- The location service knows what types it supports and will throw an error if somebody tries to use an invalid type on purpose -->
+	</xsd:simpleType>
+	<xsd:complexType name="ErrorType">
+		<xsd:sequence>
+			<xsd:element name="code" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="fieldName" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="description" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ErrorsType">
+		<xsd:sequence>
+			<xsd:element name="error" type="ErrorType" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="WarningsType">
+		<xsd:sequence>
+			<xsd:element name="warning" type="ErrorType" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="StatusCodeType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="OK"/>
+			<xsd:enumeration value="ERROR"/>
+			<xsd:enumeration value="WARNING"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="StatusType">
+		<xsd:sequence>
+			<xsd:element name="statusCode" type="StatusCodeType" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="errors" type="ErrorsType" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="warnings" type="WarningsType" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema 
+	xmlns="http://www.truvo.com/schema/shared/dataTypes/1.0" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"         
+	targetNamespace="http://www.truvo.com/schema/shared/dataTypes/1.0"
+	elementFormDefault="qualified"
+	attributeFormDefault="unqualified"> 
+	<xsd:simpleType name="GuidType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="36"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Numeric10IdType">
+		<xsd:annotation>
+			<xsd:documentation>matches number(10) datatype </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:unsignedLong">
+			<xsd:maxInclusive value="9999999999"/>
+		</xsd:restriction>
+	</xsd:simpleType>	
+	<xsd:simpleType name="Numeric12IdType">
+		<xsd:annotation>
+			<xsd:documentation>matches number(12) datatype </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:unsignedLong">
+			<xsd:maxInclusive value="999999999999"/>
+		</xsd:restriction>
+	</xsd:simpleType>	
+	<xsd:simpleType name="Numeric16IdType">
+		<xsd:annotation>
+			<xsd:documentation>matches number(16) datatype </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:unsignedLong">
+			<xsd:maxInclusive value="9999999999999999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+    <xsd:simpleType name="IdType">
+        <xsd:annotation>
+            <xsd:documentation>matches number(9) data type.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:unsignedInt">
+            <xsd:maxInclusive value="999999999"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+	<xsd:simpleType name="TimeStampType">
+		<xsd:restriction base="xsd:dateTime"/>
+	</xsd:simpleType>  	
+</xsd:schema>

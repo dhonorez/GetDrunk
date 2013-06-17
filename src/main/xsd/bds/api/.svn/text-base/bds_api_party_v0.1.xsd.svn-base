@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema 
+    xmlns="http://www.truvo.com/schema/basedata"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"       
+    targetNamespace="http://www.truvo.com/schema/basedata"
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+        
+    <!-- Includes -->   
+    <xsd:include schemaLocation="../common/bds_businessName_v0.1.xsd"/>
+    <xsd:include schemaLocation="../common/bds_customerAccount_v0.1.xsd"/>
+    <xsd:include schemaLocation="../common/bds_pagination_v0.1.xsd"/>
+    <xsd:include schemaLocation="../common/bds_party_v0.1.xsd"/>
+    <xsd:include schemaLocation="../common/bds_partySite_v0.1.xsd"/>
+    <xsd:include schemaLocation="../common/bds_relationship_v0.1.xsd"/>
+    
+    <!-- Root --> 
+    <xsd:element name="retrievePartyResponse">
+        <xsd:complexType>
+            <xsd:complexContent>
+                <xsd:extension base="PartyRetrieveType"/>
+            </xsd:complexContent>
+        </xsd:complexType>
+    </xsd:element>    
+    <xsd:element name="searchPartyResponse">
+        <xsd:complexType>
+            <xsd:sequence>                
+                <xsd:element name="header" type="PaginationHeaderType" minOccurs="1" maxOccurs="1"/>
+                <xsd:element name="partyReference" type="PartyIdentityUriType" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>        
+    
+    <!-- Complex Types -->
+    <xsd:complexType name="PartyRetrieveType">
+        <xsd:complexContent>
+            <xsd:extension base="PartyIdentityUriType">
+                <xsd:sequence>
+                    <xsd:element name="lockStatus" type="PartyLockStatusType" minOccurs="0" maxOccurs="1" />
+                    <xsd:element name="currentStatus" type="PartyStatusType" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="detailStatus" type="PartyDetailStatusType" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="profile" type="PartyProfileHolderType" minOccurs="1" maxOccurs="1"/>                    
+                    <xsd:element name="businessNames" type="PartyScopedBusinessNameHolderType" minOccurs="1" maxOccurs="1"/>
+                    <xsd:element name="info" type="PartyInfoType" minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:element name="partySitesReference" type="PartySiteHolderUriType" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="customerAccountsReference" type="CustomerAccountHolderUriType" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="relationshipsReference" type="RelationshipsHolderUriType" minOccurs="0" maxOccurs="1"/>
+                </xsd:sequence>    
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    
+
+    
+</xsd:schema>

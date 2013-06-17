@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema xmlns="http://www.truvo.com/schema/opus"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://www.truvo.com/schema/opus"
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+
+    <!-- Root -->
+    <xsd:element name="advertiserTransfered">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="advertiserId" type="PublicIdType" minOccurs="1" maxOccurs="1"/>       
+                <xsd:element name="dateTransfered" type="xsd:dateTime" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>    
+    
+    <xsd:simpleType name="PublicIdType">
+        <xsd:restriction base="xsd:NMTOKEN"/>
+    </xsd:simpleType>    
+</xsd:schema>

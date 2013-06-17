@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema 
+	xmlns="http://www.truvo.com/schema/shared/system/1.0" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"         
+	targetNamespace="http://www.truvo.com/schema/shared/system/1.0"
+	elementFormDefault="qualified"
+	attributeFormDefault="unqualified"> 
+
+	<xsd:simpleType name="CreateUpdateDeleteEnum">
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="create"/>
+			<xsd:enumeration value="delete"/>
+			<xsd:enumeration value="update"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="CreateDeleteEnum">
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="create"/>
+			<xsd:enumeration value="delete"/>						
+		</xsd:restriction>
+	</xsd:simpleType>		
+	
+	<xsd:complexType name="EventType">
+		<xsd:all>
+			<xsd:element name="Type" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>The name of the service/message</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ID" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Unique System Event ID. Usually ID is a sequence or some timestamp using which subscriber can distinguish out of order</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="CallerID" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Used in Async communitacions to determine calling application for callback</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="CorrelationID" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>CorrelationID is used in Async communitacions. Response to any Async request (JMS ,WS) will return the CorrelationID mentioned in the request</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="SourceID" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Unique System Event ID being used in Pub/Sub interface</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="OriginalAppl" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The original Publishing application (e.g OM, AAM etc’) – relevant if there are additional messages that were triggered as a result of another publish message </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="OriginalPubID" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The Unique System Event ID of the original message being used in Pub/Sub interface</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ModificationInfoType">
+		<xsd:sequence>
+			<xsd:element name="masterTimeStamp" type="xsd:dateTime" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>
+						This is the timestamp of the data element inside the master system (clientis).
+						This timestamp can be used in the context of merging changes that the master system receives from other subscribed systems.
+						This field is not filled in when the data didn't exist in the master system before.
+					</xsd:documentation>
+				</xsd:annotation>				
+			</xsd:element>
+			<xsd:element name="createdOn" type="xsd:dateTime"  minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="updatedOn" type="xsd:dateTime"  minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>	
+	</xsd:complexType>	
+</xsd:schema>

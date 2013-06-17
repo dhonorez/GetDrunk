@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema  
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+          
+    <!-- Complex Types -->          
+    <xsd:complexType name="PaginationHeaderType">
+        <xsd:sequence>
+            <xsd:element name="currentPageId" type="xsd:int" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Current page using 1-based index.
+                        Not provided in case of no results.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="totalNumberOfPages" type="xsd:int" minOccurs="1" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Total number of pages available.
+                        Value is 0 in case of no results.
+                    </xsd:documentation>
+                </xsd:annotation>                
+            </xsd:element>
+            <xsd:element name="totalNumberOfResults" type="xsd:int" minOccurs="1" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Total number of found results (records).
+                        Value is 0 in case of no results
+                    </xsd:documentation>
+                </xsd:annotation>                
+            </xsd:element>   
+            <xsd:element name="maxPageSize" type="xsd:int" minOccurs="1" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Page Size that was used for the page calculation.
+                    </xsd:documentation>
+                </xsd:annotation>                
+            </xsd:element>              
+            
+            <xsd:element name="previousPageUri" type="xsd:anyURI" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Rest URI of the previous page.
+                        Not provided in case of no results.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nextPageUri" type="xsd:anyURI" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Rest URI of the next page.
+                        Not provided in case of no results.
+                    </xsd:documentation>
+                </xsd:annotation>                
+            </xsd:element>
+            
+
+             
+        </xsd:sequence>
+    </xsd:complexType>  
+</xsd:schema>

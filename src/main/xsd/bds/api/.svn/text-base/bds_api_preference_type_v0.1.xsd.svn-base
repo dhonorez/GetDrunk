@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema 
+    xmlns="http://www.truvo.com/schema/basedata"   
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"   
+    targetNamespace="http://www.truvo.com/schema/basedata"
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+        
+    <!-- Includes -->    
+    <xsd:include schemaLocation="../common/bds_datatypes_v0.1.xsd"/>
+    <xsd:include schemaLocation="../common/bds_party_v0.1.xsd"/>
+    
+    <!-- Root -->
+    <xsd:element name="createPreferenceTypeRequest">
+        <xsd:annotation>
+            <xsd:documentation>
+                API: Create Preference Type
+                Method: POST
+                URI: {domainUri}/api/v1/preference/types 
+                Body: createPreferenceTypeRequest                
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:complexContent>
+                <xsd:extension base="PreferenceSpecificationWithCodeType"/>
+            </xsd:complexContent>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="updatePreferenceTypeRequest">
+        <xsd:annotation>
+            <xsd:documentation>
+                API: Update Preference Type
+                Method: PUT
+                URI: {domainUri}/api/v1/preference/types/{preferenceTypeCode} 
+                Body: updatePreferenceTypeRequest                
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:complexContent>
+                <xsd:extension base="PreferenceSpecificationType"/>
+            </xsd:complexContent>
+        </xsd:complexType>
+    </xsd:element>           
+    <xsd:element name="retrievePreferenceTypeResponse">
+        <xsd:annotation>
+            <xsd:documentation>
+                API: Retrieve Preference Type
+                Method: GET
+                URI: {domainUri}/api/v1/preference/types/{preferenceTypeCode} 
+                Body: NONE                
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:complexContent>
+                <xsd:extension base="PreferenceSpecificationWithCodeAndUriType"/>
+            </xsd:complexContent>
+        </xsd:complexType>
+    </xsd:element>         
+    <xsd:element name="retrieveAllPreferenceTypesResponse">
+        <xsd:annotation>
+            <xsd:documentation>
+                API: Retrieve all available preference type
+                Method: GET
+                URI: {domainUri}/api/v1/preference/types
+                Body: NONE                
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="preferenceType" type="PreferenceSpecificationWithCodeAndUriType" minOccurs="0" maxOccurs="unbounded"/>                 
+            </xsd:sequence>            
+        </xsd:complexType>
+    </xsd:element>      
+    
+    
+    <!-- Complex Types -->
+    <xsd:complexType name="PreferenceSpecificationType">
+        <xsd:sequence>
+            <xsd:element name="dataType" type="PreferenceDataTypeEnum" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="description" type="xsd:string" minOccurs="0" maxOccurs="1"/>    
+            <xsd:element name="classification" type="PartyClassificationEnum" minOccurs="1" maxOccurs="1"/>            
+            <xsd:element name="scope" type="PreferenceTypeScopeEnum" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="requiresLanguageRestriction"     type="xsd:boolean" minOccurs="1" maxOccurs="1"/>         
+            <xsd:element name="mandatory"     type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="PreferenceSpecificationWithCodeType">
+        <xsd:complexContent>            
+            <xsd:extension base="PreferenceSpecificationType">
+                <xsd:sequence>
+                    <xsd:element name="code" type="PreferenceTypeCode" minOccurs="1" maxOccurs="1"/>
+                </xsd:sequence>                
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="PreferenceSpecificationWithCodeAndUriType">
+        <xsd:complexContent>
+            <xsd:extension base="PreferenceSpecificationWithCodeType">
+                <xsd:attribute name="uri" type="UriType" use="required"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>    
+    
+    <!-- Simple Types -->
+    <xsd:simpleType name="PreferenceTypeCode">
+        <xsd:annotation>
+            <xsd:documentation>
+                Unique PreferenceType Code
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="PublicCodeType"/>       
+    </xsd:simpleType>
+    
+    <xsd:simpleType name="PreferenceDataTypeEnum">
+        <xsd:annotation>
+            <xsd:documentation>
+                Meta information about the preference type storage type
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:NMTOKEN">
+            <xsd:enumeration value="BOOLEAN"/>
+            <xsd:enumeration value="STRING"/>
+            <xsd:enumeration value="INTEGER"/>
+            <xsd:enumeration value="LONG"/>
+            <xsd:enumeration value="DOUBLE"/>
+            <xsd:enumeration value="DATE"/>
+            <xsd:enumeration value="TIME"/>
+            <xsd:enumeration value="DATETIME"/>
+            <xsd:enumeration value="JSON"/>
+        </xsd:restriction>       
+    </xsd:simpleType>   
+    
+    <xsd:simpleType name="PreferenceTypeScopeEnum">
+        <xsd:annotation>
+            <xsd:documentation>
+                This is the scope of the preference type which allows to contextualize the preference 
+                and to model a minimal inheritance tree of preference types for an advertiser with one or more businesses.
+                In this case:
+                - heading scope inherits from party site scope
+                - party site scope inherits preference types from party scope
+                
+                For concrete preferences:
+                - party scope will require the party public id
+                - partysite scope will require both the party and partySite public id
+                - heading scope will require both the party, partySite public id and the headingCode
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:NMTOKEN">
+            <xsd:enumeration value="PARTY"/>
+            <xsd:enumeration value="PARTY_SITE"/>
+            <xsd:enumeration value="HEADING"/>
+            <xsd:enumeration value="CUSTOMER_ACCOUNT"/>
+        </xsd:restriction>       
+    </xsd:simpleType>    
+</xsd:schema>

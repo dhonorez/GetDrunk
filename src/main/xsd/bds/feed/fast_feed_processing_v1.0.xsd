@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+
+	<xsd:element name="value" type="xsd:string"/>
+
+	<xsd:complexType name="document">
+		<xsd:sequence>
+			<xsd:element name="id" type="xsd:string"/>
+			<xsd:element ref="element" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="documents">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="document" type="document" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="element">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="value"/>
+			</xsd:sequence>
+			<xsd:attribute name="name" use="required">
+			</xsd:attribute>
+
+			<!--xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="additionalitems"/>
+					<xsd:enumeration value="address"/>
+					<xsd:enumeration value="addressext"/>
+					<xsd:enumeration value="altname"/>
+					<xsd:enumeration value="beboost"/>
+					<xsd:enumeration value="bookcode"/>
+					<xsd:enumeration value="comtxt"/>
+					<xsd:enumeration value="contentsource"/>
+					<xsd:enumeration value="country"/>
+					<xsd:enumeration value="coupon"/>
+					<xsd:enumeration value="customerid"/>
+					<xsd:enumeration value="emaillist"/>
+					<xsd:enumeration value="exactheading"/>
+					<xsd:enumeration value="faxlist"/>
+					<xsd:enumeration value="financial"/>
+					<xsd:enumeration value="frame"/>
+					<xsd:enumeration value="geolevel"/>
+					<xsd:enumeration value="heading"/>
+					<xsd:enumeration value="headingid"/>
+					<xsd:enumeration value="headingsynonyms"/>
+					<xsd:enumeration value="homepagelist"/>
+					<xsd:enumeration value="housenumber"/>
+					<xsd:enumeration value="idxemail"/>
+					<xsd:enumeration value="idxhomepage"/>
+					<xsd:enumeration value="idxphone"/>
+					<xsd:enumeration value="info"/>
+					<xsd:enumeration value="itemcode"/>
+					<xsd:enumeration value="keywords1"/>
+					<xsd:enumeration value="landingpageid"/>
+					<xsd:enumeration value="landingpagestatus"/>
+					<xsd:enumeration value="link1"/>
+					<xsd:enumeration value="link3"/>
+					<xsd:enumeration value="link4"/>
+					<xsd:enumeration value="listinginfo"/>
+					<xsd:enumeration value="locality1"/>
+					<xsd:enumeration value="locality2"/>
+					<xsd:enumeration value="locality4"/>
+					<xsd:enumeration value="locality5"/>
+					<xsd:enumeration value="locality6"/>
+					<xsd:enumeration value="localitysyn"/>
+					<xsd:enumeration value="logo2"/>
+					<xsd:enumeration value="logoresultlist"/>
+					<xsd:enumeration value="mainlang"/>
+					<xsd:enumeration value="mysiteflag"/>
+					<xsd:enumeration value="mysiteurl"/>
+					<xsd:enumeration value="name"/>
+					<xsd:enumeration value="namechar1"/>
+					<xsd:enumeration value="oitech"/>
+					<xsd:enumeration value="pbtech"/>
+					<xsd:enumeration value="phonelist"/>
+					<xsd:enumeration value="picture3"/>
+					<xsd:enumeration value="postalcode"/>
+					<xsd:enumeration value="ratings"/>
+					<xsd:enumeration value="referringheading"/>
+					<xsd:enumeration value="sttec3"/>
+					<xsd:enumeration value="telefax"/>
+					<xsd:enumeration value="tellist"/>
+					<xsd:enumeration value="xcoord"/>
+					<xsd:enumeration value="ycoord"/>
+					<xsd:enumeration value="zone"/>
+					<xsd:enumeration value="zonebookcode"/>
+					<xsd:enumeration value="zoneflag"/>
+					<xsd:enumeration value="zonenat"/>
+					<xsd:enumeration value="zoning"/>
+					<xsd:enumeration value="instantadlitetext"/>
+					<xsd:enumeration value="instantadliteurl"/>
+					<xsd:enumeration value="returningmysitecustomer"/>
+					<xsd:enumeration value="instantadliteid"/>
+					<xsd:enumeration value="interactivepaperurl"/>
+					<xsd:enumeration value="interactivepaperlabel"/>
+					<xsd:enumeration value="referringheadingsynonyms"/>
+					<xsd:enumeration value="multiplelistings"/>
+					<xsd:enumeration value="call"/>
+					<xsd:enumeration value="mysiteid"/>
+					<xsd:enumeration value="linktomysite"/>
+					<xsd:enumeration value="mboost"/>
+					<xsd:enumeration value="mysitetempid"/>
+					<xsd:enumeration value="ielinfothesaurus"/>
+					<xsd:enumeration value="interactivetourid"/>
+					<xsd:enumeration value="logoresultlist2"/>
+					<xsd:enumeration value="picture"/>
+					<xsd:enumeration value="foldername"/>
+					<xsd:enumeration value="parentlistingid"/>
+					<xsd:enumeration value="sttec3folder"/>
+					<xsd:enumeration value="mobilelist"/>
+					<xsd:enumeration value="mobile"/>
+					<xsd:enumeration value="mainoffice"/>
+					<xsd:enumeration value="busnumber"/>
+					<xsd:enumeration value="typcuisine"/>
+					<xsd:enumeration value="typservices"/>
+					<xsd:enumeration value="paymentmethods"/>
+					<xsd:enumeration value="typbudget"/>
+					<xsd:enumeration value="typhoteltype"/>
+					<xsd:enumeration value="typhotelformula"/>
+					<xsd:enumeration value="typhotelfacilities"/>
+					<xsd:enumeration value="typnrofrooms"/>
+         </xsd:restriction>
+			</xsd:simpleType-->
+
+		</xsd:complexType>
+	</xsd:element>
+
+
+</xsd:schema>

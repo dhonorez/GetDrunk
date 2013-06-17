@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- edited with XMLSpy v2012 rel. 2 sp1 (http://www.altova.com) by zeynep (Truvo Services & Technology BV) -->
+<xs:schema xmlns="http://www.truvo.com/schema/fam/online/gawcampaign/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:dataType="http://www.truvo.com/schema/shared/dataTypes/1.0"
+           targetNamespace="http://www.truvo.com/schema/fam/online/gawcampaign/1.0" elementFormDefault="qualified">
+    <xs:import namespace="http://www.truvo.com/schema/shared/dataTypes/1.0"
+               schemaLocation="../../../shared/dataTypes_v1.0.xsd"/>
+    <xs:simpleType name="unitEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="BE"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="itemCodeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="GADW1"/>
+            <xs:enumeration value="GADW2"/>
+            <xs:enumeration value="GADW3"/>
+            <xs:enumeration value="GADW4"/>
+            <xs:enumeration value="GADV5"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="locTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="COUNTRY"/>
+            <xs:enumeration value="PROVINCE"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="budgetTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SEAONLY"/>
+            <xs:enumeration value="COMBINED"/>
+            <xs:enumeration value="CONTACT"/>
+            <xs:enumeration value="LEAD"/>
+            <xs:enumeration value="BUDGET"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="usageEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="DESKTOP"/>
+            <xs:enumeration value="MOBILE"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="extractTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="C"/>
+            <xs:enumeration value="M"/>
+            <xs:enumeration value="R"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="LanguageCodeType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="en"/>
+            <xs:enumeration value="fr"/>
+            <xs:enumeration value="nl"/>
+            <xs:enumeration value="de"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="location">
+        <xs:sequence>
+            <xs:element name="locName" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>In default language</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="locType" type="locTypeEnum"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="budget">
+        <xs:attribute name="type" type="budgetTypeEnum" use="required"/>
+        <xs:attribute name="amount" type="dataType:Numeric10IdType" use="required">
+            <xs:annotation>
+                <xs:documentation>If budget type is BUDGET, amount is in money</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="usage" type="usageEnum" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="customAdCopy">
+        <xs:attribute name="title" type="xs:string" use="required"/>
+        <xs:attribute name="textLine1" type="xs:string" use="required"/>
+        <xs:attribute name="textLine2" type="xs:string" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="advert">
+        <xs:sequence>
+            <xs:element name="heading" type="heading" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="advertId" type="xs:string" use="required"/>
+        <xs:attribute name="language" type="xs:language" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="heading">
+        <xs:sequence>
+            <xs:element name="rankingItem" type="xs:string" minOccurs="0"/>
+            <xs:element name="campaignUrl" type="xs:string"/>
+            <xs:element name="mySiteId" type="xs:string" minOccurs="0"/>
+            <xs:element name="location" type="location" maxOccurs="unbounded"/>
+            <xs:element name="keyword" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="headingId" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CampaignType">
+        <xs:sequence>
+
+            <xs:element name="messageId" type="dataType:IdType"/>
+            <xs:element name="messageCreationTimeStamp" type="xs:dateTime"/>
+            <xs:element name="senderId" type="xs:string"/>
+            <xs:element name="clientId" type="xs:string"/>
+            <xs:element name="clientName" type="xs:string"/>
+            <xs:element name="startDate" type="xs:date"/>
+            <xs:element name="endDate" type="xs:date"/>
+            <xs:element name="campaignvalue" type="xs:string" minOccurs="0"/>
+            <xs:element name="budget" type="budget"/>
+            <xs:element name="ItemInfo">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="itemCode" type="itemCodeEnum"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="salesInfo" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="repName" type="xs:string" minOccurs="0"/>
+                        <xs:element name="salesChannel" type="xs:string" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="advert" type="advert" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="extractType" type="extractTypeEnum" use="required"/>
+        <xs:attribute name="hostId" type="xs:string" use="required"/>
+
+    </xs:complexType>
+    <xs:element name="gawCampaign">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="CampaignType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

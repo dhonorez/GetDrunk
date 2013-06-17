@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema xmlns="http://www.truvo.com/schema/geolink/api/geolinkValidate/1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gc="http://www.truvo.com/schema/geolink/api/geolinkCommon/1.0" xmlns:geo="http://www.truvo.com/schema/shared/geo/1.0" xmlns:i18n="http://www.truvo.com/schema/shared/i18n/1.0" targetNamespace="http://www.truvo.com/schema/geolink/api/geolinkValidate/1.0" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.truvo.com/schema/geolink/api/geolinkCommon/1.0" schemaLocation="geolinkCommon_v1.0.xsd"/>
+	<xsd:import namespace="http://www.truvo.com/schema/shared/geo/1.0" schemaLocation="../../shared/geo_v1.0.xsd"/>
+	<xsd:import namespace="http://www.truvo.com/schema/shared/i18n/1.0" schemaLocation="../../shared/i18n_v1.0.xsd"/>
+	<!-- Core Elements -->
+	<xsd:element name="addressValidationRequest">
+		<xsd:annotation>
+			<xsd:documentation><![CDATA[
+                Request Method 1        
+                URI: http://{geolinkDomain}/api/validate
+                QUERY: ?languageCode={languageCode}&purpose={addressPurpose}&validationLevel={validationLevel}&streetName={streetName}&houseNumber={houseNumber}&houseNumberSuffix={houseNumberSuffix}&postalCode={postalCode}&locality={locality}
+                METHOD: GET
+                BODY: n/a  
+                
+                Request Method 2        
+                URI: http://{geolinkDomain}/api/validate
+                QUERY: n/a
+                METHOD: POST
+                BODY: XML{addressValidationRequest}
+                ]]></xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="languageCode" type="i18n:LanguageCodeType" minOccurs="1" maxOccurs="1"/>
+				<xsd:element name="context" type="AddressContextType" minOccurs="0" maxOccurs="1"/>
+				<xsd:element name="addressDetails" type="geo:AddressDetailsType" minOccurs="1" maxOccurs="1"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="addressValidationResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="addressMatch" type="gc:AddressMatchType" minOccurs="0" maxOccurs="1"/>
+				<xsd:element name="status" type="gc:StatusType" minOccurs="1" maxOccurs="1"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- Types -->
+	<xsd:complexType name="AddressContextType">
+		<xsd:sequence>
+			<xsd:element name="purpose" type="AddressPurposeType" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="validationLevel" type="ValidationLevelType" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="AddressPurposeType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ADVERTISER_ADDRESS"/>
+			<xsd:enumeration value="BILLING_ADDRESS"/>
+			<xsd:enumeration value="BUSINESS_ADDRESS"/>
+			<xsd:enumeration value="CONTACT_ADDRESS"/>
+			<xsd:enumeration value="BDS_OFFICIAL"/>
+			<xsd:enumeration value="BDS_DISPLAY"/>
+			<xsd:enumeration value="BDS_GEOREPLACEMENT"/>
+			<xsd:enumeration value="BDS_PRINT"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ValidationLevelType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="LIGHT"/>
+			<xsd:enumeration value="STRICT"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

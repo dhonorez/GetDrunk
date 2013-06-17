@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns="http://www.truvo.com/schema/fam/product/online/report/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:product="http://www.truvo.com/schema/fam/product/1.0"
+           xmlns:dataType="http://www.truvo.com/schema/shared/dataTypes/1.0"
+           targetNamespace="http://www.truvo.com/schema/fam/product/online/report/1.0" elementFormDefault="qualified">
+
+    <xs:import namespace="http://www.truvo.com/schema/shared/dataTypes/1.0"
+               schemaLocation="../../shared/dataTypes_v1.0.xsd"/>
+    <xs:import namespace="http://www.truvo.com/schema/fam/product/1.0"
+               schemaLocation="./shared/product_v1.0.xsd"/>
+
+    <xs:element name="published">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates a publication of a product on the target platform
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="PublishedType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="bulkPublished">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates a publication of a products on the target platform
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="BulkPublishedType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="suppressed">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates end of a suppression of a product on the target platform
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="SuppressedType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="bulkExpired">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates end of a expire of a products on the target platform
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="BulkExpiredType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="MessageHeaderWithReplyIdType" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="product:MessageHeaderType">
+                <xs:sequence>
+                    <xs:element name="replyToMessageId" type="dataType:IdType"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="PublishedType" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="MessageHeaderWithReplyIdType">
+                <xs:sequence>
+                    <xs:element name="publishedTimeStamp" type="xs:dateTime"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="BulkType">
+        <xs:sequence>
+            <xs:element name="messageId" type="dataType:IdType"/>
+            <xs:element name="messageCreationTimeStamp" type="xs:dateTime"/>
+            <xs:element name="senderId" type="xs:string"/>
+            <xs:element name="productReference" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:attribute name="id" type="product:ProductReferenceIdType" use="required"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="BulkPublishedType" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="BulkType">
+                <xs:sequence>
+                    <xs:element name="publishedTimeStamp" type="xs:dateTime"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="BulkExpiredType" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="BulkType">
+                <xs:sequence>
+                    <xs:element name="expiredTimeStamp" type="xs:dateTime"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:simpleType name="SuppressionType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="expired"/>
+            <xs:enumeration value="cancelled"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="SuppressedType" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="MessageHeaderWithReplyIdType">
+                <xs:sequence>
+                    <xs:element name="type" type="SuppressionType"/>
+                    <xs:element name="suppressedTimeStamp" type="xs:dateTime"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="errorReport">
+        <xs:annotation>
+            <xs:documentation>Indicates an error message.Providers will not send an error message if they can sort out
+                the problem internally within a reasonable period of time.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="ErrorReportType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="ErrorReportType" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="MessageHeaderWithReplyIdType">
+                <xs:sequence>
+                    <xs:element name="countryCode" type="xs:string" default="BE"/>
+                    <xs:choice>
+                        <xs:element name="functionalError">
+                            <!-- <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="originalMessageId" type="dataType:IdType"/>
+                                </xs:sequence>
+                            </xs:complexType>-->
+                        </xs:element>
+                        <xs:element name="technicalError">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    Technical errors will not be passed to OM and will be sorted out internally between
+                                    the involved parties.
+                                </xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:choice>
+                                        <!--         <xs:element name="originalMessageId" type="dataType:IdType"/>
+                                        -->
+                                        <xs:element name="originalMessageBody" type="xs:string"/>
+                                    </xs:choice>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:element name="errorCode" type="ErrorCodeType"/>
+                    <xs:element name="description" >
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="1000"/>
+                                <xs:minLength value="1"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+
+    </xs:complexType>
+    <xs:simpleType name="ErrorCodeType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="DpQuery"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

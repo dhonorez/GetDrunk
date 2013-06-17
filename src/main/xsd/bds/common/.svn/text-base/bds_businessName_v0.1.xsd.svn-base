@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema     
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+    
+    <!-- Includes -->
+    <xsd:include schemaLocation="bds_i18n_v0.1.xsd"/>     
+    
+    <!-- Scoped Group types -->
+    <xsd:complexType name="PartyScopedBusinessNameHolderType">
+        <xsd:sequence>
+            <xsd:annotation>
+                <xsd:documentation>Will be filled in only upon delivery of FAM project phase 1</xsd:documentation>
+            </xsd:annotation>            
+            <xsd:element name="officialBusinessName"        type="BusinessNameType" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="displayBusinessName"         type="BusinessNameType" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>    
+    <xsd:complexType name="PartySiteScopedBusinessNameHolderType">
+        <xsd:sequence>
+            <xsd:annotation>
+                <xsd:documentation>At least either officialBusinessName or billingBusinessName should be filled in</xsd:documentation>
+            </xsd:annotation>                       
+            <xsd:element name="officialBusinessName"        type="BusinessNameType" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="billingBusinessName"         type="BusinessNameType" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="displayBusinessName"         type="BusinessNameType" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="alternateBusinessName"       type="BusinessNameType" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="printBusinessName"           type="BusinessNameType" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="CustomerAccountScopedBusinessNameGroupType">
+        <xsd:sequence>
+            <xsd:element name="customerAccountBusinessName" type="BusinessNameType" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <!-- Complex Types -->      
+    <xsd:complexType name="BusinessNameType">        
+        <xsd:sequence>            
+            <xsd:element name="value" type="BusinessNameValueType" minOccurs="1" maxOccurs="unbounded" />
+        </xsd:sequence>       
+        <xsd:attribute name="priority" type="xsd:int" use="required">
+            <xsd:annotation>
+                <xsd:documentation>priority is the relative importance of the businessName when multiple are available</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:complexType>   
+    
+    <xsd:complexType name="BusinessNameValueType" mixed="true">
+        <xsd:annotation>
+            <xsd:documentation>Name of the business inside this element</xsd:documentation>
+        </xsd:annotation>
+        <xsd:attribute name="language" type="LanguageType" use="required"/>
+    </xsd:complexType>   
+     
+</xsd:schema>

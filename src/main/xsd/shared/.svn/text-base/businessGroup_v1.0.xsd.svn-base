@@ -1,0 +1,36 @@
+<xsd:schema 
+	xmlns="http://www.truvo.com/schema/shared/businessGroup/1.0" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:biz="http://www.truvo.com/schema/shared/business/1.0" 
+	xmlns:adv="http://www.truvo.com/schema/shared/advertiser/1.0"
+	xmlns:sys="http://www.truvo.com/schema/shared/system/1.0"
+	targetNamespace="http://www.truvo.com/schema/shared/businessGroup/1.0" 
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified">
+	
+	<xsd:import namespace="http://www.truvo.com/schema/shared/advertiser/1.0" schemaLocation="advertiser_v1.0.xsd"/>
+	<xsd:import namespace="http://www.truvo.com/schema/shared/business/1.0" schemaLocation="business_v1.0.xsd"/>
+	<xsd:import namespace="http://www.truvo.com/schema/shared/system/1.0" schemaLocation="system_v1.0.xsd"/>
+	
+	<xsd:complexType name="BusinessGroupType">
+		<xsd:sequence>
+			<xsd:element name="groupId" type="GroupIdType"/>
+			<xsd:element name="member" type="BusinessGroupMemberType" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="BusinessGroupMemberType">
+		<xsd:sequence>
+			<xsd:element name="action" type="sys:CreateDeleteEnum" minOccurs="0" maxOccurs="1"/>			
+			<xsd:element name="advertiserId" type="adv:AdvertiserIdType" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="businessId" type="biz:BusinessIdType" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="GroupIdType">
+		<xsd:annotation>
+			<xsd:documentation>matches number(10) datatype</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:unsignedLong">
+			<xsd:maxInclusive value="9999999999"/>
+		</xsd:restriction>
+	</xsd:simpleType>	
+</xsd:schema>

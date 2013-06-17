@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema 
+    xmlns="http://www.truvo.com/schema/csm/location/0.1" 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:generic="http://www.truvo.com/schema/csm/common/generic/0.1"
+    xmlns:lt="http://www.truvo.com/schema/csm/locationtype/0.1"
+    targetNamespace="http://www.truvo.com/schema/csm/location/0.1"
+    elementFormDefault="qualified">
+    
+    <xsd:import schemaLocation="common_generic_v0.1.xsd"        namespace="http://www.truvo.com/schema/csm/common/generic/0.1"/>        
+    <xsd:import schemaLocation="locationtype_v0.1.xsd"          namespace="http://www.truvo.com/schema/csm/locationtype/0.1"/>
+    
+    <!-- headings with references to headings  -->
+    <xsd:element name="locations">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="location" type="LocationInternalRefWithBasicDetailsType" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+            <xsd:attribute name="countryIso" type="generic:CountryType"/>
+        </xsd:complexType>        
+    </xsd:element>    
+
+    <!-- heading resource -->
+    <xsd:element name="location">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="uri" type="generic:ResourceUriType" minOccurs="1" maxOccurs="1"/>                
+                <xsd:element name="code" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+                <xsd:element name="type" type="lt:LocationTypeInternalRefWithBasicDetailsType" minOccurs="1" maxOccurs="1"/>                
+                <xsd:element name="displayName" type="DisplayNameType" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element name="synonym" type="SynonymType" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element name="geoCoordinates" type="GeoCoordinatesType" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="validity" type="ValidityType" minOccurs="1" maxOccurs="1"/>
+                <xsd:element name="parents" type="LocationsHolderType" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="children" type="LocationsHolderType" minOccurs="0" maxOccurs="1"/>
+            </xsd:sequence>						
+        </xsd:complexType>     
+    </xsd:element>
+    
+    <!-- not used at the moment 
+    <xsd:complexType name="LocationInternalRefType">
+        <xsd:attribute name="href" type="generic:AnchorType" use="required"/>        
+    </xsd:complexType -->   
+
+    <xsd:complexType name="LocationInternalRefWithBasicDetailsType">
+        <xsd:sequence>
+            <xsd:element name="code" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="type" type="lt:LocationTypeInternalRefWithBasicDetailsType" minOccurs="1" maxOccurs="1"/>            
+            <xsd:element name="displayName" type="DisplayNameType" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="languageFacility" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+        </xsd:sequence>
+        <xsd:attribute name="href" type="generic:AnchorType" use="required"/>        
+    </xsd:complexType>  
+    
+    <xsd:complexType name="DisplayNameType" mixed="true">
+        <xsd:attribute name="languageIso" type="generic:LanguageType" use="required"/>        
+    </xsd:complexType>  
+    
+    <xsd:complexType name="SynonymType" mixed="true">
+        <xsd:attribute name="type" type="xsd:string" use="required"/> 
+        <xsd:attribute name="languageIso" type="generic:LanguageType" use="required"/> 
+    </xsd:complexType>    
+    
+    <xsd:complexType name="GeoCoordinatesType">
+        <xsd:attribute name="longitude" type="xsd:float" use="required"/> 
+        <xsd:attribute name="latitude" type="xsd:float" use="required"/> 
+    </xsd:complexType>     
+    
+    <xsd:complexType name="ValidityType">
+        <xsd:attribute name="from" type="xsd:dateTime" use="required"/> 
+        <xsd:attribute name="to" type="xsd:dateTime" use="required"/> 
+    </xsd:complexType>      
+    
+    <xsd:complexType name="LocationsHolderType">
+        <xsd:sequence>
+            <xsd:element name="location" type="LocationInternalRefWithBasicDetailsType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>     
+    </xsd:complexType>          
+</xsd:schema>

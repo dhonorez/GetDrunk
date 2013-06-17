@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema     
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+          
+    <!-- Simple Types -->          
+    <xsd:simpleType name="AcknowledgeStatusType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="ACCEPTED_FULLY"/>
+            <xsd:enumeration value="REJECTED_FULLY"/>
+        </xsd:restriction>
+    </xsd:simpleType>          
+</xsd:schema>

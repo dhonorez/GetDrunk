@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns="http://www.truvo.com/schema/fam/product/online/onlineProduct/1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:product="http://www.truvo.com/schema/fam/product/1.0"
+           xmlns:dataType="http://www.truvo.com/schema/shared/dataTypes/1.0"
+           targetNamespace="http://www.truvo.com/schema/fam/product/online/onlineProduct/1.0"
+           elementFormDefault="qualified">
+    <xs:import namespace="http://www.truvo.com/schema/shared/dataTypes/1.0"
+               schemaLocation="../../../shared/dataTypes_v1.0.xsd"/>
+    <xs:import namespace="http://www.truvo.com/schema/fam/product/1.0"
+               schemaLocation="../shared/product_v1.0.xsd"/>
+
+
+    <xs:complexType name="MySiteNewUpdateBaseType" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="product:ProductTypeNewUpdateWithBusinessFolderIdType">
+                <xs:sequence>
+                    <xs:element name="mysiteId" type="dataType:Numeric10IdType"/>
+                    <xs:element name="mysiteContentId" type="dataType:Numeric10IdType"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="MySiteWithTldNewUpdateBaseType" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="MySiteNewUpdateBaseType">
+                <xs:sequence>
+                    <xs:element name="tld" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="MySiteWithHeadingNewUpdateType" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="MySiteNewUpdateBaseType">
+                <xs:sequence>
+                    <xs:element name="headingCode" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+</xs:schema>

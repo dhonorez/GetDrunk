@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema  
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"     
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+    
+    <!-- Imports -->
+    <xsd:include schemaLocation="bds_datatypes_v0.1.xsd"/>
+    <xsd:include schemaLocation="bds_party_v0.1.xsd"/>
+    <xsd:include schemaLocation="bds_partySite_v0.1.xsd"/>
+    
+    <!-- Holder Types -->
+    <xsd:complexType name="RelationshipsWithoutMembersHolderType">
+        <xsd:complexContent>
+            <xsd:extension base="RelationshipsHolderUriType">
+                <xsd:annotation>
+                    <xsd:documentation>Holds the relationships a party is involved with as subject or object actor</xsd:documentation>
+                </xsd:annotation>        
+                <xsd:sequence>
+                    <xsd:element name="relationship" type="RelationshipWithoutMembersType" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>                
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    
+    <xsd:complexType name="RelationshipsWithMembersHolderType">
+        <xsd:complexContent>
+            <xsd:extension base="RelationshipsHolderUriType">
+                <xsd:annotation>
+                    <xsd:documentation>Holds the relationships a party is involved with as subject or object actor</xsd:documentation>
+                </xsd:annotation>        
+                <xsd:sequence>
+                    <xsd:element name="relationship" type="RelationshipWithMembersType" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>                
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    
+    <!-- URI Type -->
+    <xsd:complexType name="RelationshipsHolderUriType">
+        <xsd:attribute name="uri" type="UriType" use="required"/>
+    </xsd:complexType>    
+    <xsd:complexType name="RelationshipUriType">
+        <xsd:attribute name="uri" type="UriType" use="required"/>
+        <xsd:attribute name="type" type="RelationshipTypeEnum" use="required"/>
+    </xsd:complexType>      
+ 
+    <!-- Inside the holders -->
+    <xsd:complexType name="RelationshipWithoutMembersType">
+        <xsd:complexContent>
+            <xsd:extension base="RelationshipUriType">
+                <xsd:sequence>
+                    <xsd:element name="subjectParty" type="RelationshipParticipantPartyType" minOccurs="1" maxOccurs="1"/>
+                    <xsd:element name="objectParty" type="RelationshipParticipantPartyType" minOccurs="1" maxOccurs="1"/>            
+                </xsd:sequence>                
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>     
+    <xsd:complexType name="RelationshipWithMembersType">
+        <xsd:complexContent>
+            <xsd:extension base="RelationshipWithoutMembersType">
+                <xsd:sequence>
+                    <xsd:element name="partySiteMember" type="PartySiteMemberRefType" minOccurs="0" maxOccurs="unbounded"/>                    
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>        
+    </xsd:complexType> 
+    <xsd:complexType name="RelationshipWithMembersReferenceType">
+        <xsd:complexContent>
+            <xsd:extension base="RelationshipWithoutMembersType">
+                <xsd:sequence>
+                    <xsd:element name="partySiteMembersUri" type="UriType" minOccurs="0" maxOccurs="1">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Rest URI to retrieve paginated party site members that returnsa retrieveRelationshipPartySiteMembersResponse
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>   
+                    <xsd:element name="partySiteMemberDefault" type="PartySiteMemberRefType" minOccurs="0" maxOccurs="1">
+                        <xsd:annotation>
+                            <xsd:documentation>When the relationship supports members the default member party site will be returned here</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>        
+    </xsd:complexType>     
+    
+    <xsd:complexType name="RelationshipParticipantPartyType">    
+        <xsd:annotation>
+            <xsd:documentation>
+                The participant of the relationship is the party that is involved as either the subject, either the object actor.
+                The subject is the left part and the object is the right part of the relationship.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="PartyIdentityUriType">
+                <xsd:attribute name="role" type="RelationshipRoleEnum" use="required"/>                
+            </xsd:extension>
+        </xsd:complexContent>        
+    </xsd:complexType>
+    
+    <!-- Member party sites -->
+    <xsd:complexType name="PartySiteMemberRefType">
+        <xsd:complexContent>
+            <xsd:extension base="PartySiteIdentityUriType">
+                <xsd:attribute name="isDefault" type="xsd:boolean" use="optional" default="false"/>  
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    
+
+
+    <!-- Simple Types -->    
+    <xsd:simpleType name="RelationshipTypeEnum">
+        <xsd:restriction base="xsd:NMTOKEN">
+            <xsd:enumeration value="PAYS_FOR"/>
+            <xsd:enumeration value="MEMBER_OF_FOLDER"/>
+            <xsd:enumeration value="PAYER_OF_FOLDER"/>
+            <xsd:enumeration value="REPLACEMENT_OF"/>
+            <xsd:enumeration value="MERGE_FROM"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+    <xsd:simpleType name="RelationshipActorEnum">
+        <xsd:restriction base="xsd:NMTOKEN">
+            <xsd:enumeration value="SUBJECT"/>
+            <xsd:enumeration value="OBJECT"/>
+        </xsd:restriction>
+    </xsd:simpleType>    
+    
+    <xsd:simpleType name="RelationshipRoleEnum">
+        <xsd:restriction base="xsd:NMTOKEN">
+            <xsd:enumeration value="BUYER"/>
+            <xsd:enumeration value="CUSTOMER"/>
+            <xsd:enumeration value="FOLDER"/>
+            <xsd:enumeration value="ADVERTISER_SOURCE"/>
+            <xsd:enumeration value="ADVERTISER_TARGET"/>
+        </xsd:restriction>
+    </xsd:simpleType>      
+    
+
+</xsd:schema>

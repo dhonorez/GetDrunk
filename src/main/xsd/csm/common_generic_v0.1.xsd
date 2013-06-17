@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema 
+    xmlns="http://www.truvo.com/schema/csm/common/generic/0.1" 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    targetNamespace="http://www.truvo.com/schema/csm/common/generic/0.1"
+    elementFormDefault="qualified">
+      
+    <!-- Generic -->
+    <xsd:simpleType name="ResourceUriType">
+        <xsd:restriction base="xsd:anyURI"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="AnchorType">
+        <xsd:restriction base="xsd:anyURI"/>
+    </xsd:simpleType>    
+    <xsd:simpleType name="LanguageType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="nl"/>
+            <xsd:enumeration value="fr"/>
+            <xsd:enumeration value="en"/>
+            <xsd:enumeration value="pt"/>
+        </xsd:restriction>
+    </xsd:simpleType>     
+    <xsd:simpleType name="CountryType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="BE"/>
+            <xsd:enumeration value="IE"/>
+            <xsd:enumeration value="PT"/>
+        </xsd:restriction>
+    </xsd:simpleType>        
+</xsd:schema>

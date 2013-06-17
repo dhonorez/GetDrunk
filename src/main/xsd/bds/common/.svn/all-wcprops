@@ -1,0 +1,95 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/yellow/!svn/ver/19977/opus/trunk/src/main/xsd/bds/common
+END
+bds_timing_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/yellow/!svn/ver/19273/opus/trunk/src/main/xsd/bds/common/bds_timing_v0.1.xsd
+END
+bds_pagination_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/yellow/!svn/ver/19273/opus/trunk/src/main/xsd/bds/common/bds_pagination_v0.1.xsd
+END
+bds_businessName_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/yellow/!svn/ver/20189/opus/trunk/src/main/xsd/bds/common/bds_businessName_v0.1.xsd
+END
+bds_datatypes_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/yellow/!svn/ver/20135/opus/trunk/src/main/xsd/bds/common/bds_datatypes_v0.1.xsd
+END
+bds_ack_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/yellow/!svn/ver/19273/opus/trunk/src/main/xsd/bds/common/bds_ack_v0.1.xsd
+END
+bds_party_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/yellow/!svn/ver/19273/opus/trunk/src/main/xsd/bds/common/bds_party_v0.1.xsd
+END
+bds_relationship_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/yellow/!svn/ver/19273/opus/trunk/src/main/xsd/bds/common/bds_relationship_v0.1.xsd
+END
+bds_customerAccountSite_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/yellow/!svn/ver/19273/opus/trunk/src/main/xsd/bds/common/bds_customerAccountSite_v0.1.xsd
+END
+bds_user_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/yellow/!svn/ver/19273/opus/trunk/src/main/xsd/bds/common/bds_user_v0.1.xsd
+END
+bds_headingReference_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/yellow/!svn/ver/19977/opus/trunk/src/main/xsd/bds/common/bds_headingReference_v0.1.xsd
+END
+bds_customerAccount_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/yellow/!svn/ver/19273/opus/trunk/src/main/xsd/bds/common/bds_customerAccount_v0.1.xsd
+END
+bds_i18n_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/yellow/!svn/ver/19977/opus/trunk/src/main/xsd/bds/common/bds_i18n_v0.1.xsd
+END
+bds_contactMechanism_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/yellow/!svn/ver/20135/opus/trunk/src/main/xsd/bds/common/bds_contactMechanism_v0.1.xsd
+END
+bds_ticket_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/yellow/!svn/ver/19273/opus/trunk/src/main/xsd/bds/common/bds_ticket_v0.1.xsd
+END
+bds_partySite_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/yellow/!svn/ver/19273/opus/trunk/src/main/xsd/bds/common/bds_partySite_v0.1.xsd
+END

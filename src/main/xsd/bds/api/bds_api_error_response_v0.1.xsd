@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema xmlns="http://www.truvo.com/schema/basedata"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://www.truvo.com/schema/basedata"
+    elementFormDefault="qualified">
+    
+    <!-- Root -->    
+    <xsd:element name="standardErrorResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="responseStatus" type="ResponseStatusType" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>     
+        </xsd:complexType>
+    </xsd:element>   
+    
+    <!-- Complex types -->
+    <xsd:complexType name="ResponseStatusType">
+        <xsd:sequence>
+            <xsd:element name="statusDetail" type="ResponseStatusDetailType" minOccurs="0" maxOccurs="unbounded"/>            
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ResponseStatusDetailType">
+        <xsd:sequence>
+            <xsd:element name="statusDetailCode"/>
+            <xsd:element name="statusDetailText"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

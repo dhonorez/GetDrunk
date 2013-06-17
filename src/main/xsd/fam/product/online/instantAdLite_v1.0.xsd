@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns="http://www.truvo.com/schema/fam/online/instantAdLite/1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:product="http://www.truvo.com/schema/fam/product/1.0"
+           targetNamespace="http://www.truvo.com/schema/fam/online/instantAdLite/1.0"
+           elementFormDefault="qualified">
+
+    <xs:import namespace="http://www.truvo.com/schema/fam/product/1.0"
+               schemaLocation="../shared/product_v1.0.xsd"/>
+    <!--
+            Following extensions are degenerate (i.e. don't add any attribute or element to corresponding base types).
+            They are introduced to ease usage of JAXB generated classes. For example, if we declare instantAdLiteNew as
+            <![CDATA[ <xs:element name="instantAdLiteNew" type="InstantAdLiteNewUpdate"/>]]>, then no
+            java class of type instantAdLiteNew is generated and JAXB clients needs to use ObjectFactory and JAXBElement class
+            to work with an instantAdLiteNew element.
+    -->
+    <xs:element name="instantAdLiteNew">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates a newly sold Instant Adlight product
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="InstantAdLiteNewUpdate"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="instantAdLiteUpdate">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates an update request for a sold Instant Adlight product
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="InstantAdLiteNewUpdate"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="instantAdLiteCancel">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates a cancellation request for a sold Instant Adlight product
+            </xs:documentation>
+        </xs:annotation>
+
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="product:ProductTypeCancel"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="InstantAdLiteNewUpdate">
+        <xs:complexContent>
+            <xs:extension base="product:ChildProductNewUpdateType">
+                <xs:sequence>
+                    <xs:element name="languageIso" type="xs:language"/>
+                    <xs:element name="headingCode" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>
+
+

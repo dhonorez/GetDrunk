@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema         
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"     
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+    
+    <!-- Includes -->
+    <xsd:include schemaLocation="bds_headingReference_v0.1.xsd"/>
+    <xsd:include schemaLocation="bds_i18n_v0.1.xsd"/>
+          
+    <!-- Complex Types -->         
+    <xsd:complexType name="ContactMechanismBaseType">
+        <xsd:sequence>
+            <xsd:element name="use" type="ContactMechanismUseTypeEnum" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="headingRestriction" type="HeadingReferenceType" minOccurs="0" maxOccurs="unbounded"/>       
+            <xsd:element name="label" type="ContactMechanismLabelType" minOccurs="0" maxOccurs="unbounded"/>            
+        </xsd:sequence>
+        <xsd:attribute name="priority" type="xsd:int" use="optional" default="0"/>
+    </xsd:complexType>    
+    <xsd:complexType name="ContactMechanismLabelType" mixed="true">
+        <xsd:attribute name="language" type="LanguageType"/>
+    </xsd:complexType>    
+    <xsd:complexType name="DialNumberContactMechanismType">
+        <xsd:complexContent>
+            <xsd:extension base="ContactMechanismBaseType">          
+                <xsd:sequence>                    
+                    <xsd:element name="countryCode" type="xsd:string"  minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="areaCode" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="phoneNumber" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+                    <xsd:element name="extension" type="xsd:string" minOccurs="0" maxOccurs="1"/>  
+                </xsd:sequence>    
+            </xsd:extension>            
+        </xsd:complexContent>                 
+    </xsd:complexType>
+    <xsd:complexType name="EmailContactMechanismType">
+        <xsd:complexContent>
+            <xsd:extension base="ContactMechanismBaseType">        
+                <xsd:sequence>                     
+                    <xsd:element name="email" type="xsd:string" minOccurs="1" maxOccurs="1"/>            
+                </xsd:sequence> 
+            </xsd:extension>
+        </xsd:complexContent>                 
+    </xsd:complexType>  
+    <xsd:complexType name="WebSiteContactMechanismType">
+        <xsd:complexContent>
+            <xsd:extension base="ContactMechanismBaseType">
+                <xsd:sequence>
+                    <xsd:element name="url" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+                </xsd:sequence>
+                <xsd:attribute name="valid" type="FlagType" use="required"/>
+                <xsd:attribute name="utmAccept" type="FlagType" use="required"/>
+            </xsd:extension>
+        </xsd:complexContent>              
+    </xsd:complexType>     
+    
+    <!-- Simple Types -->    
+    <xsd:simpleType name="ContactMechanismUseTypeEnum">
+        <xsd:restriction base="xsd:NMTOKEN">
+            <xsd:enumeration value="FREE"/>
+            <xsd:enumeration value="PAID"/>
+            <xsd:enumeration value="KEYED_AD"/>
+            <xsd:enumeration value="USER_DEFINED"/>
+            <xsd:enumeration value="OFFICIAL_ADVERTISER_TYPE"/>
+            <xsd:enumeration value="OFFICIAL_BUSINESS_TYPE"/>
+            <xsd:enumeration value="BILL_TO"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+</xsd:schema>

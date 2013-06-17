@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns="http://www.truvo.com/schema/fam/online/ranking/1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:product="http://www.truvo.com/schema/fam/product/1.0"
+           xmlns:dataType="http://www.truvo.com/schema/shared/dataTypes/1.0"
+           targetNamespace="http://www.truvo.com/schema/fam/online/ranking/1.0"
+           elementFormDefault="qualified">
+
+    <xs:import namespace="http://www.truvo.com/schema/fam/product/1.0"
+               schemaLocation="../shared/product_v1.0.xsd"/>
+    <xs:import namespace="http://www.truvo.com/schema/shared/dataTypes/1.0"
+               schemaLocation="../../../shared/dataTypes_v1.0.xsd"/>
+    <!--
+            Following extensions are degenerate (i.e. don't add any attribute or element to corresponding base types).
+            They are introduced to ease usage of JAXB generated classes. For example, if we declare ranking as
+            <![CDATA[ <xs:element name="rankingNew" type="RankingNewUpdate"/>]]>, then no
+            java class of type ranking is generated and JAXB clients needs to use ObjectFactory and JAXBElement class
+            to work with an ranking element.
+    -->
+    <xs:element name="rankingNew">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates a newly sold Ranking product
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="RankingNewUpdate"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="rankingUpdate">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates an update request for a sold Ranking product
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="RankingNewUpdate"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="rankingCancel">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates a cancellation request for a sold Ranking product
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="product:ProductTypeCancel"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="RankingNewUpdate">
+        <xs:complexContent>
+            <xs:extension base="product:RankingBaseType">
+                <xs:sequence>
+                    <xs:element name="rankingTier" type="xs:string"/>
+                    <xs:element name="zone" type="ZoneType" maxOccurs="unbounded"/>
+                    <xs:element name="logoId" type="dataType:Numeric10IdType" minOccurs="0"/>
+                    <xs:element name="commercialText" type="xs:string" minOccurs="0"/>
+                    <xs:element name="clickUrl" type="xs:string" minOccurs="0"/>
+                    <xs:element name="url" type="xs:string" minOccurs="0"/>
+                    <xs:element name="verticalKeywords" type="product:VerticalKeywordsType" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ZoneType">
+        <xs:sequence>
+            <xs:element name="type" type="ZoneTypeEnum"/>
+            <xs:element name="code" type="xs:string"/>
+            <xs:element name="name" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="ZoneTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="N"/>
+            <xs:enumeration value="R"/>
+            <xs:enumeration value="P"/>
+            <xs:enumeration value="C"/>
+            <xs:enumeration value="H"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

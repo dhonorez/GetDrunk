@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema  
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+    
+    <!-- Complex Types -->        
+    <xsd:complexType name="TimeStampInclusiveRangeType">
+        <xsd:attribute name="from" type="TimeStampType" use="required"/>            
+        <xsd:attribute name="to" type="TimeStampType" use="required"/>               
+    </xsd:complexType>
+
+    <!-- Simple Types -->
+    <xsd:simpleType name="TimeStampType">
+        <xsd:restriction base="xsd:dateTime"/>
+    </xsd:simpleType>  
+</xsd:schema>

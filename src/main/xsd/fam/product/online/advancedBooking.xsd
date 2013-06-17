@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns="http://www.truvo.com/schema/fam/online/basicBooking/1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:product="http://www.truvo.com/schema/fam/product/1.0"
+           targetNamespace="http://www.truvo.com/schema/fam/online/basicBooking/1.0" elementFormDefault="qualified">
+    <xs:import namespace="http://www.truvo.com/schema/fam/product/1.0"
+               schemaLocation="../shared/product_v1.0.xsd"/>
+    <xs:element name="advancedBookingNew">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates a newly sold AdvancedBooking product
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="AdvancedBookingNewUpdateType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="advancedBookingUpdate">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates an update request for a sold AdvancedBooking product
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="AdvancedBookingNewUpdateType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="advancedBookingCancel">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates a cancellation request for a sold AdvancedBooking product
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="product:ProductTypeCancel"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="AdvancedBookingNewUpdateType">
+        <xs:complexContent>
+            <xs:extension base="product:BookingBaseType"/>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

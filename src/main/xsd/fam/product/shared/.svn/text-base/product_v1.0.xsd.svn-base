@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns="http://www.truvo.com/schema/fam/product/1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.truvo.com/schema/fam/product/1.0"
+           xmlns:dataType="http://www.truvo.com/schema/shared/dataTypes/1.0"
+           xmlns:business="http://www.truvo.com/schema/shared/business/1.0"
+           xmlns:advertiser="http://www.truvo.com/schema/shared/advertiser/1.0"
+           elementFormDefault="qualified">
+
+    <xs:import namespace="http://www.truvo.com/schema/shared/dataTypes/1.0"
+               schemaLocation="../../../shared/dataTypes_v1.0.xsd"/>
+    <xs:import namespace="http://www.truvo.com/schema/shared/advertiser/1.0"
+               schemaLocation="../../../shared/advertiser_v1.0.xsd"/>
+    <xs:import namespace="http://www.truvo.com/schema/shared/business/1.0"
+               schemaLocation="../../../shared/business_v1.0.xsd"/>
+
+    <xs:complexType name="MessageHeaderType" abstract="true">
+        <xs:sequence>
+            <xs:element name="messageId" type="dataType:IdType"/>
+            <xs:element name="messageCreationTimeStamp" type="xs:dateTime"/>
+            <xs:element name="senderId" type="xs:string"/>
+            <xs:element name="productReferenceId" type="ProductReferenceIdType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ProductType" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="MessageHeaderType">
+                <xs:sequence>
+                    <xs:element name="advertiserId" type="advertiser:AdvertiserIdType"/>
+                    <xs:element name="purchasedProductId" type="xs:string"/>
+                    <xs:element name="resolvesErrorMessageWithId" type="dataType:IdType" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ChildProductNewUpdateType">
+        <xs:complexContent>
+            <xs:extension base="ProductTypeNewUpdateWithBusinessFolderIdType">
+                <xs:sequence>
+                    <xs:element name="parentProductReferenceId" type="ProductReferenceIdType"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="ProductTypeCancel" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="ProductType">
+                <xs:sequence>
+                    <xs:element name="requestedCancelDate" type="xs:date"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="FolderType">
+        <xs:sequence>
+            <xs:element name="folderId" type="business:BusinessIdType"/>
+            <xs:element name="folderName" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ProductTypeNewUpdate" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="ProductType">
+                <xs:sequence>
+                    <xs:element name="requestedStartDate" type="xs:date"/>
+                    <xs:element name="requestedEndDate" type="xs:date" minOccurs="0"/>
+                    <xs:element name="requestedPeriodByAdvertiser" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ProductTypeNewUpdateWithBusinessFolderIdType" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="ProductTypeNewUpdate">
+                <xs:choice>
+                    <xs:element name="businessId" type="business:BusinessIdType"/>
+                    <xs:element name="folderId" type="business:BusinessIdType"/>
+                </xs:choice>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ProductTypeNewUpdateWithBusinessId" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="ProductTypeNewUpdate">
+                <xs:choice>
+                    <xs:element name="businessId" type="business:BusinessIdType"/>
+                    <xs:element name="folderId" type="business:BusinessIdType"/>
+                </xs:choice>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="RankingBaseType">
+        <xs:complexContent>
+            <xs:extension base="ChildProductNewUpdateType">
+                <xs:sequence>
+                    <xs:element name="languageIso" type="xs:language"/>
+                    <xs:element name="headingCode" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="BookingBaseType">
+        <xs:complexContent>
+            <xs:extension base="ProductTypeNewUpdate">
+                <xs:sequence>
+                    <xs:element name="businessId" type="business:BusinessIdType"/>
+                    <xs:element name="bookingSegment" type="xs:string"/>
+                    <xs:element name="bookingId" type="dataType:IdType"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:simpleType name="ProductReferenceIdType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:complexType name="VerticalKeywordsType">
+        <xs:sequence>
+            <xs:element name="keyword" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

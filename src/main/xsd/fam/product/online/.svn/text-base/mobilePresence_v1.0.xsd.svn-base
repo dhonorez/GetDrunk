@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns="http://www.truvo.com/schema/fam/online/mobilePresence/1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:product="http://www.truvo.com/schema/fam/product/1.0"
+           targetNamespace="http://www.truvo.com/schema/fam/online/mobilePresence/1.0" elementFormDefault="qualified">
+
+    <xs:import namespace="http://www.truvo.com/schema/fam/product/1.0"
+               schemaLocation="../shared/product_v1.0.xsd"/>
+
+    <!--
+            Following extensions are degenerate (i.e. don't add any attribute or element to corresponding base types).
+            They are introduced to ease usage of JAXB generated classes. For example, if we declare ranking as
+            <![CDATA[ <xs:element name="mobilePresenceNew" type="MobilePresenceNewUpdate"/>]]>, then no
+            java class of type ranking is generated and JAXB clients needs to use ObjectFactory and JAXBElement class
+            to work with an ranking element.
+    -->
+    <xs:element name="mobilePresenceNew">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates a newly sold Mobile Presence product
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="MobilePresenceNewUpdate"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="mobilePresenceUpdate">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates an update request for a sold Mobile Presence product
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="MobilePresenceNewUpdate"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="mobilePresenceCancel">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates a cancellation request for a sold Mobile Presence product
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="product:ProductTypeCancel"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="MobilePresenceNewUpdate">
+        <xs:complexContent>
+            <xs:extension base="product:RankingBaseType">
+                <xs:sequence>
+                    <xs:element name="rankingTier" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+</xs:schema>

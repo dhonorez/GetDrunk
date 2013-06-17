@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema     
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+    
+    <!-- Includes -->
+    <xsd:include schemaLocation="bds_datatypes_v0.1.xsd"/>
+    <xsd:include schemaLocation="bds_i18n_v0.1.xsd"/>
+              
+    <!-- Complex Types -->    
+    <xsd:complexType name="CustomerAccountSiteIdentityType">
+        <xsd:attribute name="publicId" type="PublicIdType" use="required"/>    
+        <xsd:attribute name="customerAccountPublicId" type="PublicIdType" use="required"/>
+    </xsd:complexType>     
+    
+    <xsd:complexType name="CustomerAccountSiteIdentityUriType">
+        <xsd:complexContent>
+            <xsd:extension base="CustomerAccountSiteIdentityType">
+                <xsd:attribute name="uri" type="UriType" use="required"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    
+    <xsd:complexType name="CustomerAccountSiteHolderUriType">
+        <xsd:attribute name="uri" type="UriType" use="required"/>   
+    </xsd:complexType> 
+    
+    <xsd:simpleType name="CustomerAccountSiteUseTypeEnum">
+        <xsd:restriction base="xsd:NMTOKEN">
+            <xsd:enumeration value="BILL_TO"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+</xsd:schema>

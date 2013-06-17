@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema 
+    xmlns="http://www.truvo.com/schema/shared/geo/1.0" 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"    
+    xmlns:i18n="http://www.truvo.com/schema/shared/i18n/1.0"
+    targetNamespace="http://www.truvo.com/schema/shared/geo/1.0"
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">   
+    
+    <xsd:import schemaLocation="i18n_v1.0.xsd" namespace="http://www.truvo.com/schema/shared/i18n/1.0"/>    
+    
+    <xsd:complexType name="AddressDetailsType">
+        <xsd:sequence>
+            <xsd:element name="streetName"  minOccurs="0" maxOccurs="1">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="40"/>
+                    </xsd:restriction>
+                </xsd:simpleType>                
+            </xsd:element>
+            <xsd:element name="houseNumber" minOccurs="0" maxOccurs="1">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="15"/>
+                    </xsd:restriction>
+                </xsd:simpleType>                 
+            </xsd:element>
+            <xsd:element name="houseNumberSuffix" minOccurs="0" maxOccurs="1">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="15"/>
+                    </xsd:restriction>
+                </xsd:simpleType>                 
+            </xsd:element>
+            <xsd:element name="postalCode" minOccurs="0" maxOccurs="1">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="6"/>
+                    </xsd:restriction>
+                </xsd:simpleType>                 
+            </xsd:element>
+            <xsd:element name="locality" minOccurs="0" maxOccurs="1">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="50"/>
+                    </xsd:restriction>
+                </xsd:simpleType>                   
+            </xsd:element>
+            <xsd:element name="countryCode" type="i18n:CountryCodeType" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="geoCoordinates" type="CoordinatesType" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>               
+    </xsd:complexType>      
+    
+    <xsd:complexType name="CoordinatesType">
+        <xsd:all>
+            <xsd:element name="latitude" minOccurs="1" maxOccurs="1">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:decimal">
+                        <xsd:totalDigits value="12"/>
+                        <xsd:fractionDigits value="9"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="longitude" minOccurs="1" maxOccurs="1">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:decimal">
+                        <xsd:totalDigits value="12"/>
+                        <xsd:fractionDigits value="9"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="geocodeLevel" minOccurs="0" maxOccurs="1">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:positiveInteger">
+                        <xsd:totalDigits value="2"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+        </xsd:all>
+    </xsd:complexType>   
+</xsd:schema>

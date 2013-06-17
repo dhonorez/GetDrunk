@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/yellow/!svn/ver/20004/opus/trunk/src/main/xsd/csm
+END
+heading_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/yellow/!svn/ver/18141/opus/trunk/src/main/xsd/csm/heading_v0.1.xsd
+END
+common_generic_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/yellow/!svn/ver/18040/opus/trunk/src/main/xsd/csm/common_generic_v0.1.xsd
+END
+location_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/yellow/!svn/ver/20004/opus/trunk/src/main/xsd/csm/location_v0.1.xsd
+END
+locationtype_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/yellow/!svn/ver/18040/opus/trunk/src/main/xsd/csm/locationtype_v0.1.xsd
+END

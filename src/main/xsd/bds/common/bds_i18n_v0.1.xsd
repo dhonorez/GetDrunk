@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema      
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+          
+    <!-- Simple Types -->          
+    <xsd:simpleType name="LanguageType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="nl"/>
+            <xsd:enumeration value="fr"/>
+            <xsd:enumeration value="en"/>
+            <xsd:enumeration value="pt"/>
+            <xsd:enumeration value="de"/>
+        </xsd:restriction>
+    </xsd:simpleType>     
+    <xsd:simpleType name="CountryType">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="[A-Z]{2,2}"/>
+        </xsd:restriction>
+    </xsd:simpleType>   
+</xsd:schema>

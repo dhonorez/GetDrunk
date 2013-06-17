@@ -1,0 +1,56 @@
+C H A N G E L O G - X S D 
+SYSTEM: product xsds
+
+Iteration - 9 28/01/2013 - AA
+=============================
+Folder Name has been removed from all the XSDs (http://jira.wdnet.org:8080/browse/FAM-1447)
+BasicBooking/AdvancedBooking product XSDs have been added
+URL/ClickURL/VerticalKeywords elements are aadded to Ranking and Mobile Ranking products
+CommercialText/logoId elements have been removed from MobilePresence product
+Zoning has been removed from Mobile Ranking product
+ClickToCall number has been added to Mobile Ranking product
+
+Iteration - 8 16/11/2012 - AA
+==============================
+Mobile Presence XSD has been added
+GAW Campaign XSD has been added. 
+
+
+Iteration - 7 12/11/2012 - AA
+==============================
+MyPage XSD is revised: TLD element is added (http://jira.wdnet.org:8080/browse/FAM-269)
+StandAloneVideo XSD is added. Note that since there is no businessId/folderId defined for this product in PD as of today, this information is not provided. 
+
+Iteration -6 07/11/2012 - AA 
+==============================
+Report: For error report description max size limit -1000 has been introduced
+Mobile MySite product XSDs are added 
+
+Iteration 5 01/11/2012 - AA
+==============================
+Report: For error messages error code enumation is added.
+Ranking: Zone Types are updated to include zone name (JIRA TICKET FAM-250) 
+
+Iteration 4 19/10/2012 - AA
+==============================
+Report: bulk published and expired messages are added for print products
+Ranking: Zone Types are updated to be in line with version of PD that support the values: N (National), R (Region), P (Province, C (City), H (Home)
+
+
+Iteration 3 13/09/2012 - AA
+==============================
+Heading element has been removed from MyPage product.
+
+Iteration 2 06/09/2012 - AA
+==============================
+Video: videoType that will hold the value of VIDEOTYPE attribute of Video product is introduced
+
+Iteration 1 - 15/08/2012 - AA
+==============================
+MySiteContentId is added to MySite Family products
+TLD field is added to MySite and MySitePlus Products. 
+MySite id type is updated (from int to 10 digit unsigned long)
+ClickToCall.xsd namespace is updated
+Internal XML element extension hierarchy has been modified
+ 
+initial version 01/06/2012 - AA

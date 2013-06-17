@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/yellow/!svn/ver/19273/opus/trunk/src/main/xsd/bds/feed
+END
+bds_bulk_anyParty_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/yellow/!svn/ver/19273/opus/trunk/src/main/xsd/bds/feed/bds_bulk_anyParty_v0.1.xsd
+END
+bds_bulk_orgParty_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/yellow/!svn/ver/19273/opus/trunk/src/main/xsd/bds/feed/bds_bulk_orgParty_v0.1.xsd
+END
+fast_feed_processing_v1.0.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/yellow/!svn/ver/17922/opus/trunk/src/main/xsd/bds/feed/fast_feed_processing_v1.0.xsd
+END

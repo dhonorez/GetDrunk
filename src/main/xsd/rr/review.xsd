@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://www.truvo.com/review" targetNamespace="http://www.truvo.com/review"
+	attributeFormDefault="unqualified" elementFormDefault="qualified">
+
+	<!-- ### GENERIC #### -->
+	<!-- generic types -->
+	<xsd:simpleType name="languageType">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[a-z][a-z]" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="countryType">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[a-zA-Z][a-zA-Z]" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="sourcePlatformType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="LMI" />
+			<xsd:enumeration value="YELLOW" />
+			<xsd:enumeration value="MYSITE" />
+			<xsd:enumeration value="SAYSO" />
+			<xsd:enumeration value="RNR" />
+			<xsd:enumeration value="IPHONE" />
+			<xsd:enumeration value="ANDROID" />
+			<xsd:enumeration value="IPAD" />
+			<xsd:enumeration value="MDOT" />
+			<xsd:enumeration value="WINPHONE" />
+			<xsd:enumeration value="ATABLE" />
+		</xsd:restriction>
+	</xsd:simpleType>
+  <xsd:simpleType name="deviceType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="WEB" />
+			<xsd:enumeration value="IPAD" />
+			<xsd:enumeration value="IPHONE" />
+			<xsd:enumeration value="ANDROID" />
+			<xsd:enumeration value="WINPHONE" />
+			<xsd:enumeration value="MDOT" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="localeType">
+		<xsd:attribute type="languageType" name="language" use="required" />
+		<xsd:attribute type="countryType" name="country" use="required" />
+	</xsd:complexType>
+
+
+	<xsd:complexType name="userType">
+		<xsd:sequence minOccurs="0" maxOccurs="1">
+			<xsd:element type="sourcePlatformType" name="sourcePlatform" />
+		</xsd:sequence>
+		<xsd:attribute type="xsd:string" name="sso_uid" use="optional" />
+		<xsd:attribute type="xsd:string" name="nickname" use="required" />
+		<xsd:attribute type="xsd:string" name="sourcePlatformUserId" use="optional" />
+		<xsd:attribute type="xsd:boolean" name="deactivated" use="optional" />
+	</xsd:complexType>
+	<xsd:complexType name="advertiserDetailType">
+		<xsd:sequence>
+			<xsd:element type="localeType" name="locale" />
+		</xsd:sequence>
+		<xsd:attribute type="xsd:string" name="location" use="optional" />
+		<xsd:attribute type="xsd:string" name="locationcode" use="optional" />
+		<xsd:attribute type="xsd:string" name="headingcode" use="optional" />
+        <xsd:attribute type="xsd:string" name="headingnumber" use="optional" />
+		<xsd:attribute type="xsd:string" name="customerid" use="required" />
+		<xsd:attribute type="xsd:string" name="addressid" use="optional" />
+		<xsd:attribute type="xsd:string" name="sttec3folder" use="optional" />
+    <xsd:attribute type="xsd:boolean" name="reviewsEnabled" use="optional" />
+	</xsd:complexType>
+
+	<xsd:element name="advertiserDetail">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="advertiserDetailType"/>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="user" type="userType" />
+
+  <xsd:simpleType name="ratingType">
+    <xsd:restriction base="xsd:integer">
+      <xsd:minInclusive value="1"/>
+      <xsd:maxInclusive value="5"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="avgRatingType">
+    <xsd:restriction base="xsd:decimal">
+      <xsd:minInclusive value="0"/>
+      <xsd:maxInclusive value="5"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:element name="exceptionMessage" type="xsd:string" />
+	<!-- /generic types -->
+
+	<!-- ### REVIEW ### -->
+	<!-- review types -->
+	<xsd:complexType name="reviewType">
+		<xsd:sequence>
+			<xsd:element name="rating" type="ratingType" minOccurs="1" maxOccurs="1" />
+			<xsd:element type="xsd:string" name="review" minOccurs="0" maxOccurs="1" />
+			<xsd:element type="xsd:dateTime" name="timestamp" minOccurs="0" maxOccurs="1" />
+			<xsd:element type="xsd:dateTime" name="timestampUpdate" minOccurs="0" maxOccurs="1" />
+			<xsd:element type="localeType" name="locale" minOccurs="1" maxOccurs="1" />
+			<xsd:element type="userType" name="user" minOccurs="1" maxOccurs="1" />
+			<xsd:element type="sourcePlatformType" name="sourcePlatform" minOccurs="1" maxOccurs="1" />
+			<xsd:element type="deviceType" name="device" minOccurs="0" maxOccurs="1" />
+			<xsd:element type="advertiserDetailType" name="advertiserdetail" minOccurs="1" maxOccurs="1" />
+			<xsd:element type="xsd:string" name="sourcePlatformRefId" minOccurs="0" maxOccurs="1" />
+			<xsd:element type="xsd:string" name="sourcePlatformRefUrl" minOccurs="0" maxOccurs="1" />
+			<xsd:element type="xsd:boolean" name="toBeModerated" minOccurs="1" maxOccurs="1" />
+			<xsd:element type="xsd:boolean" name="moderated" minOccurs="1" maxOccurs="1" />
+			<xsd:element type="xsd:dateTime" name="lastModerationDate" minOccurs="0" maxOccurs="1" />
+			<xsd:element type="xsd:boolean" name="firstAdvertiserReview" minOccurs="1" maxOccurs="1" />
+			<xsd:element type="xsd:integer" name="wordCount" minOccurs="1" maxOccurs="1" />
+	        <xsd:element type="xsd:boolean" name="deleted" minOccurs="0" maxOccurs="1" />
+	        <xsd:element type="abuseReportsListType" name="abusereports" minOccurs="0" maxOccurs="1" />
+	    </xsd:sequence>
+		<xsd:attribute type="xsd:anyURI" name="uri" use="required" />
+	</xsd:complexType>
+
+	<xsd:complexType name="reviewItemsType">
+		<xsd:sequence>
+			<xsd:element type="reviewType" name="review" maxOccurs="unbounded" minOccurs="0" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- /review types -->
+
+	<!-- header types -->
+	<xsd:complexType name="languageFilterType">
+		<xsd:attribute type="languageType" name="language" use="required" />
+		<xsd:attribute type="xsd:nonNegativeInteger" name="totalNumber" use="required" />
+		<xsd:attribute type="xsd:anyURI" name="uri" use="required" />
+	</xsd:complexType>
+	<xsd:complexType name="languageFiltersType">
+		<xsd:sequence>
+			<xsd:element type="languageFilterType" name="languageFilter"  maxOccurs="unbounded" minOccurs="0" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="pageType">
+		<xsd:attribute type="xsd:anyURI" name="uri" use="required" />
+	</xsd:complexType>
+	<xsd:complexType name="paginationType">
+		<xsd:sequence>
+			<xsd:element type="pageType" name="page" maxOccurs="unbounded" minOccurs="1" />
+		</xsd:sequence>
+		<xsd:attribute type="xsd:positiveInteger" name="pageSize" use="required" />
+		<xsd:attribute type="xsd:positiveInteger" name="currentPageNumber" use="required" />
+		<xsd:attribute type="xsd:nonNegativeInteger" name="totalNumberOfPages" use="required" />
+	</xsd:complexType>
+	<xsd:complexType name="headerType">
+		<xsd:sequence>
+			<xsd:element name="averageRating" type="avgRatingType" />
+			<xsd:element type="xsd:nonNegativeInteger" name="totalNumber" />
+			<xsd:element type="languageFiltersType" name="languageFilters" />
+			<xsd:element type="paginationType" name="pagination" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- /header types -->
+
+	<!-- root elements REVIEWS -->
+	<xsd:element name="reviews">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element type="headerType" name="header" minOccurs="0" />
+				<xsd:element type="reviewItemsType" name="reviewItems" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+  <xsd:element name="review" type="reviewType" />
+	<!-- /root elements REVIEWS -->
+
+
+	<!-- ### COMMENTING ### -->
+	<!-- comment types -->
+	<xsd:complexType name="commentType">
+		<xsd:sequence>
+			<xsd:element name="text" type="xsd:string" minOccurs="1" />
+			<xsd:element name="locale" type="localeType" minOccurs="1" />
+			<xsd:element name="user" type="userType" minOccurs="1" />
+		</xsd:sequence>
+		<xsd:attribute type="xsd:anyURI" name="uri" use="required" />
+	</xsd:complexType>
+	<!-- /comment types -->
+
+	<!-- root elements -->
+	<xsd:element name="comments">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="comment">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="commentType"/>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- /root elements -->
+
+	<!-- ### LIKE ### -->
+	<!-- like types -->
+	<xsd:complexType name="likeType">
+		<xsd:sequence>
+			<xsd:element name="value" type="xsd:boolean" minOccurs="1" />
+			<xsd:element name="user" type="userType" minOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- /like types -->
+
+	<!-- root elements -->
+	<xsd:element name="likes">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="like" type="likeType" minOccurs="0" maxOccurs="unbounded" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="like" type="likeType" />
+	<!-- /root elements -->
+
+  <!-- ### ABUSE REPORT ### -->
+	<!-- abuse report types -->
+	<xsd:complexType name="abuseReportType">
+		<xsd:sequence>
+			<xsd:element name="reason" type="xsd:string" minOccurs="1" />
+			<xsd:element name="comment" type="xsd:string" minOccurs="0" />
+      <xsd:element name="reporter">
+        <xsd:complexType>
+          <xsd:attribute name="identifier" type="xsd:string" use="required" />
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="locale" type="localeType" minOccurs="1" />
+      <xsd:element name="sourcePlatformRefUrl" type="xsd:string" minOccurs="0" />
+      <xsd:element name="timestamp" type="xsd:dateTime" minOccurs="1" />
+		</xsd:sequence>
+    <xsd:attribute type="xsd:anyURI" name="uri" use="optional" />
+    <xsd:attribute type="xsd:boolean" name="fromBusinessOwner" use="required" />
+	</xsd:complexType>
+
+  <xsd:complexType name="abuseReportsListType">
+    <xsd:sequence>
+      <xsd:element name="abusereport" type="abuseReportType" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+	<!-- /abuse report types -->
+
+	<!-- root elements -->
+	<xsd:element name="abusereport">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="abuseReportType"/>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="abusereports" type="abuseReportsListType" />
+	<!-- /root elements -->
+
+
+	<!-- ### SUMMARY ### -->
+	<!-- summary types -->
+	<xsd:complexType name="ReviewSummaryType">
+		<xsd:sequence>
+			<xsd:element name="averageRating" type="avgRatingType" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="totalNumber" type="xsd:nonNegativeInteger" minOccurs="0" maxOccurs="1" />
+      <xsd:element name="partnerReviewSummary">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="averageRating" type="avgRatingType" minOccurs="0" maxOccurs="1" />
+		    <xsd:element name="totalNumber" type="xsd:nonNegativeInteger" minOccurs="0" maxOccurs="1" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+			<xsd:element name="requestedAdvertiserDetail" type="lookupAdvertiserDetailType"	minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="lookupAdvertiserDetailType">
+		<xsd:sequence>
+			<xsd:element name="locale" type="localeType" minOccurs="0" maxOccurs="1" /> <!-- deprecated -->
+		</xsd:sequence>
+		<xsd:attribute type="xsd:string" name="headingcode" use="optional" />
+		<xsd:attribute type="xsd:string" name="customerid" use="required" />
+		<xsd:attribute type="xsd:string" name="addressid" use="optional" />
+		<xsd:attribute type="xsd:string" name="sttec3folder" use="optional" />
+		<xsd:attribute type="xsd:string" name="country" use="optional" />
+	</xsd:complexType>
+	<!-- /summary types -->
+
+	<!-- root elements SUMMARY -->
+	<xsd:element name="reviewSummaryRequestType">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="advertiserDetail" type="lookupAdvertiserDetailType" minOccurs="1" maxOccurs="unbounded" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="reviewSummaryResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="reviewSummary" type="ReviewSummaryType" minOccurs="1" maxOccurs="unbounded" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- /root elements SUMMARY -->
+
+  <!-- ### SYNDICATION ### -->
+  <xsd:complexType name="SyndicatedReviewSummaryRequestType">
+		<xsd:sequence>
+			<xsd:element name="advertiserDetail" type="lookupAdvertiserDetailType" minOccurs="1" maxOccurs="unbounded" />
+			<xsd:element type="xsd:string" name="partnerCode" minOccurs="0" maxOccurs="1" />
+			<xsd:element type="xsd:boolean" name="withExpertReviewsOnly" minOccurs="0" maxOccurs="1" />
+			<xsd:element type="xsd:boolean" name="withRecommendationsOfFamousPersons" minOccurs="0" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+  <xsd:complexType name="SyndicatedReviewSummaryResponseType">
+    <xsd:sequence>
+      <xsd:element name="partnerReviewSummary" type="PartnerReviewSummaryType" minOccurs="1" maxOccurs="unbounded" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="PartnerReviewSummaryType">
+    <xsd:sequence>
+      <xsd:element name="totalNumber" type="xsd:nonNegativeInteger" minOccurs="1" maxOccurs="1" />
+      <xsd:element name="totalNumberExpert" type="xsd:nonNegativeInteger" minOccurs="1" maxOccurs="1" />
+      <xsd:element name="totalNumberOfRecommendations" type="xsd:nonNegativeInteger" minOccurs="1" maxOccurs="1" />
+      <xsd:element name="averageRating" type="avgRatingType" minOccurs="0" maxOccurs="1" />
+      <xsd:element name="ratingBase" type="xsd:nonNegativeInteger" minOccurs="0" maxOccurs="1" />
+      <xsd:element name="partnerAdvertiserUrl" type="xsd:anyURI" minOccurs="0" maxOccurs="1" />
+      <xsd:element name="partnerRootUrl" type="xsd:anyURI" minOccurs="0" maxOccurs="1" />
+      <xsd:element name="smallLogoUrl" type="xsd:anyURI" minOccurs="0" maxOccurs="1" />
+      <xsd:element name="largeLogoUrl" type="xsd:anyURI" minOccurs="0" maxOccurs="1" />
+      <xsd:element name="reviewItems" type="SyndicatedReviewItems" minOccurs="0" maxOccurs="1" />
+      <xsd:element name="recommendations" type="RecommendationsType" minOccurs="1" maxOccurs="1" />
+      <xsd:element name="advertiserDetail" type="lookupAdvertiserDetailType" minOccurs="1" maxOccurs="1" />
+      <xsd:element name="displayRecommendationSource" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+      <xsd:element name="displayReviewSource" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+    </xsd:sequence>
+    <xsd:attribute name="partnerCode" type="xsd:string" use="required" />
+  </xsd:complexType>
+
+  <xsd:complexType name="RecommendationsType">
+    <xsd:sequence>
+      <xsd:element name="recommendation" type="RecommendationType" minOccurs="0" maxOccurs="unbounded" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="RecommendationType">
+    <xsd:sequence>
+      <xsd:element name="famousPerson" type="FamousPersonType" minOccurs="1" maxOccurs="1" />
+      <xsd:element name="shortText" type="xsd:string" minOccurs="0" maxOccurs="1" />
+      <xsd:element name="longText" type="xsd:string" minOccurs="0" maxOccurs="1" />
+      <xsd:element name="dateOfRecommendation" type="xsd:date" minOccurs="0" maxOccurs="1" />
+      <xsd:element name="partnerCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      <xsd:element name="language" type="languageType" minOccurs="0" maxOccurs="1" />
+      <xsd:element name="recommendationUrl" type="xsd:string" minOccurs="0" maxOccurs="1" />
+    </xsd:sequence>
+    <xsd:attribute name="recommendationRestUri" type="xsd:anyURI" use="required" />
+  </xsd:complexType>
+
+  <xsd:complexType name="SyndicatedReviewItems">
+    <xsd:sequence>
+      <xsd:element name="review" type="SyndicatedReviewType" minOccurs="0" maxOccurs="unbounded" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="SyndicatedReviewType">
+    <xsd:sequence>
+      <xsd:element name="rating" type="xsd:positiveInteger" minOccurs="1" maxOccurs="1" />
+      <xsd:element name="excerpt" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      <xsd:element name="review" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      <xsd:element name="timestamp" type="xsd:dateTime" minOccurs="0" maxOccurs="1" />
+      <xsd:element name="locale" type="localeType" minOccurs="0" maxOccurs="1" /> <!-- deprecated -->
+      <xsd:element name="language" type="languageType" minOccurs="0" maxOccurs="1" />
+      <xsd:element name="nickname" type="xsd:string" minOccurs="0" maxOccurs="1" />
+      <xsd:element name="expertReview" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+      <xsd:element name="title" type="xsd:string" minOccurs="0" maxOccurs="1" />
+      <xsd:element name="sourceReviewUrl" type="xsd:anyURI" minOccurs="0" maxOccurs="1" />
+    </xsd:sequence>
+    <xsd:attribute name="uri" type="xsd:anyURI" use="required" />
+    <xsd:attribute name="reviewItemRestUri" type="xsd:anyURI" use="required" />
+  </xsd:complexType>
+
+  <!--root elements-->
+  <xsd:element name="syndicatedReviewSummaryRequest" type="SyndicatedReviewSummaryRequestType" />
+
+	<xsd:element name="syndicatedReviewSummaryResponse" type="SyndicatedReviewSummaryResponseType" />
+
+  <xsd:element name="syndicatedReviews">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="partnerReviewSummary" type="PartnerReviewSummaryType" minOccurs="1" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <!--/root elements-->
+
+
+
+	<!-- ### PARTNERS ### -->
+	<!-- partner types -->
+	<xsd:complexType name="SyndicationPartnerDetailBaseType">
+		<xsd:sequence>
+			<xsd:element name="partnerName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="partnerWebSiteUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="partnerLogoSmallUrl" type="xsd:string" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="partnerLogoLargeUrl" type="xsd:string" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="syndicationCategory" type="xsd:string" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="filterableInSearchResults" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="defaultRatingBase" type="xsd:integer" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="country" type="countryType" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="enabledForDesktopPlatform" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="enabledForMobilePlatform" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="showShortText" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="showLongText" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="showLink" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="showFamousPersonImage" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="showFamousPersonDescription" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="displayRecommendationSource" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="displayReviewSource" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SyndicationPartnerDetailWithCodeType">
+		<xsd:complexContent>
+			<xsd:extension base="SyndicationPartnerDetailBaseType">
+				<xsd:sequence>
+					<xsd:element name="partnerCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="SyndicationPartnerDetailType">
+		<xsd:complexContent>
+			<xsd:extension base="SyndicationPartnerDetailBaseType">
+				<xsd:sequence>
+					<xsd:element name="partnerCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="managedBySystem" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="SyndicationPartnersResponseType">
+		<xsd:sequence>
+			<xsd:element name="syndicationPartnerDetail" type="SyndicationPartnerDetailType" minOccurs="0" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="SyndicatedReviewItemType">
+		<xsd:sequence>
+			<xsd:element name="uri" type="xsd:anyURI" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="partnerCode" type="xsd:string" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="advertiserDetail" type="lookupAdvertiserDetailType" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="rating" type="xsd:positiveInteger" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="excerpt" type="xsd:string" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="review" type="xsd:string" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="timestamp" type="xsd:dateTime" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="ratingBase" type="xsd:positiveInteger" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="language" type="languageType" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="nickname" type="xsd:string" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="expertReview" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="title" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- /partner types -->
+
+	<!-- root elements PARTNERS -->
+	<xsd:element name="createSyndicationPartnerRequest">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="SyndicationPartnerDetailWithCodeType"/>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="updateSyndicationPartnerRequest">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="SyndicationPartnerDetailType"/>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="syndicationPartnerResponse">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="SyndicationPartnerDetailType"/>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="syndicationPartnersResponse">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="SyndicationPartnersResponseType"/>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="syndicatedReviewItem">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="SyndicatedReviewItemType"/>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- /root elements PARTNERS -->
+
+
+	<!-- ### FAMOUS PERSONS ### -->
+	<!-- famousPerson types -->
+	<xsd:complexType name="FamousPersonType">
+		<xsd:sequence>
+			<xsd:element name="fullname" type="xsd:string" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="description" type="xsd:string" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="imageUrl" type="xsd:string" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="copyright" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		</xsd:sequence>
+		<xsd:attribute name="alias" type="xsd:string" use="optional" />
+	</xsd:complexType>
+
+	<xsd:complexType name="FamousPersonRefType">
+		<xsd:sequence>
+			<xsd:element name="fullname" type="xsd:string" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="description" type="xsd:string" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="imageUrl" type="xsd:string" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="copyright" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		</xsd:sequence>
+		<xsd:attribute name="alias" type="xsd:string" use="required" />
+	</xsd:complexType>
+	<!-- /famousPerson types -->
+
+	<!-- root elements FAMOUS PERSONS -->
+	<xsd:element name="famousPerson">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="FamousPersonType"/>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="famousPersons">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="famousPerson" type="FamousPersonType" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- /root elements FAMOUS PERSONS -->
+
+
+	<!-- ### RECOMMENDATIONS ### -->
+	<!-- recommendation types -->
+	<xsd:complexType name="SyndicatedPartnerRecommendationType">
+		<xsd:sequence>
+			<xsd:element name="famousPerson" type="FamousPersonRefType" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="advertiserDetail" type="lookupAdvertiserDetailType" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="shortText" type="xsd:string" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="longText" type="xsd:string" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="dateOfRecommendation" type="xsd:date" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="partnerCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="language" type="languageType" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="recommendationUrl" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- /recommendation types -->
+
+	<!-- root elements RECOMMENDATIONS -->
+	<xsd:element name="syndicatedPartnerRecommendation">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="SyndicatedPartnerRecommendationType"/>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="syndicatedPartnerRecommendations" >
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="syndicatedPartnerRecommendation" type="SyndicatedPartnerRecommendationType" minOccurs="0" maxOccurs="unbounded" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- /root elements RECOMMENDATIONS -->
+
+</xsd:schema>

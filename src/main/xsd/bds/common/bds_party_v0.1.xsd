@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+    
+    <!-- Imports -->
+    <xsd:include schemaLocation="bds_customerAccount_v0.1.xsd"/>
+    <xsd:include schemaLocation="bds_datatypes_v0.1.xsd"/>
+    <xsd:include schemaLocation="bds_i18n_v0.1.xsd"/>
+    <xsd:include schemaLocation="bds_timing_v0.1.xsd"/>
+    
+    <!-- Party Identity -->                        
+    <xsd:complexType name="PartyIdentityType">        
+        <xsd:attribute name="publicId" type="PublicIdType" use="required"/>
+        <xsd:attribute name="classification" type="PartyClassificationEnum" use="required"/>
+    </xsd:complexType>       
+    <xsd:complexType name="PartyIdentityUriType">
+        <xsd:complexContent>
+            <xsd:extension base="PartyIdentityType">
+                <xsd:attribute name="uri" type="UriType" use="required"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>  
+    
+    <!-- Party Lock Status -->    
+    <xsd:complexType name="PartyLockStatusType">
+        <xsd:sequence>
+            <xsd:element name="lockStatus" type="PartyLockStatusEnum" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="lockPeriod" type="TimeStampInclusiveRangeType" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="PartyLockStatusEnum">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="LOCKED"/>
+            <xsd:enumeration value="UNLOCKED_ACKED"/>
+            <xsd:enumeration value="UNLOCKED_AUTO"/>
+        </xsd:restriction>
+    </xsd:simpleType>  
+    
+    <!-- Party Classification -->    
+    <xsd:simpleType name="PartyClassificationEnum">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="ORGANIZATION"/>            
+            <xsd:enumeration value="GROUP"/>
+            <xsd:enumeration value="PERSON"/>
+        </xsd:restriction>
+    </xsd:simpleType>          
+    
+    <!-- Party General Status -->
+    <xsd:complexType name="PartyStatusType">
+        <xsd:attribute name="statusCode" type="PartyStatusEnum" use="required"/>
+        <xsd:attribute name="statusDate" type="xsd:dateTime" use="required"/>        
+    </xsd:complexType>
+    <xsd:simpleType name="PartyStatusEnum">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="ACTIVE"/>
+            <xsd:enumeration value="BACK_IN_BUSINESS"/>
+            <xsd:enumeration value="MERGED"/>
+            <xsd:enumeration value="OUT_OF_BUSINESS"/>
+        </xsd:restriction>
+    </xsd:simpleType> 
+    
+    <!-- Party Detailed Status -->    
+    <xsd:complexType name="PartyDetailStatusType">
+        <xsd:attribute name="statusCode" type="PartyDetailStatusEnum" use="required"/>
+        <xsd:attribute name="statusDate" type="xsd:dateTime" use="required"/>
+    </xsd:complexType>
+    <xsd:simpleType name="PartyDetailStatusEnum">
+        <xsd:restriction base="xsd:NMTOKEN"/>
+    </xsd:simpleType>      
+    
+    <!-- All Profiles -->
+    <xsd:complexType name="PartyProfileHolderType">
+        <xsd:sequence>
+            <xsd:choice>
+                <xsd:element name="personProfile" type="PersonProfileType" minOccurs="1" maxOccurs="1"/>                
+                <xsd:element name="groupProfile" type="GroupProfileType" minOccurs="1" maxOccurs="1"/>
+                <xsd:element name="organizationProfile" type="OrganizationProfileType" minOccurs="1" maxOccurs="1"/>
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>    
+    
+    <!-- Person Profile -->
+    <xsd:complexType name="PersonProfileType">
+        <xsd:sequence>
+            <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="middleName" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="lastName" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="initials" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="gender" type="PersonGenderEnum" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="dateOfBirth" type="xsd:date" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="socialSecurityNumber" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="identityCardNumber" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="language" type="PersonLanguageType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>       
+    <xsd:simpleType name="PersonGenderEnum">
+        <xsd:restriction base="xsd:NMTOKEN">
+            <xsd:enumeration value="MALE"/>
+            <xsd:enumeration value="FEMALE"/>
+        </xsd:restriction>
+    </xsd:simpleType>    
+    <xsd:complexType name="PersonLanguageType">
+        <xsd:attribute name="code" type="LanguageType" use="required"/>
+        <xsd:attribute name="reading" type="LanguageMasteringLevelEnum" use="optional"/>
+        <xsd:attribute name="writing" type="LanguageMasteringLevelEnum" use="optional"/>
+        <xsd:attribute name="speaking" type="LanguageMasteringLevelEnum" use="optional"/>
+    </xsd:complexType>      
+    <xsd:simpleType name="LanguageMasteringLevelEnum">
+        <xsd:restriction base="xsd:NMTOKEN">            
+            <xsd:enumeration value="BASIC"/>
+            <xsd:enumeration value="INTERMEDIATE"/>
+            <xsd:enumeration value="PROFESSIONAL"/>
+            <xsd:enumeration value="ADVANCED"/>
+            <xsd:enumeration value="MOTHERTONGUE"/>
+        </xsd:restriction>        
+    </xsd:simpleType>
+    
+    <!-- Organization Profile -->
+    <xsd:complexType name="OrganizationProfileType">
+        <xsd:sequence>
+            <xsd:element name="regionLanguage" type="LanguageType" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="defaultEnterpriseReference" type="EnterpriseReferenceType" minOccurs="0" maxOccurs="1"/>               
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <!-- Group Profile -->
+    <xsd:complexType name="GroupProfileType">
+        <xsd:sequence>
+            <xsd:element name="groupType" type="GroupTypeEnum" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="sponsored" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>               
+        </xsd:sequence>
+    </xsd:complexType>   
+    <xsd:simpleType name="GroupTypeEnum">
+        <xsd:restriction base="xsd:NMTOKEN">            
+            <xsd:enumeration value="FOLDER"/>
+        </xsd:restriction>        
+    </xsd:simpleType>    
+    
+    <!-- Info Types -->    
+    <xsd:complexType name="PartyInfoType" mixed="true">
+        <xsd:attribute name="type" type="PartyInfoTypeEnum" use="required"/>
+    </xsd:complexType>
+    
+    <xsd:simpleType name="PartyInfoTypeEnum">
+        <xsd:restriction base="xsd:NMTOKEN">
+            <xsd:enumeration value="GENERAL_NOTE"/>
+        </xsd:restriction>
+    </xsd:simpleType>    
+</xsd:schema>

@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/yellow/!svn/ver/18625/opus/trunk/src/main/xsd/geolink/api
+END
+geolinkCommon_v1.0.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/yellow/!svn/ver/18625/opus/trunk/src/main/xsd/geolink/api/geolinkCommon_v1.0.xsd
+END
+geolinkValidate_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/yellow/!svn/ver/18625/opus/trunk/src/main/xsd/geolink/api/geolinkValidate_v0.1.xsd
+END
+geolinkAutoSuggest_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/yellow/!svn/ver/18625/opus/trunk/src/main/xsd/geolink/api/geolinkAutoSuggest_v0.1.xsd
+END
+geolinkMapperLitech_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/yellow/!svn/ver/18625/opus/trunk/src/main/xsd/geolink/api/geolinkMapperLitech_v0.1.xsd
+END
+geolinkTranslate_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/yellow/!svn/ver/18625/opus/trunk/src/main/xsd/geolink/api/geolinkTranslate_v0.1.xsd
+END
+geolinkSuggest_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/yellow/!svn/ver/18625/opus/trunk/src/main/xsd/geolink/api/geolinkSuggest_v0.1.xsd
+END
+geolinkDetail_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/yellow/!svn/ver/18625/opus/trunk/src/main/xsd/geolink/api/geolinkDetail_v0.1.xsd
+END

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema 
+    xmlns="http://www.truvo.com/schema/shared/billing/1.0" 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"         
+    xmlns:cp="http://www.truvo.com/schema/shared/contactPoint/1.0"
+    xmlns:dt="http://www.truvo.com/schema/shared/dataTypes/1.0"
+    xmlns:geo="http://www.truvo.com/schema/shared/geo/1.0"
+    xmlns:i18n="http://www.truvo.com/schema/shared/i18n/1.0"
+    xmlns:sys="http://www.truvo.com/schema/shared/system/1.0"    
+    targetNamespace="http://www.truvo.com/schema/shared/billing/1.0"
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+
+    <xsd:import namespace="http://www.truvo.com/schema/shared/contactPoint/1.0" schemaLocation="contactPoint_v1.0.xsd"/>
+    <xsd:import namespace="http://www.truvo.com/schema/shared/dataTypes/1.0" schemaLocation="dataTypes_v1.0.xsd"/>
+    <xsd:import namespace="http://www.truvo.com/schema/shared/geo/1.0" schemaLocation="geo_v1.0.xsd"/>
+    <xsd:import namespace="http://www.truvo.com/schema/shared/i18n/1.0" schemaLocation="i18n_v1.0.xsd"/>
+    <xsd:import namespace="http://www.truvo.com/schema/shared/system/1.0" schemaLocation="system_v1.0.xsd"/>
+    
+    <!-- Billing Account -->
+    
+    <xsd:complexType name="BillingAccountType">
+        <xsd:sequence>
+            <xsd:element name="action" type="sys:CreateUpdateDeleteEnum" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="billingAccountId" type="BillingAccountIdType" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="billingAccountStatus" type="BillingAccountStatusEnum" minOccurs="1" maxOccurs="1"/>
+            <!-- xsd:element name="billingAgent" type="BillingAgentEnum" minOccurs="1" maxOccurs="1"/ -->
+            <xsd:element name="billingPhoneNumber" type="cp:TelephoneNumberType" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="enterpriseReference" type="EnterpriseReferenceType" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="billingName" type="xsd:string" minOccurs="1" maxOccurs="1"/>            
+            <!-- xsd:element name="billingBusinessEntity" type="BillingBusinessEntity" minOccurs="1" maxOccurs="1"/ -->
+            <xsd:element name="billingAddress" type="geo:AddressDetailsType" minOccurs="1" maxOccurs="1"/>
+            <!-- xsd:element name="billingPreferences" type="BillingAccountBillingPreferences" minOccurs="0" maxOccurs="1"/-->
+            <xsd:element name="billingAccountLanguage" type="i18n:LanguageCodeType" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="modificationInfo" type="sys:ModificationInfoType" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <!-- xsd:complexType name="BillingAccountBillingPreferences">
+		<xsd:sequence>
+			<xsd:element name="preferredBillCycle" type="BillingCycleEnum" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType -->
+    
+    <xsd:complexType name="EnterpriseReferenceType">
+        <xsd:sequence>
+            <xsd:element name="legalForm" type="LegalFormType" minOccurs="1" maxOccurs="1"/>			
+            <xsd:element name="vatMandatory" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="vatNumber" type="VatNumberType" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>	
+    </xsd:complexType>
+    
+    <xsd:complexType name="VatNumberType">
+        <xsd:annotation>
+            <xsd:documentation>A VAT structure, describing all fields related to taxes</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="country" type="i18n:CountryCodeType" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="number" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>		
+    </xsd:complexType>
+    <xsd:simpleType name="BillingAccountIdType">
+        <xsd:restriction base="dt:IdType"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="BillingAccountStatusEnum">
+        <xsd:restriction base="xsd:NMTOKEN">
+            <xsd:enumeration value="A">
+                <xsd:annotation>
+                    <xsd:documentation>Active billing account</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="N">
+                <xsd:annotation>
+                    <xsd:documentation>Inactive billing account</xsd:documentation>
+                </xsd:annotation>                
+            </xsd:enumeration>            
+        </xsd:restriction>
+    </xsd:simpleType>
+    <!--xsd:simpleType name="BillingBusinessEntity">
+		<xsd:annotation>
+			<xsd:documentation>Business entity (TODO: explain and/or example values)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType-->
+    <!-- xsd:simpleType name="BillingAgentEnum">
+		<xsd:annotation>
+			<xsd:documentation>Enumeration of values for billing account agent</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="I"/>
+		</xsd:restriction>
+	</xsd:simpleType -->
+    <xsd:simpleType name="BillingCycleEnum">
+        <xsd:restriction base="xsd:NMTOKEN"/>
+    </xsd:simpleType>	
+    <xsd:complexType name="LegalFormType">
+        <xsd:annotation>
+            <xsd:documentation>No enumeration here as this is reference data agreement</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="code" type="xsd:NMTOKEN" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="displayValue" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>		    
+</xsd:schema>

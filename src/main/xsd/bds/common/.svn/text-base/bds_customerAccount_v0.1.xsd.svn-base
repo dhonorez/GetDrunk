@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema    
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"     
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+    
+    <!-- Includes -->
+    <xsd:include schemaLocation="bds_datatypes_v0.1.xsd"/>
+    <xsd:include schemaLocation="bds_i18n_v0.1.xsd"/>
+       
+    <!-- Complex Types -->       
+    <xsd:complexType name="CustomerAccountIdentityType">        
+        <xsd:attribute name="publicId" type="PublicIdType" use="required"/>
+        <xsd:attribute name="partyPublicId" type="PublicIdType" use="required"/>
+        <xsd:attribute name="active" type="xsd:boolean" use="required"/>        
+        <xsd:attribute name="language" type="LanguageType" use="optional"/>
+    </xsd:complexType>   
+    
+    <xsd:complexType name="CustomerAccountIdentityUriType">
+        <xsd:complexContent>
+            <xsd:extension base="CustomerAccountIdentityType">
+                <xsd:attribute name="uri" type="UriType" use="required"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>       
+    
+    <xsd:complexType name="CustomerAccountHolderUriType">
+        <xsd:attribute name="uri" type="UriType" use="required"/>
+    </xsd:complexType>
+    
+    <xsd:complexType name="EnterpriseReferenceType">
+        <xsd:attribute name="legalForm" type="xsd:NMTOKEN" use="required"/>
+        <xsd:attribute name="legalFormDisplayValue" type="xsd:string" use="optional"/>
+        <xsd:attribute name="vatMandatory" type="xsd:boolean" use="required"/>
+        <xsd:attribute name="vatNumber" type="xsd:string" use="optional"/>
+    </xsd:complexType>
+</xsd:schema>

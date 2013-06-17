@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns="http://www.truvo.com/schema/fam/product/online/basicPlus/1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:online="http://www.truvo.com/schema/fam/product/online/onlineProduct/1.0"
+           xmlns:product="http://www.truvo.com/schema/fam/product/1.0"
+           targetNamespace="http://www.truvo.com/schema/fam/product/online/basicPlus/1.0"
+           elementFormDefault="qualified">
+    <xs:import namespace="http://www.truvo.com/schema/fam/product/online/onlineProduct/1.0"
+               schemaLocation="onlineProduct_v1.0.xsd"/>
+    <xs:import namespace="http://www.truvo.com/schema/fam/product/1.0"
+               schemaLocation="../shared/product_v1.0.xsd"/>
+
+    <!--
+            Following extensions are degenerate (i.e. don't add any attribute or element to corresponding base types).
+            They are introduced to ease usage of JAXB generated classes. For example, if we declare basicPlusNew as
+            <![CDATA[ <xs:element name="basicPlusNew" type="online:MySiteWithHeadingNewUpdateType"/>]]>, then no
+            java class of type basicPlusNew is generated and JAXB clients needs to use ObjectFactory and JAXBElement class
+            to work with an basicPlusNew element.
+    -->
+    <xs:element name="basicPlusNew">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates a newly sold Basic+ product
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType >
+            <xs:complexContent>
+                <xs:extension base="online:MySiteWithHeadingNewUpdateType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="basicPlusUpdate">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates an update request for a sold Basic+ product
+            </xs:documentation>
+        </xs:annotation>
+
+        <xs:complexType >
+            <xs:complexContent>
+                <xs:extension base="online:MySiteWithHeadingNewUpdateType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="basicPlusCancel">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates a cancellation request for a sold Basic+ product
+            </xs:documentation>
+        </xs:annotation>
+
+        <xs:complexType >
+            <xs:complexContent>
+                <xs:extension base="product:ProductTypeCancel"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema 
+    xmlns="http://www.truvo.com/schema/basedata"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"           
+    targetNamespace="http://www.truvo.com/schema/basedata"
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+        
+    <!-- Includes -->    
+    <xsd:include schemaLocation="../common/bds_datatypes_v0.1.xsd"/>
+    <xsd:include schemaLocation="../common/bds_i18n_v0.1.xsd"/>
+    <xsd:include schemaLocation="bds_api_preference_type_v0.1.xsd"/>
+    
+    <!-- Root --> 
+    <xsd:element name="savePartyPreferenceRequest">
+        <xsd:complexType>
+            <xsd:complexContent>
+                <xsd:extension base="PreferenceType"/>
+            </xsd:complexContent>
+        </xsd:complexType>                
+    </xsd:element>
+    <xsd:element name="retrievePreferenceResponse">
+        <xsd:complexType>
+            <xsd:complexContent>
+                <xsd:extension base="PreferenceWithScopeAndUriType"/>
+            </xsd:complexContent>
+        </xsd:complexType>
+    </xsd:element>    
+    <xsd:element name="searchPreferencesResponse">
+        <xsd:complexType>
+            <xsd:sequence>                
+                <xsd:element name="preference" type="PreferenceWithScopeAndUriType" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>        
+    
+   
+    <!-- Complex Types -->  
+    <xsd:complexType name="PreferenceType">
+        <xsd:sequence>            
+            <xsd:element name="context" type="PreferenceAdvertiserContextType" minOccurs="1" maxOccurs="1"/>            
+            <xsd:element name="code" type="PreferenceTypeCode" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="value" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>        
+    </xsd:complexType>  
+    <xsd:complexType name="PreferenceWithScopeAndUriType">
+        <xsd:complexContent>
+            <xsd:extension base="PreferenceType">
+                <xsd:attribute name="uri" type="UriType" use="required"/>
+                <xsd:attribute name="scope" type="PreferenceTypeScopeEnum" use="required"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>    
+    <xsd:complexType name="PreferenceAdvertiserContextType">
+        <xsd:sequence>
+            <xsd:element name="partyPublicId"        type="PublicIdType"      minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="partySitePublicId"    type="PublicIdType"      minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="customerAccountPublicId"    type="PublicIdType"      minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="headingCode"          type="xsd:string"        minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="language"             type="LanguageType"      minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

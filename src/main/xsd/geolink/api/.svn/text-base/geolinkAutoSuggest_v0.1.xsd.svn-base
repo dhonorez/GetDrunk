@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema xmlns="http://www.truvo.com/schema/geolink/api/geolinkAutoSuggest/1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gc="http://www.truvo.com/schema/geolink/api/geolinkCommon/1.0" xmlns:geo="http://www.truvo.com/schema/shared/geo/1.0" xmlns:i18n="http://www.truvo.com/schema/shared/i18n/1.0" targetNamespace="http://www.truvo.com/schema/geolink/api/geolinkAutoSuggest/1.0" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.truvo.com/schema/geolink/api/geolinkCommon/1.0" schemaLocation="geolinkCommon_v1.0.xsd"/>
+	<xsd:import namespace="http://www.truvo.com/schema/shared/geo/1.0" schemaLocation="../../shared/geo_v1.0.xsd"/>
+	<xsd:import namespace="http://www.truvo.com/schema/shared/i18n/1.0" schemaLocation="../../shared/i18n_v1.0.xsd"/>
+	<!-- Core Elements -->
+	<xsd:element name="locationAutoSuggestionRequest">
+		<xsd:annotation>
+			<xsd:documentation><![CDATA[
+                Request Method 1        
+                URI: http://{geolinkDomain}/api/autosuggest
+                QUERY: ?languageCode={languageCode}&value={value to search on}&geoLevel={geoLevel_1}&geoLevel={geoLevel_2}&parentGeoRefId={parentGeoRefId}
+                METHOD: GET
+                BODY: n/a  
+                
+                Request Method 2        
+                URI: http://{geolinkDomain}/api/autosuggest
+                QUERY: n/a
+                METHOD: POST
+                BODY: XML{locationAutoSuggestionRequest}
+                ]]></xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="languageCode" type="i18n:LanguageCodeType" minOccurs="1" maxOccurs="1"/>
+				<xsd:element name="value" type="AutoSuggestSearchValueType" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation>
+                            Value to search on - Minimum required length defined by the service
+                        </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="geoLevel" type="gc:GeoLevelType" minOccurs="1" maxOccurs="6">
+					<xsd:annotation>
+						<xsd:documentation>
+                            Multiple geoLevels can be searched on
+                        </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="parent" type="AutoSuggestParentLocationType" minOccurs="0" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation>
+                            This is the parent location filter of the autosuggest.
+                            Results that will be suggested will be a child of this.
+                            E.g. searching for Berchem in Belgium returns 2 results, searching for Berchem in Province of Antwerp returns 1 result
+                        </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="locationAutoSuggestionResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="autoSuggestMatch" type="gc:AutoSuggestMatchType" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element name="status" type="gc:StatusType" minOccurs="1" maxOccurs="1"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- Types -->
+	<xsd:simpleType name="AutoSuggestSearchValueType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:complexType name="AutoSuggestParentLocationType">
+		<xsd:sequence>
+			<xsd:element name="parentGeoRefId" type="gc:GeoRefIdType" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

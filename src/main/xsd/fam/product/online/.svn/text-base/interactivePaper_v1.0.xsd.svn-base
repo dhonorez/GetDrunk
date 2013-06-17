@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns="http://www.truvo.com/schema/fam/online/interactivePaper/1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:product="http://www.truvo.com/schema/fam/product/1.0"
+           xmlns:dataType="http://www.truvo.com/schema/shared/dataTypes/1.0"
+           targetNamespace="http://www.truvo.com/schema/fam/online/interactivePaper/1.0"
+           elementFormDefault="qualified">
+
+    <xs:import namespace="http://www.truvo.com/schema/fam/product/1.0"
+               schemaLocation="../shared/product_v1.0.xsd"/>
+    <xs:import namespace="http://www.truvo.com/schema/shared/dataTypes/1.0"
+               schemaLocation="../../../shared/dataTypes_v1.0.xsd"/>
+
+    <!--
+            Following extensions are degenerate (i.e. don't add any attribute or element to corresponding base types).
+            They are introduced to ease usage of JAXB generated classes. For example, if we declare interactivePaperNew as
+            <![CDATA[ <xs:element name="videoNew" type="InteractivePaperNewUpdate"/>]]>, then no
+            java class of type interactivePaperNew is generated and JAXB clients needs to use ObjectFactory and JAXBElement class
+            to work with an interactivePaperNew element.
+    -->
+    <xs:element name="interactivePaperNew">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates a newly sold Interactive Paper product
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="InteractivePaperNewUpdate"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="interactivePaperUpdate">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates an update request for a sold Interactive Paper product
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="InteractivePaperNewUpdate"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="interactivePaperCancel">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates a cancellation request for a sold Interactive Paper product
+            </xs:documentation>
+        </xs:annotation>
+
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="product:ProductTypeCancel">
+                    <!-- <xs:sequence>
+                        <xs:element name="interactivePaperId" type="dataType:IdType"/>
+                    </xs:sequence>-->
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="InteractivePaperNewUpdate">
+        <xs:complexContent>
+            <xs:extension base="product:ChildProductNewUpdateType">
+                <xs:sequence>
+                    <xs:element name="interactivePaperId" type="dataType:IdType"/>
+                    <xs:element name="interactivePaperNumberOfUpdates">
+                       <xs:simpleType>
+                           <xs:restriction base="xs:short">
+                               <xs:minInclusive value="0"/>
+                           </xs:restriction>
+                       </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="headingCode" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>
+
+

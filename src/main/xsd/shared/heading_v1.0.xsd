@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema 
+	xmlns="http://www.truvo.com/schema/shared/heading/1.0" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"         
+	targetNamespace="http://www.truvo.com/schema/shared/heading/1.0"
+	elementFormDefault="qualified"
+	attributeFormDefault="unqualified"> 
+
+	<xsd:complexType name="HeadingReferenceType">
+		<xsd:sequence>
+			<xsd:element name="headingCode" type="xsd:string" minOccurs="1" maxOccurs="1"/>	
+		</xsd:sequence>		
+	</xsd:complexType>
+	
+	<xsd:complexType name="HeadingReferencePrioritizedType">
+		<xsd:complexContent>
+			<xsd:extension base="HeadingReferenceType">
+				<xsd:sequence>
+					<xsd:element name="priority" type="xsd:integer" minOccurs="1" maxOccurs="1"/>
+				</xsd:sequence>	
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>	
+</xsd:schema>

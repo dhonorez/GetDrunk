@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns="http://www.truvo.com/schema/fam/online/clickToCall/1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:product="http://www.truvo.com/schema/fam/product/1.0"
+           targetNamespace="http://www.truvo.com/schema/fam/online/clickToCall/1.0"
+           elementFormDefault="qualified">
+
+
+    <xs:import namespace="http://www.truvo.com/schema/fam/product/1.0"
+               schemaLocation="../shared/product_v1.0.xsd"/>
+
+
+    <!--
+            Following extensions are degenerate (i.e. don't add any attribute or element to corresponding base types).
+            They are introduced to ease usage of JAXB generated classes. For example, if we declare ClickToCall as
+            <![CDATA[ <xs:element name="clickToCallNew" type="ClickToCallNewUpdateType"/>]]>, then no
+            java class of type clickToCallNew is generated and JAXB clients needs to use ObjectFactory and JAXBElement class
+            to work with an clickToCallNew element.
+    -->
+    <xs:element name="clickToCallNew">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates a newly sold ClickToCall product
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="ClickToCallNewUpdateType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="clickToCallUpdate">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates an update request for a sold ClickToCall product
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="ClickToCallNewUpdateType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="clickToCallCancel">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates a cancellation request for a sold ClickToCall product
+            </xs:documentation>
+        </xs:annotation>
+
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="product:ProductTypeCancel">
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="ClickToCallNewUpdateType">
+        <xs:complexContent>
+            <xs:extension base="product:ProductTypeNewUpdateWithBusinessFolderIdType">
+                <xs:sequence>
+                    <xs:element name="languageIso" type="xs:language"/>
+                    <xs:element name="clickToCallNumber" type="xs:string"/>
+                    <xs:element name="headingCode" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>
+
+

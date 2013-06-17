@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema     
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+    
+    <!-- Includes -->
+    <xsd:include schemaLocation="bds_datatypes_v0.1.xsd"/>
+    
+    <!-- Complex Types -->
+    <xsd:complexType name="HeadingReferenceType">
+        <xsd:attribute name="code" type="PublicCodeType" use="required"/>
+        <xsd:attribute name="priority" type="xsd:int" use="optional" default="0"/>
+        <xsd:attribute name="resolved" type="xsd:boolean" use="required"/>
+    </xsd:complexType>    
+</xsd:schema>

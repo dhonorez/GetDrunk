@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema xmlns="http://www.truvo.com/schema/geolink/api/geolinkMapper/litech/1.0" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:gc="http://www.truvo.com/schema/geolink/api/geolinkCommon/1.0"
+	xmlns:gd="http://www.truvo.com/schema/geolink/api/geolinkDetail/1.0" 	
+	targetNamespace="http://www.truvo.com/schema/geolink/api/geolinkMapper/litech/1.0" 
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified">
+	
+	<xsd:import namespace="http://www.truvo.com/schema/geolink/api/geolinkCommon/1.0" schemaLocation="geolinkCommon_v1.0.xsd"/>
+	<xsd:import namespace="http://www.truvo.com/schema/geolink/api/geolinkDetail/1.0" schemaLocation="geolinkDetail_v0.1.xsd"/>
+
+	<!-- Core Elements -->
+	<xsd:element name="retrieveMappingForLitechRequest">
+		<xsd:annotation>
+			<xsd:documentation><![CDATA[
+                Request Method 1        
+                URI: http://{geolinkDomain}/api/mappings/litech/{litechId}
+                QUERY: n/a
+                METHOD: GET
+                BODY: n/a  
+                
+                Request Method 2        
+                URI: http://{geolinkDomain}/api/mappings/litech
+                QUERY: n/a
+                METHOD: POST
+                BODY: XML{retrieveMappingForLitechRequest}
+                ]]></xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="litech" type="LitechIdType" minOccurs="1" maxOccurs="1"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="retrieveMappingForLitechResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="originalData" type="LitechDetailType" minOccurs="1" maxOccurs="1"/>
+				<xsd:element name="info" type="gd:LocationDetailType" minOccurs="0" maxOccurs="1"/>
+				<xsd:element name="status" type="gc:StatusType" minOccurs="1" maxOccurs="1"/>				
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- Types -->
+	<xsd:complexType name="LitechDetailType">
+		<xsd:sequence>
+			<xsd:element name="litech" type="LitechIdType" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="teleAtlasId" type="TeleAtlasIdType" minOccurs="1" maxOccurs="1"/> 
+			<xsd:element name="litechLevel" type="LitechLevelType" minOccurs="1" maxOccurs="1"/>			
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="LitechIdType">
+		<xsd:restriction base="xsd:positiveInteger"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="TeleAtlasIdType">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9]+[A-Z]?"></xsd:pattern>
+		</xsd:restriction>
+	</xsd:simpleType>	
+	<xsd:simpleType name="LitechLevelType">
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="DEELG"/>
+			<xsd:enumeration value="GEMEEN"/>
+			<xsd:enumeration value="GEMGRP"/>			
+			<xsd:enumeration value="PROV"/>
+			<xsd:enumeration value="GEWEST"/>
+			<xsd:enumeration value="NATIE"/>
+		</xsd:restriction>
+	</xsd:simpleType>	
+</xsd:schema>

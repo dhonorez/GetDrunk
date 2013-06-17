@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema 
+	xmlns="http://www.truvo.com/schema/shared/contactPerson/1.0" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"     
+	xmlns:adv="http://www.truvo.com/schema/shared/advertiser/1.0"
+	xmlns:cpoint="http://www.truvo.com/schema/shared/contactPoint/1.0"
+	xmlns:data="http://www.truvo.com/schema/shared/dataTypes/1.0"
+	xmlns:geo="http://www.truvo.com/schema/shared/geo/1.0"
+	xmlns:i18n="http://www.truvo.com/schema/shared/i18n/1.0"
+	targetNamespace="http://www.truvo.com/schema/shared/contactPerson/1.0"
+	elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+		
+	<xsd:import schemaLocation="advertiser_v1.0.xsd" namespace="http://www.truvo.com/schema/shared/advertiser/1.0"/>
+	<xsd:import schemaLocation="contactPoint_v1.0.xsd" namespace="http://www.truvo.com/schema/shared/contactPoint/1.0"/>
+	<xsd:import schemaLocation="dataTypes_v1.0.xsd" namespace="http://www.truvo.com/schema/shared/dataTypes/1.0"/>
+	<xsd:import schemaLocation="geo_v1.0.xsd" namespace="http://www.truvo.com/schema/shared/geo/1.0"/>	
+	<xsd:import schemaLocation="i18n_v1.0.xsd" namespace="http://www.truvo.com/schema/shared/i18n/1.0"/>
+	
+	<xsd:simpleType name="GenderEnum">
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="male"/>
+			<xsd:enumeration value="female"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CommunicationChannelEnum">
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="email"/>
+			<xsd:enumeration value="face_to_face"/>
+			<xsd:enumeration value="fax"/>
+			<xsd:enumeration value="mail"/>
+			<xsd:enumeration value="phone"/>
+			<xsd:enumeration value="self_service"/>
+			<xsd:enumeration value="sms"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RoleCodeEnum">
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="general"/>
+			<xsd:enumeration value="billing"/>
+			<xsd:enumeration value="collection"/>
+			<xsd:enumeration value="signer"/>
+			<xsd:enumeration value="proof"/>
+			<xsd:enumeration value="online_content"/>
+			<xsd:enumeration value="media-content"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="CoreContactPersonType">
+		<xsd:sequence>
+			<xsd:element name="activeInd" type="xsd:boolean"/>
+			<xsd:element name="givenName" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="100"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="surname">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="100"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="gender" type="GenderEnum"/>
+			<xsd:element name="language" type="i18n:LanguageCodeType"/>
+			<xsd:element name="address" type="geo:AddressDetailsType" minOccurs="0"/>
+			<xsd:element name="contactTelephone" type="cpoint:TelephoneNumberType" minOccurs="0"/>
+			<xsd:element name="contactFax" type="cpoint:TelephoneNumberType" minOccurs="0"/>
+			<xsd:element name="additionalTelephone" type="cpoint:TelephoneNumberType" minOccurs="0"/>
+			<xsd:element name="email" type="cpoint:EmailType" minOccurs="0"/>
+			<xsd:element name="communicationChannel" type="CommunicationChannelEnum"/>
+			<xsd:element name="additionalInfo" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>free text information</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="2048"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="roleList">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="role" type="RoleCodeEnum" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CompleteContactPersonType">
+		<xsd:complexContent>
+			<xsd:extension base="CoreContactPersonType">
+				<xsd:sequence>
+					<xsd:element name="advertiserId" type="adv:AdvertiserIdType"/>
+					<xsd:element name="contactPersonID" type="data:Numeric12IdType"/>
+					<xsd:element name="contactTitle">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:maxLength value="50"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>

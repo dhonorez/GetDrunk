@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/yellow/!svn/ver/19273/opus/trunk/src/main/xsd/bds/msg
+END
+bds_msg_change_ack_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/yellow/!svn/ver/19273/opus/trunk/src/main/xsd/bds/msg/bds_msg_change_ack_v0.1.xsd
+END
+bds_msg_event_opus_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/yellow/!svn/ver/19273/opus/trunk/src/main/xsd/bds/msg/bds_msg_event_opus_v0.1.xsd
+END
+bds_msg_lock_status_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/yellow/!svn/ver/19273/opus/trunk/src/main/xsd/bds/msg/bds_msg_lock_status_v0.1.xsd
+END
+bds_msg_change_request_v0.1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/yellow/!svn/ver/19273/opus/trunk/src/main/xsd/bds/msg/bds_msg_change_request_v0.1.xsd
+END

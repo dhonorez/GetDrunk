@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema xmlns="http://www.truvo.com/schema/basedata"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"   
+    targetNamespace="http://www.truvo.com/schema/basedata"
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+
+    <!-- Includes -->
+    <xsd:include schemaLocation="../common/bds_i18n_v0.1.xsd"/>
+    <xsd:include schemaLocation="../common/bds_party_v0.1.xsd"/>
+    <xsd:include schemaLocation="../common/bds_ticket_v0.1.xsd"/>    
+    <xsd:include schemaLocation="../common/bds_timing_v0.1.xsd"/>
+
+    <!-- Root -->
+    <xsd:element name="lockStatusNotification">
+        <xsd:complexType>
+            <xsd:sequence>
+                <!-- Country that the change is related to -->
+                <xsd:element name="country" type="CountryType" minOccurs="1" maxOccurs="1"/>
+                
+                <!-- Details about the party that is locked -->
+                <xsd:element name="party" type="PartyIdentityType" minOccurs="1" maxOccurs="1"/>
+                
+                <!-- ChangeRequestTicketNumber that caused the lock -->
+                <xsd:element name="changeRequestTicketNumber" type="ChangeRequestTicketNumberType" minOccurs="1" maxOccurs="1"/>
+                
+                <!-- Status of the lock -->
+                <xsd:element name="lockStatus" type="PartyLockStatusEnum" minOccurs="1" maxOccurs="1"/>
+                
+                <xsd:element name="lockPeriod" type="TimeStampInclusiveRangeType" minOccurs="1" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>    
+</xsd:schema>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema  
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"     
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+        
+    <!-- Imports -->    
+    <xsd:include schemaLocation="bds_contactMechanism_v0.1.xsd"/>        
+    <xsd:include schemaLocation="bds_datatypes_v0.1.xsd"/>    
+    <xsd:include schemaLocation="bds_i18n_v0.1.xsd"/>
+                        
+    <!-- Party Site Identity -->                        
+    <xsd:complexType name="PartySiteIdentityType">        
+        <xsd:attribute name="publicId" type="PublicIdType" use="required"/>
+        <xsd:attribute name="partyPublicId" type="PublicIdType" use="required"/>
+        <xsd:attribute name="active" type="xsd:boolean" use="required"/>
+        <xsd:attribute name="type" type="PartySiteTypeEnum" use="required"/>
+        <xsd:attribute name="language" type="LanguageType" use="optional"/>
+        <xsd:attribute name="business" type="xsd:boolean" use="required"/>        
+    </xsd:complexType>   
+    
+    <xsd:complexType name="PartySiteIdentityUriType">
+        <xsd:complexContent>
+            <xsd:extension base="PartySiteIdentityType">
+                <xsd:attribute name="uri" type="UriType" use="required"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>  
+    
+    <xsd:complexType name="PartySiteHolderUriType">
+        <xsd:attribute name="uri" type="UriType" use="required"/>   
+    </xsd:complexType>    
+        
+    <xsd:simpleType name="PartySiteTypeEnum">
+        <xsd:restriction base="xsd:NMTOKEN">
+            <xsd:enumeration value="GEOGRAPHICAL"/>
+            <xsd:enumeration value="WEBSHOP"/>
+            <xsd:enumeration value="FLEXIBLE"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+    <xsd:simpleType name="PartySiteUseTypeEnum">
+        <xsd:restriction base="xsd:NMTOKEN">
+            <xsd:enumeration value="OFFICIAL_ADVERTISER_SITE"/>
+            <xsd:enumeration value="OFFICIAL_BUSINESS_SITE"/>
+            <xsd:enumeration value="PUBLICATION"/>
+            <xsd:enumeration value="BILL_TO"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+
+    <!-- Address related -->
+    <xsd:complexType name="PartySiteAddressSetType">
+        <xsd:sequence>            
+            <xsd:element name="addressTranslation" type="AddressTranslationType" minOccurs="0" maxOccurs="unbounded"/>                        
+        </xsd:sequence>
+    </xsd:complexType>    
+    <xsd:complexType name="AddressTranslationType">
+        <xsd:sequence>            
+            <xsd:element name="geoDetails" type="AddressGeoDetailsType" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="street" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="houseNumber" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="houseNumberSuffix" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="postalCode" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="locality" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="country" type="CountryType" minOccurs="1" maxOccurs="1"/>                
+        </xsd:sequence>        
+        <xsd:attribute name="language" type="LanguageType" use="required"/>        
+    </xsd:complexType> 
+    <xsd:complexType name="AddressGeoDetailsType">
+        <xsd:sequence>
+            <xsd:element name="resolved" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="geoRefId" type="PublicIdType" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="resolutionType" type="AddressResolutionTypeEnum" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="coordinates" type="AddressGeoCoordinatesType" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>   
+    <xsd:complexType name="AddressGeoCoordinatesType">
+        <xsd:attribute name="latitude" type="xsd:double" use="required"/>
+        <xsd:attribute name="longitude" type="xsd:double" use="required"/>
+    </xsd:complexType>
+    <xsd:simpleType name="AddressResolutionTypeEnum">
+        <xsd:restriction base="xsd:NMTOKEN">
+            <xsd:enumeration value="GEOLINK"/>
+            <xsd:enumeration value="NONE"/>
+            <xsd:enumeration value="OPERATIONS"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+    
+    <!-- Contact Mechanism related -->
+    <xsd:complexType name="PartySiteContactMechanismsHolderType">
+        <xsd:sequence>
+            <xsd:element name="phone" type="DialNumberContactMechanismType" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="fax" type="DialNumberContactMechanismType" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="mobile" type="DialNumberContactMechanismType" minOccurs="0" maxOccurs="unbounded"/>            
+            <xsd:element name="email" type="EmailContactMechanismType" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="webSite" type="WebSiteContactMechanismType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>    
+</xsd:schema>

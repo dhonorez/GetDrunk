@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema  
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+    
+    <!-- Complex Types -->
+    <xsd:complexType name="UserInfoType">
+        <xsd:attribute name="login" type="xsd:string" use="required"/>
+        <xsd:attribute name="email" type="xsd:string" use="required"/>
+        <xsd:attribute name="fullname" type="xsd:string" use="optional"/>
+    </xsd:complexType>       
+</xsd:schema>

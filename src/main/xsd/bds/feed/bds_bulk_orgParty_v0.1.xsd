@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema xmlns="http://www.truvo.com/schema/basedata"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"             
+    targetNamespace="http://www.truvo.com/schema/basedata"
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+
+    <!-- Includes -->
+    <xsd:include schemaLocation="../common/bds_businessName_v0.1.xsd"/>    
+    <xsd:include schemaLocation="../common/bds_customerAccountSite_v0.1.xsd"/>
+    <xsd:include schemaLocation="../common/bds_headingReference_v0.1.xsd"/>
+    <xsd:include schemaLocation="../common/bds_party_v0.1.xsd"/>
+    <xsd:include schemaLocation="../common/bds_partySite_v0.1.xsd"/>
+    
+    <!-- Root Element -->
+    <xsd:element name="bulkOrgPartyFeed">
+        <xsd:complexType>
+            <xsd:sequence>                
+                <xsd:element name="party" type="BulkOrgPartyFeedPartyType" minOccurs="0" maxOccurs="unbounded"/>                
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <!-- Bulk Party Item -->
+    <xsd:complexType name="BulkOrgPartyFeedPartyType">
+        <xsd:complexContent>
+            <xsd:extension base="PartyIdentityUriType">
+                <xsd:sequence>                    
+                    <xsd:element name="profile" type="PartyProfileHolderType" minOccurs="1" maxOccurs="1"/>
+                    <xsd:element name="businessNames" type="PartyScopedBusinessNameHolderType" minOccurs="1" maxOccurs="1"/>
+                    <xsd:element name="partySite" type="BulkOrgPartyFeedPartySiteType" minOccurs="0" maxOccurs="unbounded"/>                                                         
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <!-- Party Site Related -->
+    <xsd:complexType name="BulkOrgPartyFeedPartySiteType">
+        <xsd:complexContent>
+            <xsd:extension base="PartySiteIdentityUriType">
+                <xsd:sequence>
+                    <xsd:element name="use" type="PartySiteUseTypeEnum" minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:element name="headingReference" type="HeadingReferenceType" minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:element name="businessNames" type="PartySiteScopedBusinessNameHolderType" minOccurs="1" maxOccurs="1"/>
+                    <xsd:element name="officialAddress" type="PartySiteAddressSetType" minOccurs="1" maxOccurs="1"/>
+                    <xsd:element name="displayAddress" type="PartySiteAddressSetType" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="geoAddress" type="PartySiteAddressSetType" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="contactMechanisms" type="PartySiteContactMechanismsHolderType" minOccurs="0" maxOccurs="1"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>   
+</xsd:schema>

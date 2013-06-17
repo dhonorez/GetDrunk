@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema 
+	xmlns="http://www.truvo.com/schema/shared/urls/1.0" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"         
+	targetNamespace="http://www.truvo.com/schema/shared/urls/1.0"
+	elementFormDefault="qualified"
+	attributeFormDefault="unqualified"> 
+	<xsd:simpleType name="ResourceUriType">
+		<xsd:restriction base="xsd:anyURI"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="AnchorType">
+		<xsd:restriction base="xsd:anyURI"/>
+	</xsd:simpleType>  	
+</xsd:schema>

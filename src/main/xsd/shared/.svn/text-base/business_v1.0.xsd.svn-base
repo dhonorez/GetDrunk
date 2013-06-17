@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema 
+	xmlns="http://www.truvo.com/schema/shared/business/1.0" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"       
+	xmlns:cp="http://www.truvo.com/schema/shared/contactPoint/1.0" 
+	xmlns:geo="http://www.truvo.com/schema/shared/geo/1.0" 
+	xmlns:heading="http://www.truvo.com/schema/shared/heading/1.0" 
+	xmlns:i18n="http://www.truvo.com/schema/shared/i18n/1.0" 
+	xmlns:sys="http://www.truvo.com/schema/shared/system/1.0" 
+	xmlns:url="http://www.truvo.com/schema/shared/urls/1.0" 	
+	targetNamespace="http://www.truvo.com/schema/shared/business/1.0"
+	elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+		
+	<xsd:import namespace="http://www.truvo.com/schema/shared/contactPoint/1.0" schemaLocation="contactPoint_v1.0.xsd"/>
+	<xsd:import namespace="http://www.truvo.com/schema/shared/geo/1.0" schemaLocation="geo_v1.0.xsd"/>
+	<xsd:import namespace="http://www.truvo.com/schema/shared/heading/1.0" schemaLocation="heading_v1.0.xsd"/>
+	<xsd:import namespace="http://www.truvo.com/schema/shared/i18n/1.0" schemaLocation="i18n_v1.0.xsd"/>
+	<xsd:import namespace="http://www.truvo.com/schema/shared/system/1.0" schemaLocation="system_v1.0.xsd"/>
+	<xsd:import namespace="http://www.truvo.com/schema/shared/urls/1.0" schemaLocation="urls_v1.0.xsd"/>
+	
+	<xsd:simpleType name="BusinessIdType">
+		<xsd:annotation>
+			<xsd:documentation>matches number(10) datatype</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:unsignedLong">
+			<xsd:maxInclusive value="9999999999"/>
+		</xsd:restriction>
+	</xsd:simpleType>	
+
+	<!-- Business -->
+	<xsd:complexType name="BusinessDetailType">
+		<xsd:sequence>
+			<xsd:element name="action" type="sys:CreateUpdateDeleteEnum" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="businessId" type="BusinessIdType" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="mainLanguage" type="i18n:LanguageCodeType" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="businessName" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="businessAlternativeName" type="BusinessAlternativeNameType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="indicators" type="BusinessIndicatorsType" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="businessStatus" type="BusinessStatusEnum" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="businessType" type="BusinessTypeEnum" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="businessAddress" type="geo:AddressDetailsType" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="businessAlternativeAddress" type="BusinessAlternativeAddressType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="headingReference" type="heading:HeadingReferencePrioritizedType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="businessCommunicationPoint" type="BusinessCommunicationPointWithHeadingReferenceType" minOccurs="0" maxOccurs="unbounded"/>
+			<!-- xsd:element name="businessRelation" type="BusinessRelationType" minOccurs="0" maxOccurs="unbounded"/ -->
+			<xsd:element name="modificationInfo" type="sys:ModificationInfoType" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="BusinessIndicatorsType">
+		<xsd:sequence>
+			<xsd:element name="cancelledOn" type="xsd:dateTime" minOccurs="0" maxOccurs="1"/>
+			<!--xsd:element name="omitAddress" type="xsd:boolean"/ -->
+			<xsd:element name="numOfMembers" type="xsd:int" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>
+						This is the number of businesses in case the business is of type group (a.k.a. sponsored folder)
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>			
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="BusinessAlternativeNameType">
+		<xsd:sequence>
+			<xsd:element name="language" type="i18n:LanguageCodeType"/>
+			<xsd:element name="usageType" type="BusinessAlternativeNameUsageTypeEnum"/>
+			<xsd:element name="name" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="BusinessAlternativeAddressType">
+		<xsd:sequence>
+			<xsd:element name="language" type="i18n:LanguageCodeType"/>
+			<xsd:element name="address" type="geo:AddressDetailsType"/>
+			<xsd:element name="usageType" type="BusinessAlternativeAddressUsageTypeEnum"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="BusinessCommunicationPointWithHeadingReferenceType">
+		<xsd:sequence>			
+			<xsd:choice>
+				<xsd:element name="phone" type="cp:TelephoneNumberType"/>
+				<xsd:element name="fax" type="cp:TelephoneNumberType"/>
+				<xsd:element name="email" type="cp:EmailType"/>
+				<xsd:element name="url" type="url:ResourceUriType"/>
+			</xsd:choice>
+			<xsd:element name="headingReference" type="heading:HeadingReferenceType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="priority" type="xsd:integer" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:simpleType name="BusinessAlternativeAddressUsageTypeEnum">
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="D">
+				<xsd:annotation>
+					<xsd:documentation>Display address</xsd:documentation>
+				</xsd:annotation>				
+			</xsd:enumeration>
+			<xsd:enumeration value="T">
+				<xsd:annotation>
+					<xsd:documentation>Translation address</xsd:documentation>
+				</xsd:annotation>				
+			</xsd:enumeration>
+			<xsd:enumeration value="V">
+				<xsd:annotation>
+					<xsd:documentation>Display and Mapping address</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="P">
+				<xsd:annotation>
+					<xsd:documentation>Print address</xsd:documentation>
+				</xsd:annotation>				
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="BusinessAlternativeNameUsageTypeEnum">
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="D">
+				<xsd:annotation>
+					<xsd:documentation>Display name</xsd:documentation>
+				</xsd:annotation>				
+			</xsd:enumeration>
+			<xsd:enumeration value="A">
+				<xsd:annotation>
+					<xsd:documentation>Alternate searchable name</xsd:documentation>
+				</xsd:annotation>				
+			</xsd:enumeration>	
+			<xsd:enumeration value="G">
+				<xsd:annotation>
+					<xsd:documentation>Free listing name</xsd:documentation>
+				</xsd:annotation>				
+			</xsd:enumeration>			
+			<xsd:enumeration value="P">
+				<xsd:annotation>
+					<xsd:documentation>Print name</xsd:documentation>
+				</xsd:annotation>				
+			</xsd:enumeration>				
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="BusinessStatusEnum">
+		<xsd:annotation>
+			<xsd:documentation>Enumeration of values for status of a business</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="ACTIVE"/>						
+			<xsd:enumeration value="INACTIVE"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="BusinessTypeEnum">
+		<xsd:annotation>
+			<xsd:documentation>
+				This should be used to identify whether this is a regular Business, Group Business or group member business
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="MAIN"/>
+			<xsd:enumeration value="BRANCH"/>
+			<xsd:enumeration value="GROUP"/>			
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<!--
+	NOT IN USE BECAUSE OF BUSINESSGROUPS
+	<xsd:complexType name="BusinessRelationType">
+		<xsd:sequence>
+			<xsd:element name="type" type="BusinessRelationTypeEnum"/>
+			<xsd:element name="role" type="BusinessRelationMemberRoleTypeEnum">
+				<xsd:annotation>
+					<xsd:documentation>The role of the current business in this relationship with the members</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="members" type="BusinessRelationMemberType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="BusinessRelationMemberType">
+		<xsd:annotation>
+			<xsd:documentation>Describes the members of a business relation</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="businessId" type="BusinessIdType"/>
+			<xsd:element name="role" type="BusinessRelationMemberRoleTypeEnum">
+				<xsd:annotation>
+					<xsd:documentation>The role of the other business participating in this relationship as a member</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>	
+	<xsd:simpleType name="BusinessRelationMemberRoleTypeEnum">
+		<xsd:restriction base="xsd:NMTOKEN"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="BusinessRelationTypeEnum">
+		<xsd:restriction base="xsd:NMTOKEN"/>
+	</xsd:simpleType>		
+	-->
+</xsd:schema>

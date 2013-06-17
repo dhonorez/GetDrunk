@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns="http://www.truvo.com/schema/fam/online/video/1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:product="http://www.truvo.com/schema/fam/product/1.0"
+           xmlns:dataType="http://www.truvo.com/schema/shared/dataTypes/1.0"
+           targetNamespace="http://www.truvo.com/schema/fam/online/video/1.0"
+           elementFormDefault="qualified">
+
+    <xs:import namespace="http://www.truvo.com/schema/shared/dataTypes/1.0"
+               schemaLocation="../../../shared/dataTypes_v1.0.xsd"/>
+    <xs:import namespace="http://www.truvo.com/schema/fam/product/1.0"
+               schemaLocation="../shared/product_v1.0.xsd"/>
+    <!--
+            Following extensions are degenerate (i.e. don't add any attribute or element to corresponding base types).
+            They are introduced to ease usage of JAXB generated classes. For example, if we declare videoNew as
+            <![CDATA[ <xs:element name="videoNew" type="VideoNewUpdate"/>]]>, then no
+            java class of type videoNew is generated and JAXB clients needs to use ObjectFactory and JAXBElement class
+            to work with an videoNew element.
+    -->
+    <xs:element name="videoNew">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates a newly sold Video product
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="VideoNewUpdate"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="videoUpdate">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates an update request for a sold Video product
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="VideoNewUpdate"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="videoCancel">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates a cancellation request for a sold Video product
+            </xs:documentation>
+        </xs:annotation>
+
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="product:ProductTypeCancel">
+
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="VideoNewUpdate">
+        <xs:complexContent>
+            <xs:extension base="product:ProductTypeNewUpdateWithBusinessFolderIdType">
+                <xs:sequence>
+                    <xs:element name="videoId" type="dataType:IdType"/>
+                    <xs:element name="videoType" type="xs:string"/>
+                    <xs:element name="languageIso" type="xs:language"/>
+                    <xs:element name="headingCode" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>
+
+

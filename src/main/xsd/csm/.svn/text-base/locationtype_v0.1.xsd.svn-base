@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema 
+    xmlns="http://www.truvo.com/schema/csm/locationtype/0.1" 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:generic="http://www.truvo.com/schema/csm/common/generic/0.1"
+    targetNamespace="http://www.truvo.com/schema/csm/locationtype/0.1"
+    elementFormDefault="qualified">
+    
+    <xsd:import schemaLocation="common_generic_v0.1.xsd"        namespace="http://www.truvo.com/schema/csm/common/generic/0.1"/>        
+
+    <!-- headings with references to headings  -->
+    <xsd:element name="locationTypes">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="locationType" type="LocationTypeInternalRefWithBasicDetailsType" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+            <xsd:attribute name="countryIso" type="generic:CountryType"/>
+        </xsd:complexType>        
+    </xsd:element> 
+    
+    <xsd:element name="locationType">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="uri" type="generic:ResourceUriType" minOccurs="1" maxOccurs="1"/>                
+                <xsd:element name="code" type="xsd:string" minOccurs="1" maxOccurs="1"/>            
+            </xsd:sequence>
+        </xsd:complexType>        
+    </xsd:element>     
+    
+    <!-- not used at the moment 
+    <xsd:complexType name="LocationTypeInternalRefType">
+        <xsd:attribute name="href" type="generic:AnchorType" use="required"/>        
+    </xsd:complexType -->   
+
+    <xsd:complexType name="LocationTypeInternalRefWithBasicDetailsType">
+        <xsd:sequence>
+            <xsd:element name="code" type="xsd:string" minOccurs="1" maxOccurs="1"/>            
+        </xsd:sequence>
+        <xsd:attribute name="href" type="generic:AnchorType" use="required"/>        
+    </xsd:complexType>  
+          
+</xsd:schema>

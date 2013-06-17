@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/yellow/!svn/ver/17417/opus/trunk/src/main/xsd/shared
+END
+dataTypes_v1.0.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/yellow/!svn/ver/17417/opus/trunk/src/main/xsd/shared/dataTypes_v1.0.xsd
+END
+heading_v1.0.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/yellow/!svn/ver/17417/opus/trunk/src/main/xsd/shared/heading_v1.0.xsd
+END
+i18n_v1.0.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/yellow/!svn/ver/17417/opus/trunk/src/main/xsd/shared/i18n_v1.0.xsd
+END
+billing_v1.0.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/yellow/!svn/ver/17417/opus/trunk/src/main/xsd/shared/billing_v1.0.xsd
+END
+contactPerson_v1.0.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/yellow/!svn/ver/17417/opus/trunk/src/main/xsd/shared/contactPerson_v1.0.xsd
+END
+system_v1.0.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/yellow/!svn/ver/17417/opus/trunk/src/main/xsd/shared/system_v1.0.xsd
+END
+contactPoint_v1.0.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/yellow/!svn/ver/17417/opus/trunk/src/main/xsd/shared/contactPoint_v1.0.xsd
+END
+urls_v1.0.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/yellow/!svn/ver/17417/opus/trunk/src/main/xsd/shared/urls_v1.0.xsd
+END
+advertiser_v1.0.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/yellow/!svn/ver/17417/opus/trunk/src/main/xsd/shared/advertiser_v1.0.xsd
+END
+businessGroup_v1.0.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/yellow/!svn/ver/17417/opus/trunk/src/main/xsd/shared/businessGroup_v1.0.xsd
+END
+geo_v1.0.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/yellow/!svn/ver/17417/opus/trunk/src/main/xsd/shared/geo_v1.0.xsd
+END
+business_v1.0.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/yellow/!svn/ver/17417/opus/trunk/src/main/xsd/shared/business_v1.0.xsd
+END

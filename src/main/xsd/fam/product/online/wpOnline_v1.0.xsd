@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- edited with XMLSpy v2012 sp1 (x64) (http://www.altova.com) by Melih Cetin (Truvo Services & Technology BV) -->
+<xs:schema xmlns="http://www.truvo.com/schema/fam/online/wpOnline/1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:product="http://www.truvo.com/schema/fam/product/1.0"
+           targetNamespace="http://www.truvo.com/schema/fam/online/wpOnline/1.0"
+           elementFormDefault="qualified">
+    <xs:import namespace="http://www.truvo.com/schema/fam/product/1.0"
+               schemaLocation="../shared/product_v1.0.xsd"/>
+
+    <!--
+            Following extensions are degenerate (i.e. don't add any attribute or element to corresponding base types).
+            They are introduced to ease usage of JAXB generated classes. For example, if we declare wpOnline as
+            <![CDATA[ <xs:element name="wpOnlineNew" type="WpOnlineNewUpdate"/>]]>, then no
+            java class of type wpOnline is generated and JAXB clients needs to use ObjectFactory and JAXBElement class
+            to work with an wpOnline element.
+    -->
+    <xs:element name="wpOnlineNew">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates a newly sold WP Online product
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="WpOnlineNewUpdateType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="wpOnlineUpdate">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates an update request for a sold WP Online product
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="WpOnlineNewUpdateType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="wpOnlineCancel">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates a cancellation request for a sold WP Online product
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="product:ProductTypeCancel"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="WpOnlineNewUpdateType">
+        <xs:complexContent>
+            <xs:extension base="product:ProductTypeNewUpdateWithBusinessId">
+                <xs:sequence>
+                    <xs:element name="languageIso" type="xs:language"/>
+                    <xs:element name="locality" type="xs:string"/>
+                    <xs:element name="additionalPhrase" type="AdditionalPhraseType" minOccurs="0"
+                                maxOccurs="unbounded"/>
+                    <xs:element name="info" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="AdditionalPhraseType">
+        <xs:sequence>
+            <xs:element name="label" type="xs:string" minOccurs="0"/>
+            <xs:element name="phrase" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
