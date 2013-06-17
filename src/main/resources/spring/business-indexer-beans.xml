@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	                       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	                       http://www.springframework.org/schema/task
+	 					   http://www.springframework.org/schema/task/spring-task.xsd
+		                   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+		                   
+
+	<bean id="bdsResponseErrorHandler" class="com.truvo.getdrunk.elasticsearch.index.bds.BdsResponseErrorHandler" />
+
+	 <bean id="bdsRestTemplate" class="org.springframework.web.client.RestTemplate">
+		<property name="errorHandler" ref="bdsResponseErrorHandler" />
+	</bean>
+	
+	 
+	 <bean id="bdsService" class="com.truvo.getdrunk.elasticsearch.index.bds.BDSServiceRestImpl">
+		<constructor-arg name="restTemplate" ref="bdsRestTemplate" />
+		<constructor-arg name="baseUri" value="${bds.rest.service.root}" />
+	</bean>
+	 
+	 <bean id="businessIdsFetcher" class="com.truvo.getdrunk.elasticsearch.index.BusinessIdsFetcher" >
+		<constructor-arg name="bdsService" ref="bdsService"/>
+	 </bean>
+
+	 <bean id="businessDataAggregator" class="com.truvo.getdrunk.elasticsearch.index.BusinessDataAggregator" >
+		<constructor-arg name="bdsService" ref="bdsService"/>
+		<constructor-arg name="headingService" ref="headingService"/>
+		<constructor-arg name="localityService" ref="localityService"/>
+	 </bean>
+	 
+	 <task:executor id="executor" pool-size="20" queue-capacity="500" rejection-policy="CALLER_RUNS"/>
+	 
+	 <bean id="restTemplate" class="org.springframework.web.client.RestTemplate" />
+	 
+	 <bean id="headingService" class="com.truvo.getdrunk.elasticsearch.index.heading.HeadingServiceRestImpl">
+		<property name="restTemplate" ref="restTemplate" />
+		<property name="csmServiceRoot" value="${csm.rest.service.root}" />
+	 </bean>
+
+	<bean id="localityService" class="com.truvo.getdrunk.elasticsearch.index.locality.LocalityServiceRestImpl">
+		<property name="restTemplate" ref="restTemplate" />
+		<property name="csmServiceRoot" value="${csm.rest.service.root}" />
+		<property name="geoLinkServiceRoot" value="${geolink.rest.service.root}" />
+	</bean>
+	 
+	 
+
+</beans>
