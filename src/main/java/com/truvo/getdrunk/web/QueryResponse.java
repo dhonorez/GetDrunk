@@ -19,4 +19,9 @@ public class QueryResponse {
 		this.businesses = businesses;
 	}
 
+	@Override
+	public String toString() {
+		return "QueryResponse [businesses=" + businesses + "]";
+	}
+
 }
