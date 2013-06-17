@@ -2,35 +2,35 @@ package com.truvo.getdrunk.web;
 
 public class Coordinate {
 
-	private double x;
-	private double y;
+	private double lat;
+	private double lon;
 
 	public Coordinate() {}
 	
-	public Coordinate(double x, double y) {
+	public Coordinate(double lat, double lon) {
 		super();
-		this.x = x;
-		this.y = y;
+		this.lat = lat;
+		this.lon = lon;
 	}
 
-	public double getX() {
-		return x;
+	public double getLat() {
+		return lat;
 	}
 
-	public double getY() {
-		return y;
+	public double getLon() {
+		return lon;
 	}
 
-	public void setX(double x) {
-		this.x = x;
+	public void setLat(double lat) {
+		this.lat = lat;
 	}
 
-	public void setY(double y) {
-		this.y = y;
+	public void setLon(double lon) {
+		this.lon = lon;
 	}
 
 	@Override
 	public String toString() {
-		return "Coordinate [x=" + x + ", y=" + y + "]";
+		return "Coordinate [lat=" + lat + ", lon=" + lon + "]";
 	}
 }
