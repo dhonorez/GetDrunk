@@ -51,24 +51,14 @@ public class WebQuery {
 					logger.error(e.getMessage(), e);
 				}
 
-				// Business business = new Business();
-				// business.setCategory("Cafés");
-				// business.setName("Kelly's Irish Pub BVBA");
-				// business.setPhone("03 201 59 88");
-				// business.setWebsite("http://www.kellys.be");
-				// business.setAddress(new Address("De Keyserlei", 27, 2018, "Antwerpen"));
-				//
-				// QueryResponse queryResponse = new QueryResponse(Arrays.asList(business));
-
-				Business business = new Business();
-				business.setHeadings(Arrays.asList("Cafés"));
-				business.setName("Kelly's Irish Pub BVBA");
-				business.setPhone("03 201 59 88");
-				business.setWebsite("http://www.kellys.be");
-				business.setAddress(new Address("De Keyserlei", 27, 2018, "Antwerpen"));
-
-
-				queryResponse = new QueryResponse(Arrays.asList(business));
+//				Business business = new Business();
+//				business.setHeadings(Arrays.asList("Cafés"));
+//				business.setName("Kelly's Irish Pub BVBA");
+//				business.setPhone("03 201 59 88");
+//				business.setWebsite("http://www.kellys.be");
+//				business.setAddress(new Address("De Keyserlei", 27, 2018, "Antwerpen"));
+//
+//				queryResponse = new QueryResponse(Arrays.asList(business));
 				
 				response.type("application/json; charset=UTF-8");  
 				return asJson(queryResponse);
@@ -87,7 +77,6 @@ public class WebQuery {
 
 				return asJson(query);
 			}
-
 		});
 
 	}
