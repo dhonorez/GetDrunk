@@ -1,6 +1,6 @@
 package com.truvo.getdrunk.web;
 
-import static spark.Spark.*;
+import static spark.Spark.get;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
@@ -66,9 +66,9 @@ public class WebQuery {
 				business.setPhone("03 201 59 88");
 				business.setWebsite("http://www.kellys.be");
 				business.setAddress(new Address("De Keyserlei", 27, 2018, "Antwerpen"));
-				
-				QueryResponse queryResponse = new QueryResponse(Arrays.asList(business));
-				
+
+				queryResponse = new QueryResponse(Arrays.asList(business));
+
 				return asJson(queryResponse);
 			}
 		});
