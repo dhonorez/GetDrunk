@@ -1,14 +1,15 @@
 package com.truvo.getdrunk.elasticsearch.query;
 
-import static org.elasticsearch.node.NodeBuilder.nodeBuilder;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
-import org.elasticsearch.node.Node;
+import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.settings.ImmutableSettings;
+import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHitField;
 
@@ -20,14 +21,18 @@ public class BusinessQuery {
 
 	public static QueryResponse query(Query query) {
 
-		Node node = nodeBuilder().clusterName("InDomoCluster").node();
-
-		Client client = node.client();
+		// Node node = nodeBuilder().clusterName("InDomoCluster").node();
+		// Client client = node.client();
 
 		// final SearchRequestBuilder searchRequestBuilder = client.prepareSearch("businesses");
+		Settings settings = ImmutableSettings.settingsBuilder().put("cluster.name", "InDomoCluster").build();
+		Client client = new TransportClient(settings).addTransportAddress(new InetSocketTransportAddress("http://192.168.0.121", 9300));
+
 		SearchResponse response = client.prepareSearch("businesses").setTypes("nl").setFrom(0).setSize(query.getMaxResults()).execute().actionGet();
 
-		return convertResponse(response);
+		QueryResponse queryResponse = convertResponse(response);
+		client.close();
+		return queryResponse;
 
 	}
 
