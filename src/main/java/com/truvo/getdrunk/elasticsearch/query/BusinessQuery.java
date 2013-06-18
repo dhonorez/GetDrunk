@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
@@ -52,7 +53,7 @@ public class BusinessQuery {
 		}
 
 		TermFilterBuilder categoryQuery = null;
-		if (query.getCategory() != null) {
+		if (!StringUtils.isBlank(query.getCategory())) {
 			categoryQuery = new TermFilterBuilder("headings", query.getCategory());
 		}
 
@@ -152,7 +153,7 @@ public class BusinessQuery {
 		// q.setCategory("banken");
 		// q.setCategory("garages");
 		// q.setCategory("advocaten");
-		q.setCategory(null);
+		q.setCategory("");
 		q.setMaxResults(20);
 		q.setOpenNow(false);
 
