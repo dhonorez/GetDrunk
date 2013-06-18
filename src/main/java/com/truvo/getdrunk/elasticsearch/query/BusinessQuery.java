@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
-import org.elasticsearch.client.Requests;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
@@ -17,8 +15,10 @@ import org.elasticsearch.index.query.FilterBuilders;
 import org.elasticsearch.index.query.GeoPolygonFilterBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.TermFilterBuilder;
 import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.facet.FacetBuilders;
+import org.elasticsearch.search.facet.terms.TermsFacetBuilder;
 
 import com.truvo.getdrunk.web.Address;
 import com.truvo.getdrunk.web.Business;
@@ -29,61 +29,67 @@ import com.truvo.getdrunk.web.QueryResponse;
 public class BusinessQuery {
 
 	public static QueryResponse query(Query query) {
-
+		// Local stuff
 		// Node node = nodeBuilder().clusterName("InDomoCluster").client(true).node();
 		// Client client = node.client();
 
 		Settings settings = ImmutableSettings.settingsBuilder().put("cluster.name", "InDomoCluster").build();
 		Client client = new TransportClient(settings).addTransportAddress(new InetSocketTransportAddress("192.168.0.121", 9300));
 
-		// Builder settings = ImmutableSettings.settingsBuilder();
-		// settings.put("client.transport.sniff", true);
-		// settings.put("cluster.name", "InDomoCluster");
-		// settings.build();
-		//
-		// TransportClient c = new TransportClient(settings);
-		// c.addTransportAddress(new InetSocketTransportAddress("127.0.0.1", 9300));
-		// c.addTransportAddress(new InetSocketTransportAddress("192.168.0.121", 9300));
-		// Client client = c;
-
+		GeoPolygonFilterBuilder geoPolygonFilter = null;
 		if (query != null && query.getCoordinates() != null) {
-			// FilterBuilder filter = FilterBuilders.geoPolygonFilter("location");
 
-			GeoPolygonFilterBuilder geoPolygonFilter = FilterBuilders.geoPolygonFilter("location");
+			geoPolygonFilter = FilterBuilders.geoPolygonFilter("location");
 
 			for (Coordinate coord : query.getCoordinates()) {
 				geoPolygonFilter.addPoint(coord.getLon(), coord.getLat());
-				// geoPolygonFilter.addPoint(coord.getLat(), coord.getLon());
 			}
-
-			QueryBuilder esQuery = QueryBuilders.constantScoreQuery(geoPolygonFilter);
-
-			SearchSourceBuilder source = new SearchSourceBuilder().query(esQuery);
-
-			SearchRequest request = Requests.searchRequest("businesses").source(source);
-
-			int maxSize = 20;
-			if (query != null) {
-				maxSize = query.getMaxResults();
-			}
-			SearchRequestBuilder searchRequestBuilder = client.prepareSearch("businesses");
-			searchRequestBuilder.setQuery(esQuery);
-
-			SearchResponse response = searchRequestBuilder.setSize(maxSize).setExplain(false).execute().actionGet();
-
-			QueryResponse queryResponse = convertResponse(response);
-			return queryResponse;
-		} else {
-			int maxSize = 20;
-			if (query != null) {
-				maxSize = query.getMaxResults();
-			}
-			// SearchResponse response = client.prepareSearch("businesses").setTypes("nl").setFrom(0).setSize(maxSize).execute().actionGet();
-			SearchResponse response = client.prepareSearch().execute().actionGet();
-
-			QueryResponse queryResponse = convertResponse(response);
-			return queryResponse;
 		}
+
+		TermFilterBuilder openQuery = null;
+		if (query.isOpenNow()) {
+			openQuery = new TermFilterBuilder("open", "true");
+		}
+
+		TermFilterBuilder categoryQuery = null;
+		if (query.getCategory() != null) {
+			categoryQuery = new TermFilterBuilder("headings", query.getCategory());
+		}
+
+		QueryBuilder esQuery = null;
+
+		if (openQuery != null) {
+			if (categoryQuery != null) {
+				esQuery = QueryBuilders.boolQuery().must(QueryBuilders.constantScoreQuery(geoPolygonFilter)).must(QueryBuilders.constantScoreQuery(openQuery))
+						.must(QueryBuilders.constantScoreQuery(categoryQuery));
+			} else {
+				esQuery = QueryBuilders.boolQuery().must(QueryBuilders.constantScoreQuery(geoPolygonFilter)).must(QueryBuilders.constantScoreQuery(openQuery));
+			}
+		} else {
+			if (categoryQuery != null) {
+				esQuery = QueryBuilders.boolQuery().must(QueryBuilders.constantScoreQuery(geoPolygonFilter))
+						.must(QueryBuilders.constantScoreQuery(categoryQuery));
+			} else {
+				esQuery = QueryBuilders.constantScoreQuery(geoPolygonFilter);
+			}
+		}
+
+		int maxSize = 20;
+		if (query != null) {
+			maxSize = query.getMaxResults();
+		}
+
+		TermsFacetBuilder facet = FacetBuilders.termsFacet("facet").field("headings").size(100);
+
+		SearchRequestBuilder searchRequestBuilder = client.prepareSearch("businesses").addFacet(facet);
+		searchRequestBuilder.setQuery(esQuery);
+
+		SearchResponse response = searchRequestBuilder.setSize(maxSize).setExplain(false).execute().actionGet();
+
+		QueryResponse queryResponse = convertResponse(response);
+		return queryResponse;
+		// SearchResponse response = client.prepareSearch("businesses").setTypes("nl").setFrom(0).setSize(maxSize).execute().actionGet();
+		// SearchResponse response = client.prepareSearch().execute().actionGet();
 
 	}
 
@@ -133,6 +139,19 @@ public class BusinessQuery {
 
 	public static void main(String[] args) {
 		Query q = new Query();
+		// q.setCategory("restaurants");
+		// q.setCategory("artsen");
+		// q.setCategory("handelaars");
+		// q.setCategory("immobiliën");
+		// q.setCategory("architecten");
+		// q.setCategory("kleding");
+		// q.setCategory("cafés");
+		// q.setCategory("juweliers");
+		// q.setCategory("bars");
+		// q.setCategory("evenementen");
+		// q.setCategory("banken");
+		// q.setCategory("garages");
+		// q.setCategory("advocaten");
 		q.setCategory(null);
 		q.setMaxResults(20);
 		q.setOpenNow(false);
