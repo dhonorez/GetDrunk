@@ -67,7 +67,9 @@ var MainCtrl = function($scope, queryApi, googleMapService, shapeService, $log) 
 	
 	function initialise(){
 		$scope.shapes = shapeService.getShapes();
+		console.log($scope.shapes);
 	}
 	
+	initialise();
 
 };
