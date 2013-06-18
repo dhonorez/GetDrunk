@@ -172,7 +172,8 @@ app.factory('googleMapService', function($q, $rootScope) {
         	var marker = new google.maps.Marker({
 			    position: new google.maps.LatLng(lat, lon),
 			    map: map,
-			    title: title
+			    title: title,
+			    animation: 'BOUNCE'
 			});
 			markersArray.push(marker );
 			var infowindow = new google.maps.InfoWindow({
@@ -184,7 +185,6 @@ app.factory('googleMapService', function($q, $rootScope) {
         drawShape: function(){
         	drawShape();
         },
-
         
         initialize: function() {
 		  map = new google.maps.Map(document.getElementById('map'), {
