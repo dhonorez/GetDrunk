@@ -31,7 +31,6 @@ var MainCtrl = function($scope, queryApi, googleMapService, shapeService, $log) 
     
     $scope.selectCategory = function(cat) {
     	$category = cat;
-    	//${"#categoryButton"}.text = cat;
     };
 	
 	$scope.search = function() {
