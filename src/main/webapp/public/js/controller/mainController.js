@@ -1,7 +1,7 @@
 
 /** Main Controller **/
 var MainCtrl = function($scope, queryApi, googleMapService, shapeService, $log) {
-
+	var category = '';
 	/*
 	 
 	 var dummyResponse = { businesses: [			{"name":"Nutrex NV","coordinate":{"lat":51.2484987,"lon":4.81255115},"headings":["Veevoeder - Fabr. & Grooth."],"website":null,"phone":"014 88 31 11","address":null},
@@ -28,11 +28,16 @@ var MainCtrl = function($scope, queryApi, googleMapService, shapeService, $log) 
         googleMapService.initialize();
         
     };
+    
+    $scope.selectCategory = function(cat) {
+    	$category = cat;
+    	//${"#categoryButton"}.text = cat;
+    };
 	
 	$scope.search = function() {
 		if (googleMapService.isShapeSelected()) {
 			// setup query
-			var query = { 	category:'', 
+			var query = { 	category:$category, 
 							maxResults: 5, 
 							openNow: false, 
 							coordinates: googleMapService.getCoordinatesFromSelectedShape()
