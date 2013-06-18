@@ -41,12 +41,13 @@
 
 <div class="row-fluid">
 	<!-- MAP -->
-    <div id="map" ui-map="myMap" class="span9"
+    <div id="map" ui-map="myMap" class="span8"
 		style="height: 600px; margin: 3px;"
 		ui-options="mapOptions" ui-event="{'map-idle' : 'onMapIdle()'}">
 	</div>
 	 	
-		<div id="resultList" style="height: 500px; margin: 3px;" class="span3">
+		<div id="resultList" style="height: 500px; margin: 3px;" class="span4">
+			<!-- 
 			<div id="header">
 				<h2>Shapes</h2>
 			</div>
@@ -55,10 +56,10 @@
                 	<tr ng-repeat="(name, coordinates) in shapes"><td>{{name}}</td></tr>
                 </table>
 	        </div>
+	         -->
 			<div id="header">
 				<h2>Results</h2>
 			</div>
-			{{businesses}}
 			<div class="span12">
 	            <div class="list-item" ng-repeat="business in businesses">
 	                <div class="row-fluid">
@@ -66,7 +67,7 @@
 							<a href="#" class="heading"><span class="iconplaceholder">1.</span>{{business.name}}</a>
 	                    </div>
 	                    <div class="span4 text-right">
-	                        <a href="#" class="attention"> <span>8 reviews</span>
+	                        <a href="#" class="attention"> <span>{{business.numberOfReviews}} reviews</span>
 								<span class="inline-block rating small rating4"><span></span></span>
 	                        </a>
 	                    </div>
@@ -74,7 +75,7 @@
 	                <div class="row-fluid">
 	                    <div class="span12 larger-font black">
 							<i class="icon icon-large icon-map-marker"></i>
-							<span>Groenplaats 15, 2000 Antwerpen</span>
+							<span>{{business.address}}</span>
 	                    </div>
 	                </div>
 	                <div class="row-fluid">
@@ -83,9 +84,19 @@
 								<i class="icon icon-large icon-time"></i>
 								<span>Open now </span>
 							</strong>
-							<span class="tags"><a>Restaurants</a> - <a>&lt; 25 euro</a> - <a>Italiaans</a> - <a>More</a></span>
+							<span class="tags"><a ng-repeat="heading in business.headings">{{heading}}</a></span>
 	                    </div>
 	                </div>
+	                <div class="span12 list-footer">
+						<hr>
+						<div class=" row-fluid actions">
+							<div class="span8">
+								<a href="javascript:void(0);">Bookmark</a>
+								<a href="javascript:void(0);">Write a review</a>
+							</div>
+							<div class="span4 text-right"></div>
+						</div>
+					</div>
 	            </div>
 	        </div>
 		</div>

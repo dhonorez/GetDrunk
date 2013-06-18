@@ -33,7 +33,7 @@ var MainCtrl = function($scope, queryApi, googleMapService, shapeService, $log) 
 		if (googleMapService.isShapeSelected()) {
 			// setup query
 			var query = { 	category:'', 
-							maxResults: 300, 
+							maxResults: 5, 
 							openNow: false, 
 							coordinates: googleMapService.getCoordinatesFromSelectedShape()
 						};
