@@ -35,9 +35,33 @@ var MainCtrl = function($scope, queryApi, googleMapService, shapeService, $log) 
 	
 	$scope.search = function() {		
 		var coordinates = [];
+        
+        
 		if ($scope.myCoordinates!=undefined && $scope.myCoordinates!=null){
+        
+        
+        
 			coordinates = $scope.myCoordinates.coordinates;
 			console.log(coordinates);
+            
+            var myLatLng = new google.maps.LatLng(24.886436490787712, -70.2685546875);
+  var mapOptions = {
+    zoom: 5,
+    center: myLatLng,
+    mapTypeId: google.maps.MapTypeId.TERRAIN
+  };
+
+            var triangleCoords = [
+    new google.maps.LatLng(25.774252, -80.190262),
+    new google.maps.LatLng(18.466465, -66.118292),
+    new google.maps.LatLng(32.321384, -64.75737),
+    new google.maps.LatLng(25.774252, -80.190262)
+  ];
+            var bermudaTriangle = new google.maps.Polygon({paths: triangleCoords,strokeColor: "#FF0000",strokeOpacity: 0.8,strokeWeight: 2, fillColor: "#FF0000",fillOpacity: 0.35});
+        var map = new google.maps.Map(document.getElementById('map'));
+            
+            bermudaTriangle.setMap(map);
+
 		} else if (googleMapService.isShapeSelected()) {
 			coordinates = googleMapService.getCoordinatesFromSelectedShape();
 		}
