@@ -104,6 +104,7 @@ public class BusinessQuery {
 
 			Address address = new Address((String) fields.get("street"), (String) fields.get("number"), (String) fields.get("zipcode"),
 					(String) fields.get("city"));
+			business.setAddress(address);
 
 			List<String> headings = (List<String>) fields.get("headings");
 			business.setHeadings(headings);
