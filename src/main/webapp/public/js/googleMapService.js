@@ -168,13 +168,17 @@ app.factory('googleMapService', function($q, $rootScope) {
 			map.fitBounds(bounds);
         },
         
-        addMarker: function(lat, lon, title, content){
+        addMarker: function(lat, lon, title, content, isPaid){
         	var marker = new google.maps.Marker({
 			    position: new google.maps.LatLng(lat, lon),
 			    map: map,
 			    title: title,
 			    animation: 'BOUNCE'
 			});
+        	console.log(isPaid);
+        	if (isPaid=='false'){
+        		marker.setIcon('http://maps.google.com/mapfiles/ms/icons/yellow-dot.png');
+        	}
 			markersArray.push(marker );
 			var infowindow = new google.maps.InfoWindow({
 			    content: content
