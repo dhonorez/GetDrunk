@@ -85,7 +85,6 @@ public class QueryServiceJSONImpl {
 				return asJson(query);
 			}
 		});
-
 	}
 
 	private static Object asJson(Object json) {
