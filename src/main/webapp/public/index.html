@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="mapsearch" xmlns:ng="http://angularjs.org">
+<head>
+<!--[if lte IE 8]>
+      <script>
+        document.createElement('ng-include');
+        document.createElement('ng-pluralize');
+        document.createElement('ng-view');
+ 
+        // Optionally these for CSS
+        document.createElement('ng:include');
+        document.createElement('ng:pluralize');
+        document.createElement('ng:view');
+      </script>
+    <![endif]-->
+
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<meta charset="UTF-8">
+    
+<title>Map Search Demo</title>
+<link rel="stylesheet" href="css/app.css" />
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="css/reportingApp.css" rel="stylesheet">
+<link href="lib/angular-ui/angular-ui.css" rel="stylesheet">
+<link rel="stylesheet" href="lib/slickgrid/slick.grid.css" type="text/css"/>
+<link rel="stylesheet" href="lib/slickgrid/slick.example.theme.css" type="text/css"/>
+<link rel="stylesheet" href="lib/slickgrid/smoothness/jquery-ui-1.8.16.custom.css" type="text/css"/>
+<link rel="stylesheet" href="css/mapsearch.css" type="text/css"/>
+  
+
+<style>
+body {
+	padding-top: 60px;
+	/* 60px to make the container go all the way to the bottom of the topbar */
+}     
+.clusters, .clusters svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.clusters circle {
+  fill: brown;
+  stroke: black;
+  stroke-width: 1.5px;
+}
+</style>
+</head>
+<body>
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<ul class="nav">
+					<li ng-class="navClass('home')"><a href="#/">Home</a></li>														
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+		<div ng-view></div>
+	</div>
+
+	<!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
+  -->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfENedNbQA2rhkk64KU_TMoAWvZSDEafg&sensor=true&libraries=drawing" type="text/javascript"></script>
+	
+	<script src="lib/jquery/jquery-1.9.0.min.js"></script>
+	<script src="lib/jquery/jquery.event.drag-2.2.js"></script>	
+	<!-- <script src="http://mbostock.github.com/d3/d3.js?1.29.1"></script> -->
+	<script src="lib/slickgrid/slick.core.js"></script>
+	<script src="lib/slickgrid/slick.grid.js"></script>
+	<script src="lib/bootstrap/bootstrap.js"></script>
+	<script src="lib/angular/1.0.2/angular.js"></script>
+	<script src="lib/angular/1.0.2/angular-resource.js"></script>
+	<!-- <script src="lib/angular/1.0.5/angular.min.js"></script> -->
+	<!-- <script src="lib/elastic/elastic.min.js"></script>
+	<script src="lib/elastic/elastic-angular-client.min.js"></script>
+	<script src="lib/elastic/GeoClusterFacet.js"></script> -->
+	<!-- <script src="lib/google/markerclusterer.js"></script> -->
+	<script src="lib/angular-ui/angular-ui.js"></script>
+	<script src="lib/angular-ui/angular-ui-ieshiv.js"></script>
+	<script src="js/mapsearch.js"></script>
+	<script src="js/googleMapService.js"></script>
+	<script src="js/controller/mainController.js"></script>
+	<script src="js/controller/projectController.js"></script>
+		
+
+
+</body>
+</html>

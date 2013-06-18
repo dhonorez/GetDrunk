@@ -1,7 +1,6 @@
 package com.truvo.getdrunk.web;
 
-import static spark.Spark.get;
-import static spark.Spark.post;
+import static spark.Spark.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
@@ -30,6 +29,8 @@ public class QueryServiceJSONImpl {
 	private static Logger logger = LoggerFactory.getLogger(QueryServiceJSONImpl.class);
 
 	public static void main(String[] args) throws Exception {
+		staticFileLocation("/public");
+		
 		get(new Route("/hello") {
 			@Override
 			public Object handle(Request request, Response response) {
