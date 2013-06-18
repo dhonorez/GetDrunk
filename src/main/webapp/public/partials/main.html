@@ -58,11 +58,12 @@
 			<div id="header">
 				<h2>Results</h2>
 			</div>
+			{{businesses}}
 			<div class="span12">
-	            <div class="list-item">
+	            <div class="list-item" ng-repeat="business in businesses">
 	                <div class="row-fluid">
 	                    <div class="span8">
-							<a href="#" class="heading"><span class="iconplaceholder">1.</span>Da Giovanni</a>
+							<a href="#" class="heading"><span class="iconplaceholder">1.</span>{{business.name}}</a>
 	                    </div>
 	                    <div class="span4 text-right">
 	                        <a href="#" class="attention"> <span>8 reviews</span>
