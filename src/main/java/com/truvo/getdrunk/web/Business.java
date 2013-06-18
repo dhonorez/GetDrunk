@@ -106,8 +106,9 @@ public class Business {
 
 	@Override
 	public String toString() {
-		return "Business [name=" + name + ", coordinate=" + coordinate + ", headings=" + headings + ", website=" + website + ", phone=" + phone + ", address="
-				+ address + "]";
+		return "Business [name=" + name + ", coordinate=" + coordinate + ", headings=" + headings + ", website=" + website + ", email=" + email + ", phone="
+				+ phone + ", address=" + address + ", averageRating=" + averageRating + ", numberOfReviews=" + numberOfReviews + ", paid=" + paid + ", open="
+				+ open + "]";
 	}
 
 }
