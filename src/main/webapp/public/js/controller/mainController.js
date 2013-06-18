@@ -13,7 +13,7 @@ var MainCtrl = function($scope, queryApi, googleMapService, $log) {
                                     			{"name":"Brignola G","coordinate":{"lat":51.238012108,"lon":4.721091221},"headings":["Tandartsen"],"website":null,"phone":"03 464 08 94","address":null},
                                     			{"name":"De Roeck L","coordinate":{"lat":51.266100524,"lon":4.721289334},"headings":["Boekhouders & fiscalisten"],"website":null,"phone":null,"address":null},
                                     			{"name":"Van Roy Evy","coordinate":{"lat":51.307045525,"lon":4.742804613},"headings":["Groenten & fruit - Kleinh."],"website":null,"phone":null,"address":null},
-                                    			{"name":"Central","coordinate":{"lat":51.300508319,"lon":4.7335399},"headings":["CafŽs"],"website":null,"phone":"03 312 01 25","address":null},
+                                    			{"name":"Central","coordinate":{"lat":51.300508319,"lon":4.7335399},"headings":["Cafï¿½s"],"website":null,"phone":"03 312 01 25","address":null},
                                     			{"name":"Schrauwen Guy","coordinate":{"lat":51.288792279,"lon":4.797356847},"headings":["Aannemers - Grondwerken","Containers voor stort & afval (Verhuur & vervoer van)"],"website":null,"phone":"014 71 68 74","address":null},
                                     			{"name":"Van Den Heuvel","coordinate":{"lat":51.31157835,"lon":4.7552378},"headings":["Veefokkerijen"],"website":null,"phone":"03 321 70 01","address":null},
                                     			{"name":"Ver H.A.G.A. San BVBA","coordinate":{"lat":51.24836105,"lon":4.8236302},"headings":["Tankcontrole","Centrale verwarming (Installatie van)"],"website":null,"phone":"014 88 08 13","address":null},
@@ -45,8 +45,8 @@ var MainCtrl = function($scope, queryApi, googleMapService, $log) {
 			googleMapService.clearMarkers();
 			
 			// post query						
-			//queryApi.save(query, function(res){
-			res = dummyResponse;
+			queryApi.save(query, function(res){
+			//res = dummyResponse;
 			    $log.info('RESPONSE:');
 				$log.info(res);
 				googleMapService.centerMapByBounds(bounds);
@@ -58,7 +58,7 @@ var MainCtrl = function($scope, queryApi, googleMapService, $log) {
 											   business.name, 
 											   '<b>'+business.name+'</b>');				
 				}
-			//});
+			});
 		}
 	};
 	
