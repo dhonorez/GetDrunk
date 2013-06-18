@@ -101,6 +101,27 @@ app.factory('googleMapService', function($q, $rootScope) {
   			lastInfoWindow = infowindow;
   		});
       };
+      
+      function getCoordinatesFromSelectedShape(){
+      	var coordinates = [];
+    	if (selectedShape){
+    		if (selectedShape.type == google.maps.drawing.OverlayType.POLYGON) {
+    			var path = selectedShape.getPath();
+    			path.forEach(function(p) {
+    				coordinates.push({lat:p.lat(), lon:p.lng()});    			
+    			});
+    		} else if (selectedShape.type == google.maps.drawing.OverlayType.RECTANGLE) {
+    			bounds = selectedShape.getBounds();
+    			nordEast = bounds.getNorthEast();
+    			southWest = bounds.getSouthWest();
+    			coordinates.push( {lat:nordEast.lat(), lon:nordEast.lng()});
+    			coordinates.push( {lat:nordEast.lat(), lon:southWest.lng()});
+    			coordinates.push( {lat:southWest.lat(), lon:southWest.lng()});
+    			coordinates.push( {lat:southWest.lat(), lon:nordEast.lng()});
+    		}
+    	}
+    	return coordinates;
+    }
     
     return {
     	getMap: function(){
@@ -112,24 +133,8 @@ app.factory('googleMapService', function($q, $rootScope) {
     	},
     	
     	getCoordinatesFromSelectedShape: function(){
-        	var coordinates = [];
-        	if (selectedShape){
-        		if (selectedShape.type == google.maps.drawing.OverlayType.POLYGON) {
-        			var path = selectedShape.getPath();
-        			path.forEach(function(p) {
-        				coordinates.push({lat:p.lat(), lon:p.lng()});    			
-        			});
-        		} else if (selectedShape.type == google.maps.drawing.OverlayType.RECTANGLE) {
-        			bounds = selectedShape.getBounds();
-        			nordEast = bounds.getNorthEast();
-        			southWest = bounds.getSouthWest();
-        			coordinates.push( {lat:nordEast.lat(), lon:nordEast.lng()});
-        			coordinates.push( {lat:southWest.lat(), lon:southWest.lng()});
-        			coordinates.push( {lat:nordEast.lat(), lon:southWest.lng()});
-        			coordinates.push( {lat:southWest.lat(), lon:nordEast.lng()});
-        		}
-        	}
-        	return coordinates;
+        	return getCoordinatesFromSelectedShape();
+        	
         },
     	
     	clearMarkers: function(){
@@ -209,7 +214,9 @@ app.factory('googleMapService', function($q, $rootScope) {
 		      var newShape = e.overlay;
 		      newShape.type = e.type;
 		      google.maps.event.addListener(newShape, 'click', function() {
-		            setSelection(newShape);           
+		            setSelection(newShape);
+		            console.log('TEST');
+		            console.log(JSON.stringify(getCoordinatesFromSelectedShape()));
 		          });
 		          setSelection(newShape);
 		      }

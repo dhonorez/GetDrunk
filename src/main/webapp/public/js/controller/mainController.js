@@ -1,8 +1,10 @@
 
 /** Main Controller **/
-var MainCtrl = function($scope, queryApi, googleMapService, $log) {
+var MainCtrl = function($scope, queryApi, googleMapService, shapeService, $log) {
 
-	var dummyResponse = { businesses: [			{"name":"Nutrex NV","coordinate":{"lat":51.2484987,"lon":4.81255115},"headings":["Veevoeder - Fabr. & Grooth."],"website":null,"phone":"014 88 31 11","address":null},
+	/*
+	 
+	 var dummyResponse = { businesses: [			{"name":"Nutrex NV","coordinate":{"lat":51.2484987,"lon":4.81255115},"headings":["Veevoeder - Fabr. & Grooth."],"website":null,"phone":"014 88 31 11","address":null},
                                     			{"name":"Sterkens Alarmsystemen NV","coordinate":{"lat":51.301490475,"lon":4.746795425},"headings":["Bewaking - Apparaten & systemen","Alarmsystemen - Installateurs"],"website":null,"phone":"03 311 68 72","address":null},
                                     			{"name":"Boelieboe BVBA","coordinate":{"lat":51.250697523,"lon":4.815884473},"headings":["Kinderdagverblijven & -oppasdiensten"],"website":null,"phone":"0476 86 99 90","address":null},
                                     			{"name":"Batisol BVBA","coordinate":{"lat":51.268576489,"lon":4.794347117},"headings":["Hernieuwbare energie"],"website":null,"phone":null,"address":null},
@@ -19,6 +21,7 @@ var MainCtrl = function($scope, queryApi, googleMapService, $log) {
                                     			{"name":"Ver H.A.G.A. San BVBA","coordinate":{"lat":51.24836105,"lon":4.8236302},"headings":["Tankcontrole","Centrale verwarming (Installatie van)"],"website":null,"phone":"014 88 08 13","address":null},
                                     			{"name":"Krijnen Keukens BVBA","coordinate":{"lat":51.30614605,"lon":4.736871461},"headings":["Keukens"],"website":null,"phone":"03 312 45 62","address":null},
                                     ]};
+     */
 	
 	//initialize when map is loaded
     $scope.onMapIdle = function() {
@@ -62,7 +65,9 @@ var MainCtrl = function($scope, queryApi, googleMapService, $log) {
 		}
 	};
 	
-	
+	function initialise(){
+		$scope.shapes = shapeService.getShapes();
+	}
 	
 
 };
