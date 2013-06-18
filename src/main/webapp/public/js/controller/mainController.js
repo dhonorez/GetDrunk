@@ -26,9 +26,8 @@ var MainCtrl = function($scope, queryApi, googleMapService, shapeService, $log) 
 	//initialize when map is loaded
     $scope.onMapIdle = function() {
         googleMapService.initialize();
+        
     };
-    
-    
 	
 	$scope.search = function() {
 		if (googleMapService.isShapeSelected()) {
@@ -53,6 +52,7 @@ var MainCtrl = function($scope, queryApi, googleMapService, shapeService, $log) 
 			    $log.info('RESPONSE:');
 				$log.info(res);
 				googleMapService.centerMapByBounds(bounds);
+				$scope.businesses=res.businesses;
 				for (var i=0; i<res.businesses.length;i++){
 					var business = res.businesses[i];
 					$log.info(res.businesses[i]);
@@ -67,7 +67,7 @@ var MainCtrl = function($scope, queryApi, googleMapService, shapeService, $log) 
 	
 	function initialise(){
 		$scope.shapes = shapeService.getShapes();
-		console.log($scope.shapes);
+		console.log($scope.shapes);		
 	}
 	
 	initialise();
