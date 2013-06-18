@@ -83,8 +83,7 @@ var MainCtrl = function($scope, queryApi, googleMapService, shapeService, $log) 
 	
 	$scope.shapes = [];
 	$scope.myCoordinates=[];
-	$scope.myCategories= ['restaurants','artsen','handelaars'];
+	$scope.myCategories= ['restaurants','artsen','handelaars','immobiliën','architecten','kleding','cafés','juweliers', 'bars','evenementen','banken','garages','advocaten'];
 	$scope.myCategory = null;
 	initialise();
-
 };
