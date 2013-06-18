@@ -15,10 +15,44 @@
 
 <div class="row-fluid">
 	<!-- MAP -->
-    <div id="map" ui-map="myMap"
-		style="height: 500px; width: 100%; margin: 3px;"
+    <div id="map" ui-map="myMap" class="span9"
+		style="height: 500px; margin: 3px;"
 		ui-options="mapOptions" ui-event="{'map-idle' : 'onMapIdle()'}">
-	</div>	
+	</div>
+	<div id="resultList" style="height: 500px; margin: 3px;" class="span3">
+		<div id="header">
+			<h2>Resultaten</h2>
+		</div>
+		<div class="span12">
+            <div class="list-item">
+                <div class="row-fluid">
+                    <div class="span8">
+						<a href="#" class="heading"><span class="iconplaceholder">1.</span>Da Giovanni</a>
+                    </div>
+                    <div class="span4 text-right">
+                        <a href="#" class="attention"> <span>8 reviews</span>
+							<span class="inline-block rating small rating4"><span></span></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12 larger-font black">
+						<i class="icon icon-large icon-map-marker"></i>
+						<span>Groenplaats 15, 2000 Antwerpen</span>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span9 vertical-align-button">
+						<strong>
+							<i class="icon icon-large icon-time"></i>
+							<span>Open now </span>
+						</strong>
+						<span class="tags"><a>Restaurants</a> - <a>&lt; 25 euro</a> - <a>Italiaans</a> - <a>More</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
 </div>
 
 
