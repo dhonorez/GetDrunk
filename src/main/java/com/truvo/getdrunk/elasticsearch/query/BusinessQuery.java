@@ -59,19 +59,36 @@ public class BusinessQuery {
 
 		QueryBuilder esQuery = null;
 
-		if (openQuery != null) {
-			if (categoryQuery != null) {
-				esQuery = QueryBuilders.boolQuery().must(QueryBuilders.constantScoreQuery(geoPolygonFilter)).must(QueryBuilders.constantScoreQuery(openQuery))
-						.must(QueryBuilders.constantScoreQuery(categoryQuery));
+		if (geoPolygonFilter != null) {
+			if (openQuery != null) {
+				if (categoryQuery != null) {
+					esQuery = QueryBuilders.boolQuery().must(QueryBuilders.constantScoreQuery(geoPolygonFilter))
+							.must(QueryBuilders.constantScoreQuery(openQuery)).must(QueryBuilders.constantScoreQuery(categoryQuery));
+				} else {
+					esQuery = QueryBuilders.boolQuery().must(QueryBuilders.constantScoreQuery(geoPolygonFilter))
+							.must(QueryBuilders.constantScoreQuery(openQuery));
+				}
 			} else {
-				esQuery = QueryBuilders.boolQuery().must(QueryBuilders.constantScoreQuery(geoPolygonFilter)).must(QueryBuilders.constantScoreQuery(openQuery));
+				if (categoryQuery != null) {
+					esQuery = QueryBuilders.boolQuery().must(QueryBuilders.constantScoreQuery(geoPolygonFilter))
+							.must(QueryBuilders.constantScoreQuery(categoryQuery));
+				} else {
+					esQuery = QueryBuilders.constantScoreQuery(geoPolygonFilter);
+				}
 			}
 		} else {
-			if (categoryQuery != null) {
-				esQuery = QueryBuilders.boolQuery().must(QueryBuilders.constantScoreQuery(geoPolygonFilter))
-						.must(QueryBuilders.constantScoreQuery(categoryQuery));
+			if (openQuery != null) {
+				if (categoryQuery != null) {
+					esQuery = QueryBuilders.boolQuery().must(QueryBuilders.constantScoreQuery(openQuery)).must(QueryBuilders.constantScoreQuery(categoryQuery));
+				} else {
+					esQuery = QueryBuilders.boolQuery().must(QueryBuilders.constantScoreQuery(openQuery));
+				}
 			} else {
-				esQuery = QueryBuilders.constantScoreQuery(geoPolygonFilter);
+				if (categoryQuery != null) {
+					esQuery = QueryBuilders.boolQuery().must(QueryBuilders.constantScoreQuery(categoryQuery));
+				} else {
+					esQuery = QueryBuilders.matchAllQuery();
+				}
 			}
 		}
 
@@ -167,7 +184,7 @@ public class BusinessQuery {
 		coordinates.add(c3);
 		Coordinate c4 = new Coordinate(51.28768819403519, 4.38629150390625);
 		coordinates.add(c4);
-		q.setCoordinates(coordinates);
+		// q.setCoordinates(coordinates);
 
 		QueryResponse response = BusinessQuery.query(q);
 		System.out.println(response);
