@@ -70,17 +70,6 @@ public class QueryServiceJSONImpl {
 				response.type("application/json; charset=UTF-8");
 				return asJson(queryResponse);
 			}
-
-			private Business createDummyBusinesses() {
-				Business business = new Business();
-				business.setHeadings(Arrays.asList("Cafés"));
-				business.setName("Kelly's Irish Pub BVBA");
-				business.setPhone("03 201 59 88");
-				business.setWebsite("http://www.kellys.be");
-				business.setAddress(new Address("De Keyserlei", "27", "2018", "Antwerpen"));
-				business.setCoordinate(new Coordinate(4.418218577f, 51.217544792f));
-				return business;
-			}
 		});
 
 		get(new Route("/example") {
@@ -112,6 +101,17 @@ public class QueryServiceJSONImpl {
 		} finally {
 			IOUtils.closeQuietly(outputStream);
 		}
+	}
+	
+	private static Business createDummyBusinesses() {
+		Business business = new Business();
+		business.setHeadings(Arrays.asList("Cafés"));
+		business.setName("Kelly's Irish Pub BVBA");
+		business.setPhone("03 201 59 88");
+		business.setWebsite("http://www.kellys.be");
+		business.setAddress(new Address("De Keyserlei", "27", "2018", "Antwerpen"));
+		business.setCoordinate(new Coordinate(4.418218577f, 51.217544792f));
+		return business;
 	}
 
 }
