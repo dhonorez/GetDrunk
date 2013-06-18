@@ -14,8 +14,7 @@
 			<button class="btn">Kies voorgedefinieerd gebied ...</button>
 			<button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
 			<ul class="dropdown-menu">
-				<li><a href="#">Antwerpen centrum</a></li>
-				<li><a href="#">Belgische Kust</a></li>
+				<li ng-repeat="(name, coordinates) in shapes"><a href="#">{{name}}</a></li>
 			</ul>
 		</div>
 		<div class="btn-group">
