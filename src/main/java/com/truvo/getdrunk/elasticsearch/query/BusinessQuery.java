@@ -20,7 +20,6 @@ import org.elasticsearch.index.query.TermFilterBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.facet.FacetBuilders;
 import org.elasticsearch.search.facet.terms.TermsFacetBuilder;
-import org.elasticsearch.search.sort.SortOrder;
 
 import com.truvo.getdrunk.web.Address;
 import com.truvo.getdrunk.web.Business;
@@ -99,10 +98,8 @@ public class BusinessQuery {
 		}
 
 		TermsFacetBuilder facet = FacetBuilders.termsFacet("facet").field("headings").size(100);
+
 		SearchRequestBuilder searchRequestBuilder = client.prepareSearch("businesses").addFacet(facet);
-
-		searchRequestBuilder.addSort("name", SortOrder.ASC);
-
 		searchRequestBuilder.setQuery(esQuery);
 
 		SearchResponse response = searchRequestBuilder.setSize(maxSize).setExplain(false).execute().actionGet();
