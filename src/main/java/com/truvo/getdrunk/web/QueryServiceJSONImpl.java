@@ -23,6 +23,7 @@ import com.truvo.getdrunk.elasticsearch.query.BusinessQuery;
 
 public class QueryServiceJSONImpl {
 
+	private static final String RESPONSE_TYPE = "application/json; charset=UTF-8";
 	private static ObjectMapper mapper = new ObjectMapper();
 	private static JsonGenerator generator;
 
@@ -53,8 +54,8 @@ public class QueryServiceJSONImpl {
 
 				logger.info("Elastic search returned {} result(s).", queryResponse.getBusinesses().size());
 
-				response.type("application/json; charset=UTF-8");
-				return asJson(queryResponse);
+				response.type(RESPONSE_TYPE);
+				return asJson(queryResponse, response);
 			}
 		});
 
@@ -67,8 +68,8 @@ public class QueryServiceJSONImpl {
 
 				QueryResponse queryResponse = new QueryResponse(Arrays.asList(business));
 
-				response.type("application/json; charset=UTF-8");
-				return asJson(queryResponse);
+				response.type(RESPONSE_TYPE);
+				return asJson(queryResponse, response);
 			}
 		});
 
@@ -78,24 +79,26 @@ public class QueryServiceJSONImpl {
 				logger.info(request.toString());
 
 				Query query = new Query();
-				query.setCategory("TETTEN");
+				query.setCategory("Winkels");
 				query.setMaxResults(10);
 				query.setCoordinates(Arrays.asList(new Coordinate(1.06f, 13.0f)));
 
-				return asJson(query);
+				return asJson(query, response);
 			}
 		});
 	}
 
-	private static Object asJson(Object json) {
+	private static Object asJson(Object json, Response response) {
 		OutputStream outputStream = null;
 		try {
 			outputStream = new ByteArrayOutputStream();
 			generator = new JsonFactory().createGenerator(outputStream, JsonEncoding.UTF8);
 			mapper.writeValue(generator, json);
+			response.status(200);
 			return outputStream.toString();
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			response.status(400);
 			return e.getMessage();
 		} finally {
 			IOUtils.closeQuietly(outputStream);
