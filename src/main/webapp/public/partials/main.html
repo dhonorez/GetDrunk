@@ -9,11 +9,25 @@
     </div>
     <!-- <div id="map"></div> -->    
     <div>
-    	<button id="search-button" ng-click="search()" class="btn btn-inverse">Search<i class="yellow-icon-search"></i></button>
-    	<div class="btn-group">
+    	<form class="form-search">
+		    <div class="controls">
+		        <select ng-model="myCoordinates"
+					ng-options="coordinates as name for (name, coordinates) in shapes">
+					<option></option>
+				</select>
+				<select ng-model="myCategory"
+					ng-options="category as category for category in myCategories">
+					<option></option>
+				</select>
+		        <button id="search-button" ng-click="search()" class="btn btn-inverse btn-small" type="submit">Search<i class="yellow-icon-search"></i></button>
+		    </div>    
+		</form>
+    	
+    	<!-- <button id="search-button" ng-click="search()" class="btn btn-inverse">Search<i class="yellow-icon-search"></i></button>
+    	<div class="btn-group" >
 			<button class="btn">Kies voorgedefinieerd gebied ...</button>
 			<button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
-			<ul class="dropdown-menu">
+			<ul class="dropdown-menu" ng-model="myCoordinates">
 				<li ng-repeat="(name, coordinates) in shapes"><a href="#">{{name}}</a></li>
 			</ul>
 		</div>
@@ -35,7 +49,7 @@
 				<li><a href="#" ng-click="selectCategory('garages')">garages</a></li>
 				<li><a href="#" ng-click="selectCategory('advocaten')">advocaten</a></li>
 			</ul>
-		</div>
+		</div> -->
     </div>
 </div>
 

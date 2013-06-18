@@ -30,17 +30,24 @@ var MainCtrl = function($scope, queryApi, googleMapService, shapeService, $log) 
     };
     
     $scope.selectCategory = function(cat) {
-    	$category = cat;
+    	//$category = cat;
     	//${"#categoryButton"}.text = cat;
     };
 	
-	$scope.search = function() {
-		if (googleMapService.isShapeSelected()) {
+	$scope.search = function() {		
+		var coordinates = [];
+		if ($scope.myCoordinates!=undefined && $scope.myCoordinates!=null){
+			coordinates = $scope.myCoordinates.coordinates;
+			console.log(coordinates);
+		} else if (googleMapService.isShapeSelected()) {
+			coordinates = googleMapService.getCoordinatesFromSelectedShape();
+		}
+		if (coordinates.length>0){
 			// setup query
-			var query = { 	category:$category, 
-							maxResults: 5, 
+			var query = { 	category: $scope.myCategory, 
+							maxResults: 25, 
 							openNow: false, 
-							coordinates: googleMapService.getCoordinatesFromSelectedShape()
+							coordinates: coordinates
 						};
 			$log.info(query);
 			// calculate boundaries (used to center the map when results come in)
@@ -75,6 +82,10 @@ var MainCtrl = function($scope, queryApi, googleMapService, shapeService, $log) 
 		console.log($scope.shapes);		
 	}
 	
+	$scope.shapes = [];
+	$scope.myCoordinates=[];
+	$scope.myCategories= ['restaurants','artsen','handelaars'];
+	$scope.myCategory = null;
 	initialise();
 
 };
