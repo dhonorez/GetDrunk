@@ -25,8 +25,7 @@ var MainCtrl = function($scope, queryApi, googleMapService, shapeService, $log) 
 	
 	//initialize when map is loaded
     $scope.onMapIdle = function() {
-        googleMapService.initialize();
-        
+        googleMapService.initialize();        
     };
     
     $scope.selectCategory = function(cat) {
@@ -36,12 +35,11 @@ var MainCtrl = function($scope, queryApi, googleMapService, shapeService, $log) 
 	$scope.search = function() {		
 		var coordinates = [];
 		if ($scope.myCoordinates!=undefined && $scope.myCoordinates!=null){
-			coordinates = $scope.myCoordinates.coordinates;
-			console.log(coordinates);
+			coordinates = $scope.myCoordinates.coordinates;			
 		} else if (googleMapService.isShapeSelected()) {
 			coordinates = googleMapService.getCoordinatesFromSelectedShape();
 		}
-		if (coordinates.length>0){
+		//if (coordinates.length>0){
 			// setup query
 			var query = { 	category: $scope.myCategory, 
 							maxResults: 25, 
@@ -70,10 +68,11 @@ var MainCtrl = function($scope, queryApi, googleMapService, shapeService, $log) 
 					googleMapService.addMarker(business.coordinate.lat, 
 											   business.coordinate.lon, 
 											   business.name, 
-											   '<b>'+business.name+'</b>');				
+											   '<b>'+business.name+'</b>',
+											   business.paid);				
 				}
 			});
-		}
+		//}
 	};
 	
 	function initialise(){
